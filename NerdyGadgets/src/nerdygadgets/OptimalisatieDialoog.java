@@ -7,6 +7,7 @@ package nerdygadgets;
 
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
@@ -16,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -36,15 +36,15 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
     private JTextField AantalPFsenseRouters = new JTextField(2);
     private JCheckBox Webserver = new JCheckBox("Webserver");
     private JTextField AantalWebservers = new JTextField(2);
-    private JPanel Boven = new JPanel(null);
     private JButton Optimaliseer = new JButton("Optimaliseer");
     
     public OptimalisatieDialoog(JFrame frame) {
         super(frame, true);
         setSize(500,300);
-        setLayout(null);
+        setLayout(new FlowLayout());
         setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
+       
         
         Header.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -59,7 +59,6 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         AantalPFsenseRouters.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Webserver.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         AantalWebservers.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Boven.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Optimaliseer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         
         Optimaliseer.setBackground(new Color(204,255,255));
@@ -81,7 +80,6 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         add(AantalPFsenseRouters);
         add(Webserver);
         add(AantalWebservers);
-        add(Boven);
         add(Optimaliseer);
     }
 
