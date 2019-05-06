@@ -155,7 +155,12 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setVisible(true);
 
         }
+        if(e.getSource() == Optimalisatie) {
+            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
+            dialoog.setVisible(true);
+        }
     }
+   
 }
 
 
