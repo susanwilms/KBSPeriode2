@@ -176,6 +176,7 @@ public class Scherm extends JFrame implements ActionListener {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setVisible(true);
             
+            //Aanmaken array met alle webservers en databaseservers.
             ArrayList<Webserver> webservers = new ArrayList<>();
             webservers.add(ws1);
             webservers.add(ws2);
@@ -184,7 +185,34 @@ public class Scherm extends JFrame implements ActionListener {
             dbservers.add(ds1);
             dbservers.add(ds2);
             dbservers.add(ds3);
+            //arraylist voor de goedkoopste oplossing 
+            ArrayList<Server> besteSamenstelling = new ArrayList<>();
+            besteSamenstelling.add(PFsense);
+            besteSamenstelling.add(DBloadBalancer);
+            //ArrayList voor samenstelling in het algoritme
+            ArrayList<Server> huidigeSamenstelling = new ArrayList<>();
+            huidigeSamenstelling.add(PFsense);
+            huidigeSamenstelling.add(DBloadBalancer);
             
+            /*in deze variabelen komt de laatst verwijderde dbserver of webserver.
+            Hierdoor pakt de foreach niet steeds dezelfde oplossing*/
+            Webserver verwijderdeWeb;
+            DatabaseServer verwijderdeDB;
+            
+            double percentageDoel = 0.9999; //Integer.parseInt(textfield.getText()) <-- moet nog een waarde uit dialog halen. 
+            
+            double totaleBeschikbaarheid = 0;
+            double beschikbaarheidWeb = 0;
+            double beschikbaarheidData = 0;
+            
+            //Deze tellers zijn nodig om de beschikbaarheid van de webservers en databaseservers te kunnen berekenen
+            int tellerWeb = 1;
+            int tellerData = 1;
+            
+            //Berekenen eerste waarde;
+            
+        
+        
         }
     }
    
