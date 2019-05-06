@@ -17,16 +17,17 @@ public class Tests {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Scherm test = new Scherm();
         Webserver a = new Webserver("HAL9001W", 2200, 0.8);
         Webserver b = new Webserver("HAL9002W", 3200, 0.9);
         Webserver c = new Webserver("HAL9003W", 5100, 0.95);
-        DatabaseServer d = new DatabaseServer("", 2000, 0.90);
-        Firewall g = new Firewall("", 2000, 0.9999);
-        DBloadbalancer h = new DBloadbalancer("", 2000, 0.9999);
-        
+        DatabaseServer d = new DatabaseServer("", 5100, 0.90);
+        DatabaseServer e = new DatabaseServer("", 7700, 0.95);
+        DatabaseServer f = new DatabaseServer("", 12200, 0.98);
+        PFsense g = new PFsense("", 2000, 0.9999);
+        DBloadBalancer h = new DBloadBalancer("", 2000, 0.9999);
+        Scherm test = new Scherm(a,b,c,d,e,f,g,h);
         ArrayList<Webserver> webservers = new ArrayList<>();
-        ArrayList<Databaseserver> dbServers = new ArrayList<>();
+        ArrayList<DatabaseServer> dbServers = new ArrayList<>();
         
         webservers.add(a);
         webservers.add(b);
