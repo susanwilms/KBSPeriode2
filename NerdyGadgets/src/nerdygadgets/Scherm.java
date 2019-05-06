@@ -196,8 +196,8 @@ public class Scherm extends JFrame implements ActionListener {
             
             /*in deze variabelen komt de laatst verwijderde dbserver of webserver.
             Hierdoor pakt de foreach niet steeds dezelfde oplossing*/
-            Webserver verwijderdeWeb;
-            DatabaseServer verwijderdeDB;
+            Webserver verwijderdeWeb = null;
+            DatabaseServer verwijderdeDB = null;
             
             double percentageDoel = 0.9999; //Integer.parseInt(textfield.getText()) <-- moet nog een waarde uit dialog halen. 
             
@@ -250,8 +250,19 @@ public class Scherm extends JFrame implements ActionListener {
                 }
                 totaleBeschikbaarheid = beschikbaarheidWeb * beschikbaarheidData;
             }
-        
-        
+            totaleBeschikbaarheid = 0;
+            beschikbaarheidWeb = 0;
+            beschikbaarheidData = 0;
+            // berekenen beste samenstelling
+            while(totaleBeschikbaarheid <= percentageDoel){
+                if (beschikbaarheidWeb < beschikbaarheidData){
+                    for (Webserver ws : webservers){
+                        if(verwijderdeWeb.equals(ws) == false){
+                            besteSamenstelling.add(ws);
+                        }
+                    }
+                }
+            }
         }
     }
    
