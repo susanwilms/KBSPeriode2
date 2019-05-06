@@ -10,11 +10,6 @@ package nerdygadgets;
  * @author susanwilms
  */
 public class DatabaseServer extends Server{
-    
-    
-    public DatabaseServer(){
-        super("", 1, 1);
-    }
     public DatabaseServer(String naam, int prijs, double beschikbaarheid){
         super(naam, prijs, beschikbaarheid);
     }
