@@ -11,7 +11,7 @@ package nerdygadgets;
  */
 public class PFsense extends Server{
     
-    public PFsense(){
-        super(" ", 1, 1);
+    public PFsense(String naam, int prijs, double beschikbaarheid){
+        super(naam, prijs, beschikbaarheid);
     }
 }
