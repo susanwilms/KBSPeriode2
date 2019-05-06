@@ -6,11 +6,10 @@
 package nerdygadgets;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -124,6 +123,7 @@ public class Scherm extends JFrame implements ActionListener {
                 
                 //Actionlisteners
                 Opslaan.addActionListener(this);
+                Optimalisatie.addActionListener(this);
                 
                 //Voegt alle componenten toe 
                 add(Componenten);
@@ -154,6 +154,10 @@ public class Scherm extends JFrame implements ActionListener {
             OpslaanDialoog dialoog = new OpslaanDialoog(this);	
             dialoog.setVisible(true);
 
+        }
+        if(e.getSource() == Optimalisatie){
+            ArrayList<Server> besteOplossing = new ArrayList<>();
+            
         }
     }
 }
