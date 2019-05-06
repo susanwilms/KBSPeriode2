@@ -11,7 +11,7 @@ package nerdygadgets;
  */
 public class DBloadBalancer extends Server{
     
-    public DBloadBalancer(){
-        super(" ", 1,1);
+    public DBloadBalancer(String naam, int prijs, double beschikbaarheid){
+        super(naam, prijs, beschikbaarheid);
     }
 }
