@@ -39,8 +39,11 @@ public class Configuratie {
     
     // fucntie voor berekenen voor totaalprijs
     public int BerekenTotaalPrijs(){
-        // pseudocode
-        return 2;
+        int prijs = 0;
+        for(Server component: samenstelling ) {
+            prijs += component.getPrijs();
+        }
+        return prijs;
     }
     
     public double BerekenPercentage(){
