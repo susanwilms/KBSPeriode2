@@ -38,10 +38,27 @@ public class Scherm extends JFrame implements ActionListener {
     private JLabel Naam = new JLabel("Naam project:");
     private JTextField NaamTF = new JTextField(500);
     private JPanel p = new JPanel(null);
+    private Webserver ws1;
+    private Webserver ws2;
+    private Webserver ws3;
+    private DatabaseServer ds1;
+    private DatabaseServer ds2;
+    private DatabaseServer ds3;
+    private PFsense PFsense;
+    private DBloadBalancer DBloadBalancer;
     
-    
-    
-	public Scherm() {
+	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
+                        DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
+                        DBloadBalancer DBloadBalancer) {
+            this.ws1 = ws1;
+            this.ws2 = ws2;
+            this.ws3 = ws3;
+            this.ds1 = ds1;
+            this.ds2 = ds2;
+            this.ds3 = ds3;
+            this.PFsense = PFsense;
+            this.DBloadBalancer = DBloadBalancer;
+            
 		setTitle("Java Applicatie");
 		setSize(900,660);
 		setLayout(null);
@@ -158,6 +175,83 @@ public class Scherm extends JFrame implements ActionListener {
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setVisible(true);
+            
+            //Aanmaken array met alle webservers en databaseservers.
+            ArrayList<Webserver> webservers = new ArrayList<>();
+            webservers.add(ws1);
+            webservers.add(ws2);
+            webservers.add(ws3);
+            ArrayList<DatabaseServer> dbservers = new ArrayList<>();
+            dbservers.add(ds1);
+            dbservers.add(ds2);
+            dbservers.add(ds3);
+            //arraylist voor de goedkoopste oplossing 
+            ArrayList<Server> besteSamenstelling = new ArrayList<>();
+            besteSamenstelling.add(PFsense);
+            besteSamenstelling.add(DBloadBalancer);
+            //ArrayList voor samenstelling in het algoritme
+            ArrayList<Server> huidigeSamenstelling = new ArrayList<>();
+            huidigeSamenstelling.add(PFsense);
+            huidigeSamenstelling.add(DBloadBalancer);
+            
+            /*in deze variabelen komt de laatst verwijderde dbserver of webserver.
+            Hierdoor pakt de foreach niet steeds dezelfde oplossing*/
+            Webserver verwijderdeWeb;
+            DatabaseServer verwijderdeDB;
+            
+            double percentageDoel = 0.9999; //Integer.parseInt(textfield.getText()) <-- moet nog een waarde uit dialog halen. 
+            
+            double totaleBeschikbaarheid = 0;
+            double beschikbaarheidWeb = 0;
+            double beschikbaarheidData = 0;
+            
+            //Deze tellers zijn nodig om de beschikbaarheid van de webservers en databaseservers te kunnen berekenen
+            int tellerWeb = 1;
+            int tellerData = 1;
+            
+            //Berekenen eerste waarde;
+            while(totaleBeschikbaarheid < percentageDoel){
+                if(beschikbaarheidWeb < beschikbaarheidData){
+                    Webserver besteWebserver = null;
+                    for (Webserver wb : webservers){
+                       double beschikbaarheid = 0;
+                       // De beste webserver wordt gevonden (beste = hoogste beschikbaarheid)
+                       if (wb.getBeschikbaarheid()> beschikbaarheid){
+                           beschikbaarheid = wb.getBeschikbaarheid();
+                           besteWebserver = wb;
+                       }
+                    }
+                    //Om een nullpointerexception te voorkomen een try en catch.
+                    try{
+                        besteSamenstelling.add(besteWebserver);
+                        beschikbaarheidWeb = 1 - Math.pow((1 - besteWebserver.getBeschikbaarheid()), tellerWeb);
+                    } catch (Exception ed){
+                        System.out.println("Geen webserves gevonden");
+                    }
+                    tellerWeb++;
+                } else {
+                    DatabaseServer besteDBserver = null;
+                    for (DatabaseServer dbs : dbservers){
+                       double beschikbaarheid = 0;
+                       // De beste databaseserver wordt gevonden (beste = hoogste beschikbaarheid)
+                       if (dbs.getBeschikbaarheid()> beschikbaarheid){
+                           beschikbaarheid = dbs.getBeschikbaarheid();
+                           besteDBserver = dbs;
+                       }
+                    }
+                    //Om een nullpointerexception te voorkomen een try en catch.
+                    try{
+                        besteSamenstelling.add(besteDBserver);
+                        beschikbaarheidData = 1 - Math.pow((1 - besteDBserver.getBeschikbaarheid()), tellerData);
+                    } catch (Exception ed){
+                        System.out.println("Geen databaseservers gevonden");
+                    }
+                    tellerData++;
+                }
+                totaleBeschikbaarheid = beschikbaarheidWeb * beschikbaarheidData;
+            }
+        
+        
         }
     }
    

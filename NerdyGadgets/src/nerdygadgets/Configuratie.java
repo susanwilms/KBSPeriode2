@@ -21,6 +21,11 @@ public class Configuratie {
         this.percentageDoei = percentageDoei;
     }
     
+    public Configuratie(ArrayList<Server> samenstelling) {
+        this.samenstelling = samenstelling;
+    }
+    
+    
     // constructor die gebruikt wordt bij het maken van een nieuw ontwerp
     public Configuratie() {
         
