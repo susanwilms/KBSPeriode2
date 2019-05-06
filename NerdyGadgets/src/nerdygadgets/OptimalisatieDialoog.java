@@ -7,6 +7,7 @@ package nerdygadgets;
 
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
@@ -45,11 +46,49 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
         
-        add()
+        Header.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        GewenstePercentage.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        PercentageTF.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        Componenten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        DBbalancingServer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        AantalDBbalancingServers.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        DBloadBalancingServer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        AantalDBloadBalancingServers.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        PFsenseRouter.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        AantalPFsenseRouters.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        Webserver.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        AantalWebservers.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        Boven.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        Optimaliseer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        
+        Optimaliseer.setBackground(new Color(204,255,255));
+        
+        Optimaliseer.setBorder(null);
+        
+        Optimaliseer.addActionListener(this);
+        
+        add(Header);
+        add(Naam);
+        add(GewenstePercentage);
+        add(PercentageTF);
+        add(Componenten);
+        add(DBbalancingServer);
+        add(AantalDBbalancingServers);
+        add(DBloadBalancingServer);
+        add(AantalDBloadBalancingServers);
+        add(PFsenseRouter);
+        add(AantalPFsenseRouters);
+        add(Webserver);
+        add(AantalWebservers);
+        add(Boven);
+        add(Optimaliseer);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getSource() == Optimaliseer) {
+            this.setVisible(false);
+        }
     }
 }
