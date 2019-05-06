@@ -124,6 +124,7 @@ public class Scherm extends JFrame implements ActionListener {
                 
                 //Actionlisteners
                 Opslaan.addActionListener(this);
+                Optimalisatie.addActionListener(this);
                 
                 //Voegt alle componenten toe 
                 add(Componenten);
