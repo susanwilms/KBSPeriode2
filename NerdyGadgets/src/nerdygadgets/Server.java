@@ -47,5 +47,8 @@ public class Server {
         return prijs;
     }
     
+    public double getBeschikbaarheid(){
+        return beschikbaarheid;
+    }
     
 }
