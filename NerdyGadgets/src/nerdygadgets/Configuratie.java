@@ -11,14 +11,13 @@ import java.util.ArrayList;
  *
  * @author susanwilms
  */
-public class Configuratie extends Server{
+public class Configuratie{
     // variabelen voor configuratie
     private ArrayList samenstelling;
     private double percentageDoei;
     
     // constructor met super() voor de server class
     public Configuratie(double percentageDoei){
-        super("", 2, 2.5);
         this.percentageDoei = percentageDoei;
     }
     
