@@ -5,6 +5,8 @@
  */
 package nerdygadgets;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author mbred
@@ -16,7 +18,22 @@ public class Tests {
      */
     public static void main(String[] args) {
         Scherm test = new Scherm();
-
+        Webserver a = new Webserver("HAL9001W", 2200, 0.8);
+        Webserver b = new Webserver("HAL9002W", 3200, 0.9);
+        Webserver c = new Webserver("HAL9003W", 5100, 0.95);
+        DatabaseServer d = new DatabaseServer("", 2000, 0.90);
+        Firewall g = new Firewall("", 2000, 0.9999);
+        DBloadbalancer h = new DBloadbalancer("", 2000, 0.9999);
+        
+        ArrayList<Webserver> webservers = new ArrayList<>();
+        ArrayList<Databaseserver> dbServers = new ArrayList<>();
+        
+        webservers.add(a);
+        webservers.add(b);
+        webservers.add(c);
+        dbServers.add(d);
+        dbServers.add(e);
+        dbServers.add(f);
     }
     
 }
