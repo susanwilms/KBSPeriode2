@@ -210,7 +210,46 @@ public class Scherm extends JFrame implements ActionListener {
             int tellerData = 1;
             
             //Berekenen eerste waarde;
-            
+            while(totaleBeschikbaarheid < percentageDoel){
+                if(beschikbaarheidWeb < beschikbaarheidData){
+                    Webserver besteWebserver = null;
+                    for (Webserver wb : webservers){
+                       double beschikbaarheid = 0;
+                       // De beste webserver wordt gevonden (beste = hoogste beschikbaarheid)
+                       if (wb.getBeschikbaarheid()> beschikbaarheid){
+                           beschikbaarheid = wb.getBeschikbaarheid();
+                           besteWebserver = wb;
+                       }
+                    }
+                    //Om een nullpointerexception te voorkomen een try en catch.
+                    try{
+                        besteSamenstelling.add(besteWebserver);
+                        beschikbaarheidWeb = 1 - Math.pow((1 - besteWebserver.getBeschikbaarheid()), tellerWeb);
+                    } catch (Exception ed){
+                        System.out.println("Geen webserves gevonden");
+                    }
+                    tellerWeb++;
+                } else {
+                    DatabaseServer besteDBserver = null;
+                    for (DatabaseServer dbs : dbservers){
+                       double beschikbaarheid = 0;
+                       // De beste databaseserver wordt gevonden (beste = hoogste beschikbaarheid)
+                       if (dbs.getBeschikbaarheid()> beschikbaarheid){
+                           beschikbaarheid = dbs.getBeschikbaarheid();
+                           besteDBserver = dbs;
+                       }
+                    }
+                    //Om een nullpointerexception te voorkomen een try en catch.
+                    try{
+                        besteSamenstelling.add(besteDBserver);
+                        beschikbaarheidData = 1 - Math.pow((1 - besteDBserver.getBeschikbaarheid()), tellerData);
+                    } catch (Exception ed){
+                        System.out.println("Geen databaseservers gevonden");
+                    }
+                    tellerData++;
+                }
+                totaleBeschikbaarheid = beschikbaarheidWeb * beschikbaarheidData;
+            }
         
         
         }
