@@ -38,10 +38,27 @@ public class Scherm extends JFrame implements ActionListener {
     private JLabel Naam = new JLabel("Naam project:");
     private JTextField NaamTF = new JTextField(500);
     private JPanel p = new JPanel(null);
+    private Webserver ws1;
+    private Webserver ws2;
+    private Webserver ws3;
+    private DatabaseServer ds1;
+    private DatabaseServer ds2;
+    private DatabaseServer ds3;
+    private PFsense PFsense;
+    private DBloadBalancer DBloadBalancer;
     
-    
-    
-	public Scherm() {
+	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
+                        DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
+                        DBloadBalancer DBloadBalancer) {
+            this.ws1 = ws1;
+            this.ws2 = ws2;
+            this.ws3 = ws3;
+            this.ds1 = ds1;
+            this.ds2 = ds2;
+            this.ds3 = ds3;
+            this.PFsense = PFsense;
+            this.DBloadBalancer = DBloadBalancer;
+            
 		setTitle("Java Applicatie");
 		setSize(900,660);
 		setLayout(null);
@@ -158,6 +175,16 @@ public class Scherm extends JFrame implements ActionListener {
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setVisible(true);
+            
+            ArrayList<Webserver> webservers = new ArrayList<>();
+            webservers.add(ws1);
+            webservers.add(ws2);
+            webservers.add(ws3);
+            ArrayList<DatabaseServer> dbservers = new ArrayList<>();
+            dbservers.add(ds1);
+            dbservers.add(ds2);
+            dbservers.add(ds3);
+            
         }
     }
    
