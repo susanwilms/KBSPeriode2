@@ -49,11 +49,11 @@ public class Configuratie {
         
         for(Server component: samenstelling) {
             if(component instanceof Webserver) {
-                webserverlijst.add(Component.getBeschikbaarheid());
+                webserverlijst.add(component.getBeschikbaarheid());
                 
             } else if (component instanceof DatabaseServer) {
                 databaseserverlijst.add(component.getBeschikbaarheid());
-            } else if (component instanceof Firewall) {
+            } else if (component instanceof PFsense) {
                 firewall = component.getBeschikbaarheid();
             } else {
                 DBLoader = component.getBeschikbaarheid();
