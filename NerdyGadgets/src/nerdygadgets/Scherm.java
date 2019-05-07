@@ -149,6 +149,7 @@ public class Scherm extends JFrame implements ActionListener {
                 DBServer.addActionListener(this);
                 DBBalancer.addActionListener(this);
                 Firewall.addActionListener(this);
+                Openen.addActionListener(this);
 
                 
                 //Voegt alle componenten toe 
@@ -179,19 +180,22 @@ public class Scherm extends JFrame implements ActionListener {
         if(e.getSource() == Opslaan) {
             OpslaanDialoog dialoog = new OpslaanDialoog(this);	
             dialoog.setVisible(true);
+        }
         if(e.getSource() == webserver) {
-            
+            ToevoegenGUI webserver = new ToevoegenGUI(this, "Webserver");
+            webserver.setVisible(true);
         }    
         if(e.getSource() == DBServer) {
-            
+            ToevoegenGUI DBServer = new ToevoegenGUI(this, "DBServer");
+            System.out.println("test");
         } 
         if(e.getSource() == DBBalancer) {
-            
-        } 
+            System.out.println("test");
+        }   
         if(e.getSource() == Firewall) {
             
         }         
-        }
+        
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setVisible(true);
