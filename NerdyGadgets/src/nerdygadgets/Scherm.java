@@ -9,6 +9,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -170,6 +174,7 @@ public class Scherm extends JFrame implements ActionListener {
         if(e.getSource() == Opslaan) {
             OpslaanDialoog dialoog = new OpslaanDialoog(this);	
             dialoog.setVisible(true);
+            
 
         }
         if(e.getSource() == Optimalisatie) {

@@ -5,6 +5,10 @@
  */
 package nerdygadgets;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -35,6 +39,20 @@ public class Tests {
         dbServers.add(d);
         dbServers.add(e);
         dbServers.add(f);
-    }
+        
+        try{
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sonoo?serverTimezone=UTC","root", "");
+            Statement myStmt = myConn.createStatement();
+            ResultSet myRs = myStmt.executeQuery("select * from emp");
+            while(myRs.next()) {
+                System.out.println(myRs.getString("id"));
+            }
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+            
     
-}
+    }
+}  
+    
+   
