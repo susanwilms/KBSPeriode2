@@ -145,6 +145,11 @@ public class Scherm extends JFrame implements ActionListener {
                 //Actionlisteners
                 Opslaan.addActionListener(this);
                 Optimalisatie.addActionListener(this);
+                webserver.addActionListener(this);
+                DBServer.addActionListener(this);
+                DBBalancer.addActionListener(this);
+                Firewall.addActionListener(this);
+
                 
                 //Voegt alle componenten toe 
                 add(Componenten);
@@ -174,8 +179,18 @@ public class Scherm extends JFrame implements ActionListener {
         if(e.getSource() == Opslaan) {
             OpslaanDialoog dialoog = new OpslaanDialoog(this);	
             dialoog.setVisible(true);
+        if(e.getSource() == webserver) {
             
-
+        }    
+        if(e.getSource() == DBServer) {
+            
+        } 
+        if(e.getSource() == DBBalancer) {
+            
+        } 
+        if(e.getSource() == Firewall) {
+            
+        }         
         }
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);

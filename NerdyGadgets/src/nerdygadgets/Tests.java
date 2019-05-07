@@ -41,11 +41,11 @@ public class Tests {
         dbServers.add(f);
         
         try{
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sonoo?serverTimezone=UTC","root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/KBS?serverTimezone=UTC","root", "");
             Statement myStmt = myConn.createStatement();
-            ResultSet myRs = myStmt.executeQuery("select * from emp");
+            ResultSet myRs = myStmt.executeQuery("select * from infrastructuurcomponent");
             while(myRs.next()) {
-                System.out.println(myRs.getString("id"));
+                System.out.println(myRs.getString("naam"));
             }
         } catch (Exception exc) {
             exc.printStackTrace();
