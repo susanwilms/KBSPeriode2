@@ -259,7 +259,7 @@ public class Scherm extends JFrame implements ActionListener {
             beschikbaarheidWeb = 0;
             beschikbaarheidData = 0;
             // berekenen beste samenstelling
-            while(totaleBeschikbaarheid <= percentageDoel){
+            /*while(totaleBeschikbaarheid <= percentageDoel){
                 if (beschikbaarheidWeb < beschikbaarheidData){
                     for (Webserver ws : webservers){
                         if(verwijderdeWeb.equals(ws) == false){
@@ -267,7 +267,7 @@ public class Scherm extends JFrame implements ActionListener {
                         }
                     }
                 }
-            }
+            }*/
         }
     }
    
