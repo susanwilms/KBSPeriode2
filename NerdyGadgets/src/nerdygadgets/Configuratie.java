@@ -24,11 +24,25 @@ public class Configuratie {
     public Configuratie(ArrayList<Server> samenstelling) {
         this.samenstelling = samenstelling;
     }
+
+    public ArrayList<Server> getSamenstelling() {
+        return samenstelling;
+    }
+
+    public double getPercentageDoei() {
+        return percentageDoei;
+    }
     
     
     // constructor die gebruikt wordt bij het maken van een nieuw ontwerp
     public Configuratie() {
         
+    }
+    
+    public void print() {
+        for(Server test: samenstelling) {
+            System.out.println(test.toString());
+        }
     }
     
     // functie berekening
@@ -70,6 +84,7 @@ public class Configuratie {
         }
         if(aantal <= 1) {
             for(Server component: samenstelling) {
+                totaal -= 1;
                 totaal += component.getBeschikbaarheid();
             }
         } else {
