@@ -196,8 +196,8 @@ public class Scherm extends JFrame implements ActionListener {
             
             /*in deze variabelen komt de laatst verwijderde dbserver of webserver.
             Hierdoor pakt de foreach niet steeds dezelfde oplossing*/
-            Webserver verwijderdeWeb = null;
-            DatabaseServer verwijderdeDB = null;
+            Webserver verwijderdeWeb = new Webserver();
+            DatabaseServer verwijderdeDB = new DatabaseServer();
             
             double percentageDoel = 0.9999; //Integer.parseInt(textfield.getText()) <-- moet nog een waarde uit dialog halen. 
             
@@ -205,9 +205,12 @@ public class Scherm extends JFrame implements ActionListener {
             double beschikbaarheidWeb = 0;
             double beschikbaarheidData = 0;
             
+            
+            
             //Deze tellers zijn nodig om de beschikbaarheid van de webservers en databaseservers te kunnen berekenen
             int tellerWeb = 1;
             int tellerData = 1;
+            int teller = 1;
             
             //Berekenen eerste waarde;
             while(totaleBeschikbaarheid < percentageDoel){
@@ -253,16 +256,98 @@ public class Scherm extends JFrame implements ActionListener {
             totaleBeschikbaarheid = 0;
             beschikbaarheidWeb = 0;
             beschikbaarheidData = 0;
+            tellerWeb = 1;
+            tellerData = 1;
+            
+            int prijsOplossing = 0;
+            int prijsBesteOplossing = 0;
+            for (Server server : besteSamenstelling){
+                prijsBesteOplossing += server.getPrijs();
+            }
+            
+            System.out.println(prijsBesteOplossing);
+            
             // berekenen beste samenstelling
-            /*while(totaleBeschikbaarheid <= percentageDoel){
+            while(totaleBeschikbaarheid <= percentageDoel && prijsOplossing < prijsBesteOplossing && teller <25 ){
+                System.out.println("test1");
                 if (beschikbaarheidWeb < beschikbaarheidData){
+                    System.out.println("test3");
                     for (Webserver ws : webservers){
                         if(verwijderdeWeb.equals(ws) == false){
-                            besteSamenstelling.add(ws);
+                            huidigeSamenstelling.add(ws);
+                            System.out.println(ws.getNaam());
+                            for (Server component : huidigeSamenstelling){
+                                prijsOplossing += component.getPrijs();
+                            }
+                            if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
+                                System.out.println("test2");
+                                prijsBesteOplossing = prijsOplossing;
+                                besteSamenstelling = huidigeSamenstelling;
+                                huidigeSamenstelling.clear();
+                                huidigeSamenstelling.add(PFsense);
+                                huidigeSamenstelling.add(DBloadBalancer);
+                                teller = 1;
+                                totaleBeschikbaarheid = 0;
+                                beschikbaarheidWeb = 0;
+                                beschikbaarheidData = 0;
+                            } else if(prijsOplossing > prijsBesteOplossing){
+                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                            } else {
+                                beschikbaarheidWeb = 1 - Math.pow((1 - ws.getBeschikbaarheid()), tellerWeb);
+                                tellerWeb++;
+                                totaleBeschikbaarheid = PFsense.getBeschikbaarheid() * DBloadBalancer.getBeschikbaarheid() * beschikbaarheidWeb * beschikbaarheidData;
+                                break;
+                            }
                         }
+                        for(int i = huidigeSamenstelling.size() - 1 ; i > 0 ; i --){
+                            Server s = huidigeSamenstelling.get(i);
+                            if(s instanceof Webserver){
+                                verwijderdeWeb = (Webserver) s;
+                                huidigeSamenstelling.remove(s);
+                                break;
+                            }
+                        }
+                        
+                    }
+                } else {
+                    System.out.println("test4");
+                    for (DatabaseServer ds : dbservers){
+                        if(verwijderdeDB.equals(ds) == false){
+                            huidigeSamenstelling.add(ds);
+                            for (Server component : huidigeSamenstelling){
+                                prijsOplossing += component.getPrijs();
+                            }
+                            if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
+                                prijsBesteOplossing = prijsOplossing;
+                                besteSamenstelling = huidigeSamenstelling;
+                                huidigeSamenstelling.clear();
+                                huidigeSamenstelling.add(PFsense);
+                                huidigeSamenstelling.add(DBloadBalancer);
+                                teller = 1;
+                            } else if(prijsOplossing > prijsBesteOplossing){
+                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                            } else {
+                                beschikbaarheidData = 1 - Math.pow((1 - ds.getBeschikbaarheid()), tellerData);
+                                tellerData++;
+                                break;
+                            }
+                        }
+                        for(int i = huidigeSamenstelling.size() - 1 ; i > 0 ; i --){
+                            Server s = huidigeSamenstelling.get(i);
+                            if(s instanceof DatabaseServer){
+                                verwijderdeDB = (DatabaseServer) s;
+                                huidigeSamenstelling.remove(s);
+                                break;
+                            }
+                        }
+                        
                     }
                 }
-            }*/
+                teller++;
+            }
+            for(Server server : besteSamenstelling){
+                System.out.println(server.getNaam());
+            }
         }
     }
    
