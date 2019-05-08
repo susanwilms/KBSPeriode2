@@ -181,6 +181,7 @@ public class Scherm extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Opslaan) {
             OpslaanDialoog dialoog = new OpslaanDialoog(this);	
+            dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
         }
         
