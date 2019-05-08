@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,13 +6,11 @@
 package nerdygadgets;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -90,6 +88,8 @@ public class Scherm extends JFrame implements ActionListener {
                 NaamTF.setBounds(330,13,545,20);
                 p.setBounds (0,0,220,800);
                 werkveld.setBounds(230,43,643,560);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
                 
                 //Zet de font naar onze 'main' font Helvetica Neue + Lettertype
                 Componenten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -238,7 +238,9 @@ public class Scherm extends JFrame implements ActionListener {
         
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
+            dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+            
             
             //Aanmaken array met alle webservers en databaseservers.
             ArrayList<Webserver> webservers = new ArrayList<>();
