@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,7 +6,9 @@
 package nerdygadgets;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class Scherm extends JFrame implements ActionListener {
     private JButton DBBalancer = new JButton("DBBalancer");
     private JButton Firewall = new JButton("Firewall");
     private JLabel Componenten = new JLabel("Beschikbare componenten");
-    private JLabel Beschikbaarheid = new JLabel("Beschikbaarheid: " + "%");
-    private JLabel Kosten = new JLabel("Kosten: $");
+    private JLabel Beschikbaarheid = new JLabel("Beschikbaarheid: ");
+    private JLabel Kosten = new JLabel("Kosten: ");
     private JButton Openen = new JButton("Openen");
     private JButton Opslaan = new JButton("Opslaan");
     private JButton Optimalisatie = new JButton("Optimalisatie");
@@ -46,6 +48,7 @@ public class Scherm extends JFrame implements ActionListener {
     private DatabaseServer ds3;
     private PFsense PFsense;
     private DBloadBalancer DBloadBalancer;
+    private Configuratie ontwerp = new Configuratie();
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
@@ -85,6 +88,8 @@ public class Scherm extends JFrame implements ActionListener {
                 NaamTF.setBounds(330,13,545,20);
                 p.setBounds (0,0,220,800);
                 werkveld.setBounds(230,43,643,560);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
                 
                 //Zet de font naar onze 'main' font Helvetica Neue + Lettertype
                 Componenten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -141,6 +146,13 @@ public class Scherm extends JFrame implements ActionListener {
                 //Actionlisteners
                 Opslaan.addActionListener(this);
                 Optimalisatie.addActionListener(this);
+                webserver.addActionListener(this);
+                DBServer.addActionListener(this);
+                DBBalancer.addActionListener(this);
+                Firewall.addActionListener(this);
+                Openen.addActionListener(this);
+                Berekenen.addActionListener(this);
+
                 
                 //Voegt alle componenten toe 
                 add(Componenten);
@@ -169,12 +181,67 @@ public class Scherm extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Opslaan) {
             OpslaanDialoog dialoog = new OpslaanDialoog(this);	
+            dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
-
         }
+        
+        if(e.getSource() == Berekenen) {
+            System.out.println(ontwerp.getSamenstelling());
+        }
+        
+        if(e.getSource() == webserver) {
+            WebserverGUI webserver = new WebserverGUI(this, "Webserver");
+            webserver.setVisible(true);
+            
+            if(webserver.WelkeWebserver != 0) {
+                if(webserver.WelkeWebserver == 1) {
+                    ontwerp.getSamenstelling().add(ws1);
+                } else if(webserver.WelkeWebserver == 2) {
+                    ontwerp.getSamenstelling().add(ws2);
+                } else if(webserver.WelkeWebserver == 3) {
+                    ontwerp.getSamenstelling().add(ws3);
+                }
+            }
+        }
+        
+        if(e.getSource() == DBServer) {
+            WebserverGUI DBserver = new WebserverGUI(this, "DBserver");
+            DBserver.setVisible(true);
+            if(DBserver.WelkeDBserver != 0) {
+                if(DBserver.WelkeDBserver == 1) {
+                    ontwerp.getSamenstelling().add(ds1);
+                } else if(DBserver.WelkeDBserver == 2) {
+                    ontwerp.getSamenstelling().add(ds2);
+                } else if(DBserver.WelkeDBserver == 3) {
+                    ontwerp.getSamenstelling().add(ds3);
+                }
+            }            
+        } 
+        if(e.getSource() == DBBalancer) {
+            WebserverGUI DBloadbalancer = new WebserverGUI(this, "DBloadbalancer");
+            DBloadbalancer.setVisible(true);
+            if(DBloadbalancer.WelkeDBloadbalancer != 0) {
+                if(DBloadbalancer.WelkeDBloadbalancer == 1) {
+                    ontwerp.getSamenstelling().add(DBloadBalancer);
+                }
+            }
+        }   
+        
+        if(e.getSource() == Firewall) {
+            WebserverGUI Firewall = new WebserverGUI(this, "Firewall");
+            Firewall.setVisible(true);
+            if(Firewall.WelkeFirewall != 0) {
+                if(Firewall.WelkeFirewall == 1) {
+                    ontwerp.getSamenstelling().add(PFsense);
+                }
+            }
+        }         
+        
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
+            dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+            
             
             //Aanmaken array met alle webservers en databaseservers.
             ArrayList<Webserver> webservers = new ArrayList<>();
@@ -349,6 +416,8 @@ public class Scherm extends JFrame implements ActionListener {
                 System.out.println(server.getNaam());
             }
         }
+    Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
+    Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*100 + "%");
     }
    
 }
