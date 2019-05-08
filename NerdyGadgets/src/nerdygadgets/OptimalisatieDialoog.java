@@ -46,6 +46,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         this.getContentPane().setBackground(Color.WHITE);
         
         Header.setBounds                        (0, 0, 550, 40);
+        Header.setHorizontalAlignment(JLabel.CENTER);
         Naam.setBounds                          (10, 50, 275, 20);
         GewenstePercentage.setBounds            (10, 80, 275, 20);
         PercentageTF.setBounds                  (275, 80, 265, 20);
