@@ -10,6 +10,10 @@ package nerdygadgets;
  * @author susanwilms
  */
 public class DatabaseServer extends Server{
+    public DatabaseServer(){
+        
+    }
+    
     public DatabaseServer(String naam, int prijs, double beschikbaarheid){
         super(naam, prijs, beschikbaarheid);
     }
