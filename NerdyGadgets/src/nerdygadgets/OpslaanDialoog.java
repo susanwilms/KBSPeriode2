@@ -23,14 +23,14 @@ import javax.swing.SwingUtilities;
  */
 public class OpslaanDialoog extends JDialog implements ActionListener {
     private JLabel Naam = new JLabel("Naam project: " + "Projectnaam");
-    private JLabel Beschikbaarheid = new JLabel("Beschikbaarheidspercentage: percentage %");
-    private JLabel Kosten = new JLabel("Kosten: " + "totaal kosten");
+    private JLabel Beschikbaarheid = new JLabel("Beschikbaarheidspercentage: ");
+    private JLabel Kosten = new JLabel("Kosten: " );
     private JLabel Resultaat = new JLabel("Resultaat");
     private JPanel Boven = new JPanel(null);
     private JButton Sluiten = new JButton("Sluiten");
     
     
-    public OpslaanDialoog(JFrame frame) {
+    public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam) {
         super(frame, true);
         setSize(500,300);
         setLayout(null);
@@ -38,6 +38,12 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
         this.getContentPane().setBackground(Color.WHITE);
 
         Boven.setBounds(0, 0, 500, 40);
+        
+        Naam.setText("Naam project: " + naam);
+        Kosten.setText("Kosten: " + prijs + " euro");
+        Beschikbaarheid.setText("Beschikbaarheidspercentage: " + percentage + "%");
+        
+        Boven.setBounds(0,0, 500,28);
         Resultaat.setBounds(210,5,100,20);
         Naam.setBounds(10, 50, 500, 20);
         Beschikbaarheid.setBounds(10,85,500,20);
