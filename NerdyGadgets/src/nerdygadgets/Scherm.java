@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,13 +6,11 @@
 package nerdygadgets;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+
 
 /**
  *
@@ -51,6 +51,9 @@ public class Scherm extends JFrame implements ActionListener {
     private PFsense PFsense;
     private DBloadBalancer DBloadBalancer;
     private Configuratie ontwerp = new Configuratie();
+    private Werkveld werkveld = new Werkveld();
+    
+    
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
@@ -71,7 +74,7 @@ public class Scherm extends JFrame implements ActionListener {
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.getContentPane().setBackground(Color.WHITE);
                 
-                Werkveld werkveld = new Werkveld();
+                
                 
                 
                 //Geef iedere component zijn plek waar hij moet staan
@@ -90,6 +93,8 @@ public class Scherm extends JFrame implements ActionListener {
                 NaamTF.setBounds(330,13,545,20);
                 p.setBounds (0,0,220,800);
                 werkveld.setBounds(230,43,643,560);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
                 
                 //Zet de font naar onze 'main' font Helvetica Neue + Lettertype
                 Componenten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -180,7 +185,11 @@ public class Scherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Opslaan) {
-            OpslaanDialoog dialoog = new OpslaanDialoog(this);	
+
+
+            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.BerekenTotaalPrijs(), (ontwerp.BerekenPercentage()*100), NaamTF.getText());	
+
+            dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
         }
         
@@ -195,10 +204,13 @@ public class Scherm extends JFrame implements ActionListener {
             if(webserver.WelkeWebserver != 0) {
                 if(webserver.WelkeWebserver == 1) {
                     ontwerp.getSamenstelling().add(ws1);
+                    werkveld.lijst.add(ws1);
                 } else if(webserver.WelkeWebserver == 2) {
                     ontwerp.getSamenstelling().add(ws2);
+                    werkveld.lijst.add(ws2);
                 } else if(webserver.WelkeWebserver == 3) {
                     ontwerp.getSamenstelling().add(ws3);
+                    werkveld.lijst.add(ws3);
                 }
             }
         }
@@ -209,10 +221,13 @@ public class Scherm extends JFrame implements ActionListener {
             if(DBserver.WelkeDBserver != 0) {
                 if(DBserver.WelkeDBserver == 1) {
                     ontwerp.getSamenstelling().add(ds1);
+                    werkveld.lijst.add(ds1);
                 } else if(DBserver.WelkeDBserver == 2) {
                     ontwerp.getSamenstelling().add(ds2);
+                    werkveld.lijst.add(ds2);
                 } else if(DBserver.WelkeDBserver == 3) {
                     ontwerp.getSamenstelling().add(ds3);
+                    werkveld.lijst.add(ds3);
                 }
             }            
         } 
@@ -222,6 +237,7 @@ public class Scherm extends JFrame implements ActionListener {
             if(DBloadbalancer.WelkeDBloadbalancer != 0) {
                 if(DBloadbalancer.WelkeDBloadbalancer == 1) {
                     ontwerp.getSamenstelling().add(DBloadBalancer);
+                    werkveld.lijst.add(DBloadBalancer);
                 }
             }
         }   
@@ -232,13 +248,16 @@ public class Scherm extends JFrame implements ActionListener {
             if(Firewall.WelkeFirewall != 0) {
                 if(Firewall.WelkeFirewall == 1) {
                     ontwerp.getSamenstelling().add(PFsense);
+                    werkveld.lijst.add(PFsense);
                 }
             }
         }         
         
         if(e.getSource() == Optimalisatie) {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
+            dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+            
             
             //Aanmaken array met alle webservers en databaseservers.
             ArrayList<Webserver> webservers = new ArrayList<>();
@@ -260,8 +279,8 @@ public class Scherm extends JFrame implements ActionListener {
             
             /*in deze variabelen komt de laatst verwijderde dbserver of webserver.
             Hierdoor pakt de foreach niet steeds dezelfde oplossing*/
-            Webserver verwijderdeWeb = null;
-            DatabaseServer verwijderdeDB = null;
+            Webserver verwijderdeWeb = new Webserver();
+            DatabaseServer verwijderdeDB = new DatabaseServer();
             
             double percentageDoel = 0.9999; //Integer.parseInt(textfield.getText()) <-- moet nog een waarde uit dialog halen. 
             
@@ -269,9 +288,12 @@ public class Scherm extends JFrame implements ActionListener {
             double beschikbaarheidWeb = 0;
             double beschikbaarheidData = 0;
             
+            
+            
             //Deze tellers zijn nodig om de beschikbaarheid van de webservers en databaseservers te kunnen berekenen
             int tellerWeb = 1;
             int tellerData = 1;
+            int teller = 1;
             
             //Berekenen eerste waarde;
             while(totaleBeschikbaarheid < percentageDoel){
@@ -317,21 +339,104 @@ public class Scherm extends JFrame implements ActionListener {
             totaleBeschikbaarheid = 0;
             beschikbaarheidWeb = 0;
             beschikbaarheidData = 0;
+            tellerWeb = 1;
+            tellerData = 1;
+            
+            int prijsOplossing = 0;
+            int prijsBesteOplossing = 0;
+            for (Server server : besteSamenstelling){
+                prijsBesteOplossing += server.getPrijs();
+            }
+            
+            System.out.println(prijsBesteOplossing);
+            
             // berekenen beste samenstelling
-            /*while(totaleBeschikbaarheid <= percentageDoel){
+            while(totaleBeschikbaarheid <= percentageDoel && prijsOplossing < prijsBesteOplossing && teller <25 ){
+                System.out.println("test1");
                 if (beschikbaarheidWeb < beschikbaarheidData){
+                    System.out.println("test3");
                     for (Webserver ws : webservers){
                         if(verwijderdeWeb.equals(ws) == false){
-                            besteSamenstelling.add(ws);
+                            huidigeSamenstelling.add(ws);
+                            System.out.println(ws.getNaam());
+                            for (Server component : huidigeSamenstelling){
+                                prijsOplossing += component.getPrijs();
+                            }
+                            if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
+                                System.out.println("test2");
+                                prijsBesteOplossing = prijsOplossing;
+                                besteSamenstelling = huidigeSamenstelling;
+                                huidigeSamenstelling.clear();
+                                huidigeSamenstelling.add(PFsense);
+                                huidigeSamenstelling.add(DBloadBalancer);
+                                teller = 1;
+                                totaleBeschikbaarheid = 0;
+                                beschikbaarheidWeb = 0;
+                                beschikbaarheidData = 0;
+                            } else if(prijsOplossing > prijsBesteOplossing){
+                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                            } else {
+                                beschikbaarheidWeb = 1 - Math.pow((1 - ws.getBeschikbaarheid()), tellerWeb);
+                                tellerWeb++;
+                                totaleBeschikbaarheid = PFsense.getBeschikbaarheid() * DBloadBalancer.getBeschikbaarheid() * beschikbaarheidWeb * beschikbaarheidData;
+                                break;
+                            }
                         }
+                        for(int i = huidigeSamenstelling.size() - 1 ; i > 0 ; i --){
+                            Server s = huidigeSamenstelling.get(i);
+                            if(s instanceof Webserver){
+                                verwijderdeWeb = (Webserver) s;
+                                huidigeSamenstelling.remove(s);
+                                break;
+                            }
+                        }
+                        
+                    }
+                } else {
+                    System.out.println("test4");
+                    for (DatabaseServer ds : dbservers){
+                        if(verwijderdeDB.equals(ds) == false){
+                            huidigeSamenstelling.add(ds);
+                            for (Server component : huidigeSamenstelling){
+                                prijsOplossing += component.getPrijs();
+                            }
+                            if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
+                                prijsBesteOplossing = prijsOplossing;
+                                besteSamenstelling = huidigeSamenstelling;
+                                huidigeSamenstelling.clear();
+                                huidigeSamenstelling.add(PFsense);
+                                huidigeSamenstelling.add(DBloadBalancer);
+                                teller = 1;
+                            } else if(prijsOplossing > prijsBesteOplossing){
+                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                            } else {
+                                beschikbaarheidData = 1 - Math.pow((1 - ds.getBeschikbaarheid()), tellerData);
+                                tellerData++;
+                                break;
+                            }
+                        }
+                        for(int i = huidigeSamenstelling.size() - 1 ; i > 0 ; i --){
+                            Server s = huidigeSamenstelling.get(i);
+                            if(s instanceof DatabaseServer){
+                                verwijderdeDB = (DatabaseServer) s;
+                                huidigeSamenstelling.remove(s);
+                                break;
+                            }
+                        }
+                        
                     }
                 }
-            }*/
+                teller++;
+            }
+            for(Server server : besteSamenstelling){
+                System.out.println(server.getNaam());
+            }
         }
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*100 + "%");
+    repaint();
+
     }
-   
 }
 
 
