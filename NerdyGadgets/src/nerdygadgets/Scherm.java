@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+
+
 /**
  *
  * @author mbred
@@ -50,6 +52,9 @@ public class Scherm extends JFrame implements ActionListener {
     private PFsense PFsense;
     private DBloadBalancer DBloadBalancer;
     private Configuratie ontwerp = new Configuratie();
+    private Werkveld werkveld = new Werkveld();
+    
+    
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
@@ -70,7 +75,7 @@ public class Scherm extends JFrame implements ActionListener {
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.getContentPane().setBackground(Color.WHITE);
                 
-                Werkveld werkveld = new Werkveld();
+                
                 
                 
                 //Geef iedere component zijn plek waar hij moet staan
@@ -181,7 +186,9 @@ public class Scherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Opslaan) {
-            OpslaanDialoog dialoog = new OpslaanDialoog(this);	
+
+            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.BerekenTotaalPrijs(), (ontwerp.BerekenPercentage()*100), NaamTF.getText());	
+
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
         }
@@ -197,10 +204,13 @@ public class Scherm extends JFrame implements ActionListener {
             if(webserver.WelkeWebserver != 0) {
                 if(webserver.WelkeWebserver == 1) {
                     ontwerp.getSamenstelling().add(ws1);
+                    werkveld.lijst.add(ws1);
                 } else if(webserver.WelkeWebserver == 2) {
                     ontwerp.getSamenstelling().add(ws2);
+                    werkveld.lijst.add(ws2);
                 } else if(webserver.WelkeWebserver == 3) {
                     ontwerp.getSamenstelling().add(ws3);
+                    werkveld.lijst.add(ws3);
                 }
             }
         }
@@ -211,10 +221,13 @@ public class Scherm extends JFrame implements ActionListener {
             if(DBserver.WelkeDBserver != 0) {
                 if(DBserver.WelkeDBserver == 1) {
                     ontwerp.getSamenstelling().add(ds1);
+                    werkveld.lijst.add(ds1);
                 } else if(DBserver.WelkeDBserver == 2) {
                     ontwerp.getSamenstelling().add(ds2);
+                    werkveld.lijst.add(ds2);
                 } else if(DBserver.WelkeDBserver == 3) {
                     ontwerp.getSamenstelling().add(ds3);
+                    werkveld.lijst.add(ds3);
                 }
             }            
         } 
@@ -224,6 +237,7 @@ public class Scherm extends JFrame implements ActionListener {
             if(DBloadbalancer.WelkeDBloadbalancer != 0) {
                 if(DBloadbalancer.WelkeDBloadbalancer == 1) {
                     ontwerp.getSamenstelling().add(DBloadBalancer);
+                    werkveld.lijst.add(DBloadBalancer);
                 }
             }
         }   
@@ -234,6 +248,7 @@ public class Scherm extends JFrame implements ActionListener {
             if(Firewall.WelkeFirewall != 0) {
                 if(Firewall.WelkeFirewall == 1) {
                     ontwerp.getSamenstelling().add(PFsense);
+                    werkveld.lijst.add(PFsense);
                 }
             }
         }         
@@ -436,8 +451,9 @@ public class Scherm extends JFrame implements ActionListener {
         }
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*100 + "%");
+    repaint();
+
     }
-   
 }
 
 
