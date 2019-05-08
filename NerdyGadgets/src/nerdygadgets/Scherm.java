@@ -186,7 +186,6 @@ public class Scherm extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Opslaan) {
 
-
             OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.BerekenTotaalPrijs(), (ontwerp.BerekenPercentage()*100), NaamTF.getText());	
 
             dialoog.setLocationRelativeTo(null);

@@ -32,6 +32,7 @@ public class Tests {
         PFsense g = new PFsense("f", 2000, 0.9999);
         DBloadBalancer h = new DBloadBalancer("f", 2000, 0.9999);
 
+
         
         Scherm test = new Scherm(a,b,c,d,e,f,g,h);
         ArrayList<Webserver> webservers = new ArrayList<>();
