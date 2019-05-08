@@ -10,6 +10,10 @@ package nerdygadgets;
  * @author joery
  */
 public class Webserver extends Server {
+    public Webserver(){
+        
+    }
+    
     public Webserver(String naam, int prijs, double beschikbaarheid){
         super(naam, prijs, beschikbaarheid); 
     }
