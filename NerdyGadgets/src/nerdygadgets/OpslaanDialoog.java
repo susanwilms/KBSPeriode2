@@ -37,7 +37,7 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
         setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
 
-        Boven.setBounds(0,0, 500,28);
+        Boven.setBounds(0, 0, 500, 40);
         Resultaat.setBounds(210,5,100,20);
         Naam.setBounds(10, 50, 500, 20);
         Beschikbaarheid.setBounds(10,85,500,20);
