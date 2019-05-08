@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -325,14 +326,16 @@ public class Scherm extends JFrame implements ActionListener {
             beschikbaarheidData = 0;
             tellerWeb = 1;
             tellerData = 1;
+            int aantalVerwijderdeOplossingen = 0;
+            Webserver laatsteWebserver = null;
+            DatabaseServer laatsteDbserver = null;
             
+            int index = 0;
             int prijsOplossing = 0;
             int prijsBesteOplossing = 0;
             for (Server server : besteSamenstelling){
                 prijsBesteOplossing += server.getPrijs();
             }
-            
-            System.out.println(prijsBesteOplossing);
             
             // berekenen beste samenstelling
             while(totaleBeschikbaarheid <= percentageDoel && prijsOplossing < prijsBesteOplossing && teller <25 ){
@@ -343,9 +346,8 @@ public class Scherm extends JFrame implements ActionListener {
                         if(verwijderdeWeb.equals(ws) == false){
                             huidigeSamenstelling.add(ws);
                             System.out.println(ws.getNaam());
-                            for (Server component : huidigeSamenstelling){
-                                prijsOplossing += component.getPrijs();
-                            }
+                            prijsOplossing += ws.getPrijs();
+                            System.out.println(prijsOplossing);
                             if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
                                 System.out.println("test2");
                                 prijsBesteOplossing = prijsOplossing;
@@ -357,33 +359,44 @@ public class Scherm extends JFrame implements ActionListener {
                                 totaleBeschikbaarheid = 0;
                                 beschikbaarheidWeb = 0;
                                 beschikbaarheidData = 0;
+                                prijsOplossing = 0;
+                                for(Server server : huidigeSamenstelling){
+                                    prijsOplossing += server.getPrijs();
+                                }
+                                break;
                             } else if(prijsOplossing > prijsBesteOplossing){
+                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
                                 huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
+                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                                if(aantalVerwijderdeOplossingen< webservers.size() -1 ){
+                                    //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
+                                    laatsteDbserver = (DatabaseServer) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
+                                    for (int i = 0 ; i < dbservers.size() - 1 ; i++){
+                                        DatabaseServer db = dbservers.get(i);
+                                        if(db.equals(laatsteDbserver)){
+                                            index = i;
+                                            //ER MOET NOG IETS GEBEUREN MET DE INDEX BIJ DE FOREACH VAN WEB/DBSERVERS!!!
+                                        }
+                                    }
+                                }
                             } else {
                                 beschikbaarheidWeb = 1 - Math.pow((1 - ws.getBeschikbaarheid()), tellerWeb);
                                 tellerWeb++;
                                 totaleBeschikbaarheid = PFsense.getBeschikbaarheid() * DBloadBalancer.getBeschikbaarheid() * beschikbaarheidWeb * beschikbaarheidData;
                                 break;
                             }
+                            
                         }
-                        for(int i = huidigeSamenstelling.size() - 1 ; i > 0 ; i --){
-                            Server s = huidigeSamenstelling.get(i);
-                            if(s instanceof Webserver){
-                                verwijderdeWeb = (Webserver) s;
-                                huidigeSamenstelling.remove(s);
-                                break;
-                            }
-                        }
-                        
                     }
                 } else {
                     System.out.println("test4");
                     for (DatabaseServer ds : dbservers){
                         if(verwijderdeDB.equals(ds) == false){
                             huidigeSamenstelling.add(ds);
-                            for (Server component : huidigeSamenstelling){
-                                prijsOplossing += component.getPrijs();
-                            }
+                            System.out.println(ds.getNaam());
+                            prijsOplossing += ds.getPrijs();
+                            System.out.println(prijsOplossing);
                             if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
                                 prijsBesteOplossing = prijsOplossing;
                                 besteSamenstelling = huidigeSamenstelling;
@@ -392,22 +405,27 @@ public class Scherm extends JFrame implements ActionListener {
                                 huidigeSamenstelling.add(DBloadBalancer);
                                 teller = 1;
                             } else if(prijsOplossing > prijsBesteOplossing){
+                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
                                 huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
+                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
+                                aantalVerwijderdeOplossingen++;
+                                if(aantalVerwijderdeOplossingen< dbservers.size() -1 ){
+                                    //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
+                                    laatsteWebserver = (Webserver) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
+                                    for (int i = 0 ; i < webservers.size() - 1 ; i++){
+                                        Webserver web = webservers.get(i);
+                                        if(web.equals(laatsteWebserver)){
+                                            index = i;
+                                        }
+                                    }
+                                }
                             } else {
                                 beschikbaarheidData = 1 - Math.pow((1 - ds.getBeschikbaarheid()), tellerData);
                                 tellerData++;
                                 break;
                             }
-                        }
-                        for(int i = huidigeSamenstelling.size() - 1 ; i > 0 ; i --){
-                            Server s = huidigeSamenstelling.get(i);
-                            if(s instanceof DatabaseServer){
-                                verwijderdeDB = (DatabaseServer) s;
-                                huidigeSamenstelling.remove(s);
-                                break;
-                            }
-                        }
-                        
+                        } 
                     }
                 }
                 teller++;
