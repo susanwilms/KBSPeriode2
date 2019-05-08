@@ -38,6 +38,9 @@ public class Server {
         this.diskruimte         = diskruimte; 
     }
     
+    public Server(){
+        
+    }
     // getters
     public String getNaam() {
         return naam;
