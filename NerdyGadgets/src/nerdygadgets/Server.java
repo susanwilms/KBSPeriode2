@@ -54,4 +54,7 @@ public class Server {
         return beschikbaarheid;
     }
     
+    public String toString(){
+        return naam + " ";
+    }
 }
