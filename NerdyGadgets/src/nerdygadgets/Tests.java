@@ -5,6 +5,10 @@
  */
 package nerdygadgets;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -23,8 +27,10 @@ public class Tests {
         DatabaseServer d = new DatabaseServer("HAL9001DB", 5100, 0.90);
         DatabaseServer e = new DatabaseServer("HAL9002DB", 7700, 0.95);
         DatabaseServer f = new DatabaseServer("HAL9003DB", 12200, 0.98);
+
         PFsense g = new PFsense("", 2000, 0.9999);
         DBloadBalancer h = new DBloadBalancer("", 2000, 0.9999);
+        
         Scherm test = new Scherm(a,b,c,d,e,f,g,h);
         ArrayList<Webserver> webservers = new ArrayList<>();
         ArrayList<DatabaseServer> dbServers = new ArrayList<>();
@@ -35,6 +41,20 @@ public class Tests {
         dbServers.add(d);
         dbServers.add(e);
         dbServers.add(f);
-    }
+        
+        try{
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/KBS?serverTimezone=UTC","root", "");
+            Statement myStmt = myConn.createStatement();
+            ResultSet myRs = myStmt.executeQuery("select * from infrastructuurcomponent");
+            while(myRs.next()) {
+                System.out.println(myRs.getString("naam"));
+            }
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+            
     
-}
+    }
+}  
+    
+   
