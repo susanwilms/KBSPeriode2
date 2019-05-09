@@ -84,7 +84,7 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Sluiten) {
-            string Naam = 
+            //string Naam = 
             
             this.setVisible(false);
         }
