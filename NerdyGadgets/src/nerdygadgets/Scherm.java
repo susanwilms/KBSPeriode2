@@ -39,7 +39,7 @@ public class Scherm extends JFrame implements ActionListener {
     private JButton Openen = new JButton("Openen");
     private JButton Opslaan = new JButton("Opslaan");
     private JButton Optimalisatie = new JButton("Optimalisatie");
-    private JButton Berekenen = new JButton("Kosten Berekenen");
+    private JButton Monitoring = new JButton("Monitoring");
     private JLabel Naam = new JLabel("Naam project:");
     private JTextField NaamTF = new JTextField(500);
     private JPanel p = new JPanel(null);
@@ -89,7 +89,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setBounds(10, 455, 200, 30);
                 Opslaan.setBounds(10, 495, 200, 30);
                 Optimalisatie.setBounds(10, 535, 200, 30);
-                Berekenen.setBounds(10, 575, 200, 30);
+                Monitoring.setBounds(10, 575, 200, 30);
                 Naam.setBounds(230,10,100,20);
                 NaamTF.setBounds(330,13,545,20);
                 p.setBounds (0,0,220,800);
@@ -108,7 +108,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Opslaan.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Optimalisatie.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-                Berekenen.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));       
+                Monitoring.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));       
                 Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 
                 //Zorgt ervoor dat de inhoud van de knoppen links weergeven wordt
@@ -127,7 +127,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Opslaan.setBackground(new Color(204,255,255));
                 Openen.setBackground(new Color(204,255,255));
                 Optimalisatie.setBackground(new Color(204,255,255));
-                Berekenen.setBackground(new Color(204,255,255));
+                Monitoring.setBackground(new Color(204,255,255));
                 NaamTF.setBackground(new Color(204,255,255));
 
                 
@@ -139,7 +139,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Opslaan.setBorder(null);
                 Openen.setBorder(null);
                 Optimalisatie.setBorder(null);
-                Berekenen.setBorder(null);
+                Monitoring.setBorder(null);
                 NaamTF.setBorder(null);
                 
                 
@@ -157,7 +157,7 @@ public class Scherm extends JFrame implements ActionListener {
                 DBBalancer.addActionListener(this);
                 Firewall.addActionListener(this);
                 Openen.addActionListener(this);
-                Berekenen.addActionListener(this);
+                Monitoring.addActionListener(this);
 
                 
                 //Voegt alle componenten toe 
@@ -171,7 +171,7 @@ public class Scherm extends JFrame implements ActionListener {
                 add(Openen);
                 add(Opslaan);
                 add(Optimalisatie);
-                add(Berekenen);
+                add(Monitoring);
                 add(Naam);
                 add(NaamTF);
                 add(werkveld);
@@ -193,8 +193,10 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setVisible(true);
         }
         
-        if(e.getSource() == Berekenen) {
-            System.out.println(ontwerp.getSamenstelling());
+        if(e.getSource() == Monitoring) {
+            MonitoringDialoog dialoog = new MonitoringDialoog();
+            dialoog.setLocationRelativeTo(null);
+            dialoog.setVisible(true);
         }
         
         if(e.getSource() == webserver) {
