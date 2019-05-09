@@ -28,6 +28,9 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
     private JLabel Resultaat = new JLabel("Resultaat");
     private JPanel Boven = new JPanel(null);
     private JButton Sluiten = new JButton("Sluiten");
+    private String opslaannaam;
+    private int opslaanprijs;
+    private double opslaanpercentage;
     
     
     public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam) {
@@ -39,6 +42,9 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
 
         Boven.setBounds(0, 0, 500, 40);
         
+        this.opslaannaam = naam;
+        this.opslaanprijs = prijs;
+        this.opslaanpercentage = percentage / 100;
         Naam.setText("Naam project: " + naam);
         Kosten.setText("Kosten: " + prijs + " euro");
         Beschikbaarheid.setText("Beschikbaarheidspercentage: " + percentage + "%");
@@ -78,6 +84,8 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Sluiten) {
+            string Naam = 
+            
             this.setVisible(false);
         }
     }
