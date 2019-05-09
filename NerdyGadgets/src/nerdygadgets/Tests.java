@@ -29,8 +29,8 @@ public class Tests {
         DatabaseServer f = new DatabaseServer("HAL9003DB", 12200, 0.98);
 
 
-        PFsense g = new PFsense("f", 2000, 0.9999);
-        DBloadBalancer h = new DBloadBalancer("f", 2000, 0.9999);
+        PFsense g = new PFsense("PFsense", 2000, 0.9999);
+        DBloadBalancer h = new DBloadBalancer("DB loadbalancer", 2000, 0.9999);
 
 
         
