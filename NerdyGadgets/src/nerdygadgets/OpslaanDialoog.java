@@ -39,6 +39,8 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
         setLayout(null);
         setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
+
+        Boven.setBounds(0, 0, 500, 40);
         
         this.opslaannaam = naam;
         this.opslaanprijs = prijs;
