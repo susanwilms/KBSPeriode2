@@ -79,18 +79,18 @@ public class WebserverGUI extends JDialog implements ActionListener{
         add(Boven);
         add(Combobox);
         
-        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Sluiten) {            
+        if(e.getSource() == Sluiten) {
+            
             if(type == "Webserver") {
-                if(Combobox.getSelectedItem() == "HAL9001W - 80%") {
+                if(Combobox.getSelectedItem().toString().contains("HAL9001W")) {
                     WelkeWebserver = 1;
-                } else if (Combobox.getSelectedItem() == "HAL9002W - 90%") {
+                } else if (Combobox.getSelectedItem().toString().contains("HAL9002W")) {
                     WelkeWebserver = 2;
-                } else if(Combobox.getSelectedItem() == "HAL9003W - 95%") {
+                } else if(Combobox.getSelectedItem().toString().contains("HAL9003W")) {
                     WelkeWebserver = 3;
                 }
             } else if(type.equals("DBserver")) {

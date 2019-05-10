@@ -10,6 +10,10 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -25,15 +29,17 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
     private JLabel Naam = new JLabel("Naam project: " + "Projectnaam");
     private JLabel Beschikbaarheid = new JLabel("Beschikbaarheidspercentage: ");
     private JLabel Kosten = new JLabel("Kosten: " );
-    private JLabel Resultaat = new JLabel("Resultaat");
+    private JLabel Resultaat = new JLabel("Opslaan");
     private JPanel Boven = new JPanel(null);
-    private JButton Sluiten = new JButton("Sluiten");
+    private JButton Bevestig = new JButton("Bevestig");
     private String opslaannaam;
     private int opslaanprijs;
     private double opslaanpercentage;
+    private Database connectie = new Database();
+    private ArrayList<Server> samenstelling;
     
     
-    public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam) {
+    public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam, ArrayList<Server> samenstelling) {
         super(frame, true);
         setSize(500,300);
         setLayout(null);
@@ -42,6 +48,7 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
 
         Boven.setBounds(0, 0, 500, 40);
         
+        this.samenstelling = samenstelling;
         this.opslaannaam = naam;
         this.opslaanprijs = prijs;
         this.opslaanpercentage = percentage / 100;
@@ -54,7 +61,7 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
         Naam.setBounds(10, 50, 500, 20);
         Beschikbaarheid.setBounds(10,85,500,20);
         Kosten.setBounds(10, 120, 500, 20);
-        Sluiten.setBounds(410, 230,80,30);
+        Bevestig.setBounds(410, 230,80,30);
 
         
         Resultaat.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -64,14 +71,14 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
 
         
         Boven.setBackground(new Color(102,255,255));
-        Sluiten.setBackground(new Color(204,255,255));
+        Bevestig.setBackground(new Color(204,255,255));
         
-        Sluiten.setBorder(null);
+        Bevestig.setBorder(null);
         
-        Sluiten.addActionListener(this);
+        Bevestig.addActionListener(this);
         
         Boven.add(Resultaat);
-        add(Sluiten);
+        add(Bevestig);
         add(Resultaat);
         add(Boven);
         add(Naam);
@@ -83,9 +90,9 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Sluiten) {
-            string Naam = 
-            
+        if(e.getSource() == Bevestig) {            
+            String opslagdatum = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            connectie.insertinto(opslaanpercentage, opslaanprijs, opslaannaam, samenstelling);
             this.setVisible(false);
         }
     }

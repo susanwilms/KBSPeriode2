@@ -53,6 +53,7 @@ public class Scherm extends JFrame implements ActionListener {
     private DBloadBalancer DBloadBalancer;
     private Configuratie ontwerp = new Configuratie();
     private Werkveld werkveld = new Werkveld();
+    private Database connectie = new Database();
     
     
     
@@ -186,11 +187,22 @@ public class Scherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Opslaan) {
-
-            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.BerekenTotaalPrijs(), (ontwerp.BerekenPercentage()*100), NaamTF.getText());	
-
+            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.BerekenTotaalPrijs(), (ontwerp.BerekenPercentage()*100), NaamTF.getText(), ontwerp.getSamenstelling());	
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+        }
+        if(e.getSource() == Openen) {
+            OpenenDialoog dialoog = new OpenenDialoog(this);            
+            dialoog.setLocationRelativeTo(null);
+            dialoog.setVisible(true);
+            if(dialoog.isBevestigd) {
+                System.out.println(connectie.getComponenten(dialoog.OpenenID));
+            ArrayList<Server> Opslagcomponenten = ontwerp.stringToComponent(connectie.getComponenten(dialoog.OpenenID), werkveld, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
+            for(Server component: Opslagcomponenten) {
+                ontwerp.getSamenstelling().add(component);
+                werkveld.lijst.add(component);
+            }
+            }
         }
         
         if(e.getSource() == Berekenen) {
@@ -200,57 +212,24 @@ public class Scherm extends JFrame implements ActionListener {
         if(e.getSource() == webserver) {
             WebserverGUI webserver = new WebserverGUI(this, "Webserver");
             webserver.setVisible(true);
-            
-            if(webserver.WelkeWebserver != 0) {
-                if(webserver.WelkeWebserver == 1) {
-                    ontwerp.getSamenstelling().add(ws1);
-                    werkveld.lijst.add(ws1);
-                } else if(webserver.WelkeWebserver == 2) {
-                    ontwerp.getSamenstelling().add(ws2);
-                    werkveld.lijst.add(ws2);
-                } else if(webserver.WelkeWebserver == 3) {
-                    ontwerp.getSamenstelling().add(ws3);
-                    werkveld.lijst.add(ws3);
-                }
-            }
+            ontwerp.voegComponentToe(webserver.WelkeWebserver, werkveld, ws1, ws2, ws3);
         }
         
         if(e.getSource() == DBServer) {
             WebserverGUI DBserver = new WebserverGUI(this, "DBserver");
             DBserver.setVisible(true);
-            if(DBserver.WelkeDBserver != 0) {
-                if(DBserver.WelkeDBserver == 1) {
-                    ontwerp.getSamenstelling().add(ds1);
-                    werkveld.lijst.add(ds1);
-                } else if(DBserver.WelkeDBserver == 2) {
-                    ontwerp.getSamenstelling().add(ds2);
-                    werkveld.lijst.add(ds2);
-                } else if(DBserver.WelkeDBserver == 3) {
-                    ontwerp.getSamenstelling().add(ds3);
-                    werkveld.lijst.add(ds3);
-                }
-            }            
+            ontwerp.voegComponentToe(DBserver.WelkeDBserver, werkveld, ds1, ds2, ds3);
         } 
         if(e.getSource() == DBBalancer) {
             WebserverGUI DBloadbalancer = new WebserverGUI(this, "DBloadbalancer");
             DBloadbalancer.setVisible(true);
-            if(DBloadbalancer.WelkeDBloadbalancer != 0) {
-                if(DBloadbalancer.WelkeDBloadbalancer == 1) {
-                    ontwerp.getSamenstelling().add(DBloadBalancer);
-                    werkveld.lijst.add(DBloadBalancer);
-                }
-            }
+            ontwerp.voegComponentToe(DBloadbalancer.WelkeDBloadbalancer, werkveld, DBloadBalancer);
         }   
         
         if(e.getSource() == Firewall) {
             WebserverGUI Firewall = new WebserverGUI(this, "Firewall");
             Firewall.setVisible(true);
-            if(Firewall.WelkeFirewall != 0) {
-                if(Firewall.WelkeFirewall == 1) {
-                    ontwerp.getSamenstelling().add(PFsense);
-                    werkveld.lijst.add(PFsense);
-                }
-            }
+            ontwerp.voegComponentToe(Firewall.WelkeFirewall, werkveld, PFsense);
         }         
         
         if(e.getSource() == Optimalisatie) {

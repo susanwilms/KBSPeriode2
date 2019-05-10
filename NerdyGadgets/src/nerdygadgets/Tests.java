@@ -55,9 +55,7 @@ public class Tests {
 //        } catch (Exception exc) {
 //            exc.printStackTrace();
 //        }
-        Database connectie = new Database();
-        connectie.test(0.9);
-    
+ 
     }
 }  
     
