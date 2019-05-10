@@ -55,7 +55,7 @@ public class Oplossing {
 
         //Er wordt een waarde berekent voor de gestelde beschikbaarheid
         while (beschikbaarheidOplossing < beschikbaarheidDoel) {
-            if (this.berekenBeschikbaarheidWebservers(besteOplossing) < this.berekenBeschikbaarheidDbservers(besteOplossing)) {
+            if (berekenBeschikbaarheidWebservers(besteOplossing) < berekenBeschikbaarheidDbservers(besteOplossing)) {
                 for (Webserver wb : webservers) {
                     double beschikbaarheid = 0; //deze variabele voorkomt nullpointer in de if-loop (rgl 48), deze variabele wordt overgeschreven in de loop
                     if (wb.getBeschikbaarheid() > beschikbaarheid) {
@@ -64,7 +64,7 @@ public class Oplossing {
                     }
                 }
                 besteOplossing.add(besteWebserver);
-
+                beschikbaarheidOplossing = berekenBeschikbaarheid(besteOplossing);
             } else {
                 for (DatabaseServer ds : dbservers) {
                     double beschikbaarheid = 0;
@@ -74,13 +74,14 @@ public class Oplossing {
                     }
                 }
                 besteOplossing.add(besteDatabaseServer);
+                beschikbaarheidOplossing = berekenBeschikbaarheid(besteOplossing);
             }
         }
-        prijsBesteOplossing = this.berekenPrijs(besteOplossing);
+       /* prijsBesteOplossing = berekenPrijs(besteOplossing); */
 
         /*Nu moet de beste/goedkoopste oplossing worden berekent. Voor uitleg van deze code of pseudocode zie het technisch ontwerp*/
-        while (this.berekenBeschikbaarheid(huidigeOplossing) < this.berekenBeschikbaarheid(besteOplossing) && this.berekenPrijs(huidigeOplossing) < this.berekenPrijs(besteOplossing) && teller < 25) {
-            if (this.berekenBeschikbaarheidWebservers(huidigeOplossing) < this.berekenBeschikbaarheidDbservers(huidigeOplossing)) {
+        /*while (berekenBeschikbaarheid(huidigeOplossing) < berekenBeschikbaarheid(besteOplossing) && berekenPrijs(huidigeOplossing) < berekenPrijs(besteOplossing) && teller < 25) {
+            if (berekenBeschikbaarheidWebservers(huidigeOplossing) < berekenBeschikbaarheidDbservers(huidigeOplossing)) {
                 while (index >= webservers.size() - 1) {
                     //vorige webserver moet worden verwijderd
                     for (int i = huidigeOplossing.size() - 1; i > 0; i--) {
@@ -101,12 +102,12 @@ public class Oplossing {
                     huidigeOplossing.add(webservers.get(index));
                 }
                 //Als de oplossing voldoet aan de eisen wordt de prijs en oplossing worden opgeslagen.
-                if(this.berekenBeschikbaarheid(huidigeOplossing) >= this.berekenBeschikbaarheid(besteOplossing) && this.berekenPrijs(huidigeOplossing) < this.berekenPrijs(besteOplossing)){ 
+                if(berekenBeschikbaarheid(huidigeOplossing) >= berekenBeschikbaarheid(besteOplossing) && berekenPrijs(huidigeOplossing) < berekenPrijs(besteOplossing)){ 
                     besteOplossing = huidigeOplossing;
                     huidigeOplossing.clear();
                     huidigeOplossing.add(PFsense);
                     huidigeOplossing.add(DBloadbalancer);
-                } else if(this.berekenPrijs(huidigeOplossing) > this.berekenPrijs(besteOplossing)){
+                } else if(berekenPrijs(huidigeOplossing) > berekenPrijs(besteOplossing)){
                     //De webserver moet worden verwijderd en de index moet worden opgeslagen
                     for (int i = huidigeOplossing.size() - 1; i > 0; i--) {
                         Server server = huidigeOplossing.get(i);
@@ -141,12 +142,12 @@ public class Oplossing {
                     huidigeOplossing.add(dbservers.get(index));
                 }
                 //Als de oplossing voldoet aan de eisen wordt de prijs en oplossing worden opgeslagen.
-                if(this.berekenBeschikbaarheid(huidigeOplossing) >= this.berekenBeschikbaarheid(besteOplossing) && this.berekenPrijs(huidigeOplossing) < this.berekenPrijs(besteOplossing)){ 
+                if(berekenBeschikbaarheid(huidigeOplossing) >= berekenBeschikbaarheid(besteOplossing) && berekenPrijs(huidigeOplossing) < berekenPrijs(besteOplossing)){ 
                     besteOplossing = huidigeOplossing;
                     huidigeOplossing.clear();
                     huidigeOplossing.add(PFsense);
                     huidigeOplossing.add(DBloadbalancer);
-                } else if(this.berekenPrijs(huidigeOplossing) > this.berekenPrijs(besteOplossing)){
+                } else if(berekenPrijs(huidigeOplossing) > berekenPrijs(besteOplossing)){
                     //De webserver moet worden verwijderd en de index moet worden opgeslagen
                     for (int i = huidigeOplossing.size() - 1; i > 0; i--) {
                         Server server = huidigeOplossing.get(i);
@@ -162,9 +163,9 @@ public class Oplossing {
                 }
             }
             teller++;
-        }
+        } */
         return besteOplossing;
-    }
+    } 
 
     public int berekenPrijs(ArrayList<Server> oplossing) {
         int prijs = 0;
