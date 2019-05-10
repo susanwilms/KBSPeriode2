@@ -19,9 +19,26 @@ public class Oplossing {
     private ArrayList<DatabaseServer> dbservers = new ArrayList<>();
     private PFsense PFsense;
     private DBloadBalancer DBloadbalancer;
+    private Webserver a;
+    private Webserver b;
+    private Webserver c;
+    private DatabaseServer d;
+    private DatabaseServer e;
+    private DatabaseServer f;
+    private PFsense g;
+    private DBloadBalancer h;
+    
 
     public Oplossing(Webserver a, Webserver b, Webserver c, DatabaseServer d, DatabaseServer e, DatabaseServer f, PFsense g, DBloadBalancer h) {
         //Databaseservers en webservers worden toegevoegd.
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.e = e;
+        this.f = f;
+        this.g = g;
+        this.h = h;
         webservers.add(a);
         webservers.add(b);
         webservers.add(c);
@@ -80,7 +97,7 @@ public class Oplossing {
        /* prijsBesteOplossing = berekenPrijs(besteOplossing); */
 
         /*Nu moet de beste/goedkoopste oplossing worden berekent. Voor uitleg van deze code of pseudocode zie het technisch ontwerp*/
-        /*while (berekenBeschikbaarheid(huidigeOplossing) < berekenBeschikbaarheid(besteOplossing) && berekenPrijs(huidigeOplossing) < berekenPrijs(besteOplossing) && teller < 25) {
+        while (berekenBeschikbaarheid(huidigeOplossing) < berekenBeschikbaarheid(besteOplossing) && berekenPrijs(huidigeOplossing) < berekenPrijs(besteOplossing) && teller < 25) {
             if (berekenBeschikbaarheidWebservers(huidigeOplossing) < berekenBeschikbaarheidDbservers(huidigeOplossing)) {
                 while (index >= webservers.size() - 1) {
                     //vorige webserver moet worden verwijderd
@@ -163,7 +180,7 @@ public class Oplossing {
                 }
             }
             teller++;
-        } */
+        } 
         return besteOplossing;
     } 
 

@@ -208,9 +208,9 @@ public class Scherm extends JFrame implements ActionListener {
         }
         
         if(e.getSource() == Monitoring) {
-            MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
-            monitoringDialoog.setLocationRelativeTo(null);
-            monitoringDialoog.setVisible(true);
+            //MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
+            //monitoringDialoog.setLocationRelativeTo(null);
+            //monitoringDialoog.setVisible(true);
         }
         
         if(e.getSource() == webserver) {
@@ -242,14 +242,15 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setVisible(true);
             ArrayList<Server> oplossing =  backtrack.berekenGoedkoopsteOplossing();
            for(Server server : oplossing){
+               System.out.println("test");
                System.out.println(server.getNaam());
            }
-            
+        }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*100 + "%");
     repaint();
 
-    }
+  
 }
 }
 

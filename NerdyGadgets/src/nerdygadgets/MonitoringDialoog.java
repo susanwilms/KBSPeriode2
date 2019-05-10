@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nerdygadgets;
+//package nerdygadgets;
 
 /**
  *
@@ -11,7 +11,7 @@ package nerdygadgets;
  */
 
 
-public class MonitoringDialoog extends JDialog implements ActionListener{
+/*public class MonitoringDialoog extends JDialog implements ActionListener{
     // SSHverbinding monitoring = new(SSHverbinding);
     
     // for (monitoring.getComponenten():items)
@@ -20,4 +20,4 @@ public class MonitoringDialoog extends JDialog implements ActionListener{
     }
 }
 
-}
+}*/
