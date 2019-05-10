@@ -93,7 +93,7 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
         if(e.getSource() == Bevestig) {            
             String opslagdatum = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
             connectie.insertinto(opslaanpercentage, opslaanprijs, opslaannaam, samenstelling);
-            this.setVisible(false);
-        }
+        
     }
+}
 }

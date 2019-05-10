@@ -39,7 +39,7 @@ public class Scherm extends JFrame implements ActionListener {
     private JButton Openen = new JButton("Openen");
     private JButton Opslaan = new JButton("Opslaan");
     private JButton Optimalisatie = new JButton("Optimalisatie");
-    private JButton Berekenen = new JButton("Kosten Berekenen");
+    private JButton Monitoring = new JButton("Monitoring");
     private JLabel Naam = new JLabel("Naam project:");
     private JTextField NaamTF = new JTextField(500);
     private JPanel p = new JPanel(null);
@@ -90,7 +90,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setBounds(10, 455, 200, 30);
                 Opslaan.setBounds(10, 495, 200, 30);
                 Optimalisatie.setBounds(10, 535, 200, 30);
-                Berekenen.setBounds(10, 575, 200, 30);
+                Monitoring.setBounds(10, 575, 200, 30);
                 Naam.setBounds(230,10,100,20);
                 NaamTF.setBounds(330,13,545,20);
                 p.setBounds (0,0,220,800);
@@ -109,7 +109,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Opslaan.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Optimalisatie.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-                Berekenen.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));       
+                Monitoring.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));       
                 Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 
                 //Zorgt ervoor dat de inhoud van de knoppen links weergeven wordt
@@ -128,7 +128,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Opslaan.setBackground(new Color(204,255,255));
                 Openen.setBackground(new Color(204,255,255));
                 Optimalisatie.setBackground(new Color(204,255,255));
-                Berekenen.setBackground(new Color(204,255,255));
+                Monitoring.setBackground(new Color(204,255,255));
                 NaamTF.setBackground(new Color(204,255,255));
 
                 
@@ -140,7 +140,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Opslaan.setBorder(null);
                 Openen.setBorder(null);
                 Optimalisatie.setBorder(null);
-                Berekenen.setBorder(null);
+                Monitoring.setBorder(null);
                 NaamTF.setBorder(null);
                 
                 
@@ -158,7 +158,7 @@ public class Scherm extends JFrame implements ActionListener {
                 DBBalancer.addActionListener(this);
                 Firewall.addActionListener(this);
                 Openen.addActionListener(this);
-                Berekenen.addActionListener(this);
+                Monitoring.addActionListener(this);
 
                 
                 //Voegt alle componenten toe 
@@ -172,7 +172,7 @@ public class Scherm extends JFrame implements ActionListener {
                 add(Openen);
                 add(Opslaan);
                 add(Optimalisatie);
-                add(Berekenen);
+                add(Monitoring);
                 add(Naam);
                 add(NaamTF);
                 add(werkveld);
@@ -205,8 +205,10 @@ public class Scherm extends JFrame implements ActionListener {
             }
         }
         
-        if(e.getSource() == Berekenen) {
-            System.out.println(ontwerp.getSamenstelling());
+        if(e.getSource() == Monitoring) {
+            MonitoringDialoog dialoog = new MonitoringDialoog(this);
+            dialoog.setLocationRelativeTo(null);
+            dialoog.setVisible(true);
         }
         
         if(e.getSource() == webserver) {
@@ -324,6 +326,7 @@ public class Scherm extends JFrame implements ActionListener {
             Webserver laatsteWebserver = null;
             DatabaseServer laatsteDbserver = null;
             
+            
             int index = 0;
             int prijsOplossing = 0;
             int prijsBesteOplossing = 0;
@@ -336,7 +339,8 @@ public class Scherm extends JFrame implements ActionListener {
                 System.out.println("test1");
                 if (beschikbaarheidWeb < beschikbaarheidData){
                     System.out.println("test3");
-                    for (Webserver ws : webservers){
+                    for ( int i = index; i < webservers.size() - 1 ; i ++ ){
+                        Webserver ws = webservers.get(index);
                         if(verwijderdeWeb.equals(ws) == false){
                             huidigeSamenstelling.add(ws);
                             System.out.println(ws.getNaam());
@@ -366,12 +370,13 @@ public class Scherm extends JFrame implements ActionListener {
                                 if(aantalVerwijderdeOplossingen< webservers.size() -1 ){
                                     //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
                                     laatsteDbserver = (DatabaseServer) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
-                                    for (int i = 0 ; i < dbservers.size() - 1 ; i++){
-                                        DatabaseServer db = dbservers.get(i);
+                                    for (int in = 0 ; in < dbservers.size() - 1 ; in++){
+                                        DatabaseServer db = dbservers.get(in);
                                         if(db.equals(laatsteDbserver)){
-                                            index = i;
+                                            index = in;
                                             //ER MOET NOG IETS GEBEUREN MET DE INDEX BIJ DE FOREACH VAN WEB/DBSERVERS!!!
                                         }
+                                        huidigeSamenstelling.remove(index);
                                     }
                                 }
                             } else {
@@ -385,7 +390,8 @@ public class Scherm extends JFrame implements ActionListener {
                     }
                 } else {
                     System.out.println("test4");
-                    for (DatabaseServer ds : dbservers){
+                    for (int i = index ; index < dbservers.size() - 1 ; i ++){
+                        DatabaseServer ds = dbservers.get(i);
                         if(verwijderdeDB.equals(ds) == false){
                             huidigeSamenstelling.add(ds);
                             System.out.println(ds.getNaam());
@@ -407,7 +413,7 @@ public class Scherm extends JFrame implements ActionListener {
                                 if(aantalVerwijderdeOplossingen< dbservers.size() -1 ){
                                     //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
                                     laatsteWebserver = (Webserver) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
-                                    for (int i = 0 ; i < webservers.size() - 1 ; i++){
+                                    for (int in = 0 ; in < webservers.size() - 1 ; in++){
                                         Webserver web = webservers.get(i);
                                         if(web.equals(laatsteWebserver)){
                                             index = i;
