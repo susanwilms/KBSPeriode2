@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//package nerdygadgets;
+/*package nerdygadgets;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author mbred
  */
-public class MonitoringDialoog extends JDialog implements ActionListener {
+/*public class MonitoringDialoog extends JDialog implements ActionListener {
     private JLabel Naam = new JLabel("Naam project: " + "Projectnaam");
     private JLabel Resultaat = new JLabel("Opslaan");
     private JPanel Boven = new JPanel(null);
@@ -44,14 +44,13 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         Boven.setBounds(0,0, 500,28);
         Resultaat.setBounds(210,5,100,20);
         Naam.setBounds(10, 50, 500, 20);
-
+*/
 
 /*public class MonitoringDialoog extends JDialog implements ActionListener{
     // SSHverbinding monitoring = new(SSHverbinding);
     
     // for (monitoring.getComponenten():items)
     {
-=======
         
         Resultaat.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -65,11 +64,9 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         add(Resultaat);
         add(Boven);
         add(Naam);
-        
->>>>>>> 24582bca2beea451fd77333c98ede71c9401dcc2
-        
-    }
 
-<<<<<<< HEAD
+        
+    }   
+
 }*/
 

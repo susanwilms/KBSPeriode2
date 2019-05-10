@@ -239,9 +239,11 @@ public class Scherm extends JFrame implements ActionListener {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+            System.out.println("test");
             ArrayList<Server> oplossing =  backtrack.berekenGoedkoopsteOplossing();
+            System.out.println("test1");
            for(Server server : oplossing){
-               System.out.println("test");
+               
                System.out.println(server.getNaam());
            }
         }   
