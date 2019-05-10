@@ -21,8 +21,8 @@ import javax.swing.JPanel;
  * @author mbred
  */
 public class MonitoringDialoog extends JDialog implements ActionListener {
-    private JLabel Naam = new JLabel("Naam project: " + "Projectnaam");
-    private JLabel Resultaat = new JLabel("Opslaan");
+    private JLabel Naam = new JLabel("");
+    private JLabel Resultaat = new JLabel("");
     private JPanel Boven = new JPanel(null);
     private String opslaannaam;
     private int opslaanprijs;
@@ -33,7 +33,7 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
     
     public MonitoringDialoog(JFrame frame) {
         super(frame, true);
-        this.setSize(500,300);
+        this.setSize(1000,600);
         this.setLayout(null);
         this.setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
@@ -41,7 +41,7 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         Boven.setBounds(0, 0, 500, 40);
         
         
-        Boven.setBounds(0,0, 500,28);
+        Boven.setBounds(0,0, 1000,28);
         Resultaat.setBounds(210,5,100,20);
         Naam.setBounds(10, 50, 500, 20);
 
@@ -53,8 +53,29 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
 
         
         Boven.setBackground(new Color(102,255,255));
-
         
+        
+        
+        int i = 1;
+        int x = 50;
+        while(i<=3) {
+            
+            MonitoringBlok blok = new MonitoringBlok();
+            JPanel jpanel = blok.maakBlok();
+            
+            if(i%2 == 1) {
+                jpanel.setBounds(50,x, 400,150);
+                add(jpanel);
+            } else {
+                jpanel.setBounds(550, x, 400, 150);
+                add(jpanel);
+                x += 175;
+            }
+            i++;
+            
+        }
+        
+            
         Boven.add(Resultaat);
         add(Resultaat);
         add(Boven);

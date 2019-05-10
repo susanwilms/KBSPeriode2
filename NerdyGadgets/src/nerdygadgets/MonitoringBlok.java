@@ -6,6 +6,7 @@
 package nerdygadgets;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,12 +29,18 @@ public class MonitoringBlok {
     
 
 
-    public void maakBlok(){
-        JPanel Blok = new JPanel(null);
-        Blok.setSize(200,100);
+    public JPanel maakBlok(){
+        JPanel Blok = new JPanel(new FlowLayout());
+        Blok.setSize(400, 150);
         Blok.setBackground(new Color(204,255,255));
-
-       
+        Blok.add(beschikbaar);
+        Blok.add(tijd);
+        Blok.add(processor);
+        Blok.add(disk);
+        
+            
+        
+        return Blok;
     }
     
     
