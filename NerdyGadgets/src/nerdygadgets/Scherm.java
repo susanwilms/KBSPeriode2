@@ -196,7 +196,6 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             if(dialoog.isBevestigd) {
-                System.out.println(connectie.getComponenten(dialoog.OpenenID));
             ArrayList<Server> Opslagcomponenten = ontwerp.stringToComponent(connectie.getComponenten(dialoog.OpenenID), werkveld, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
             for(Server component: Opslagcomponenten) {
                 ontwerp.getSamenstelling().add(component);
@@ -435,7 +434,11 @@ public class Scherm extends JFrame implements ActionListener {
             }
         }
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
+    if(ontwerp.BerekenPercentage()*100 == 100) {
+        Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*0 + "%");
+    } else {
     Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*100 + "%");
+    }
     repaint();
 
     }

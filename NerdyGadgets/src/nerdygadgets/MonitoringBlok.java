@@ -22,9 +22,10 @@ public class MonitoringBlok {
     private JLabel processor = new JLabel("Processorbelasting:");
     private JLabel disk = new JLabel("Diskruimte beschikbaar:");
     
+    
     public MonitoringBlok(int status, String beschikbaar, int processor, int disk){
         StatusColor1.setBounds (320,65,115,115);
-        beschikbaar.setBounds (25,25,200,100);
+        beschikbaar.setBounds(25,25,200,100);
         tijd.setBounds (25,55,200,100);
         processor.setBounds (25,85,200,100);
         disk.setBounds (25,115,200,100);
