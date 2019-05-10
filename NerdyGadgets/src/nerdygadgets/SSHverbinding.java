@@ -9,15 +9,9 @@ package nerdygadgets;
  *
  * @author susanwilms
  */
-
-
-public class MonitoringDialoog extends JDialog implements ActionListener{
-    // SSHverbinding monitoring = new(SSHverbinding);
+public class SSHverbinding {
+    // componenten aanmaken
     
-    // for (monitoring.getComponenten():items)
-    {
-        
-    }
-}
-
+    // voor alle binnenkomende componenten
+    // FysiekComponent component = new FysiekComponent(alle informatie om component aan te maken);
 }
