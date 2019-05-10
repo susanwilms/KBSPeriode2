@@ -218,8 +218,4 @@ public class Oplossing {
         totaleBeschikbaarheid = beschikbaarheidWeb * beschikbaarheidData * beschikbaarheidPFsense * beschikbaarheidDBloadbalancer;
         return totaleBeschikbaarheid;
     }
-
-    public ArrayList<Server> getOplossing() {
-        return besteOplossing;
-    }
 }
