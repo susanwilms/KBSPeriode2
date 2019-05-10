@@ -54,12 +54,13 @@ public class Scherm extends JFrame implements ActionListener {
     private Configuratie ontwerp = new Configuratie();
     private Werkveld werkveld = new Werkveld();
     private Database connectie = new Database();
+    private Oplossing backtrack;
     
     
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
-                        DBloadBalancer DBloadBalancer) {
+                        DBloadBalancer DBloadBalancer, Oplossing backtrack) {
             this.ws1 = ws1;
             this.ws2 = ws2;
             this.ws3 = ws3;
@@ -68,6 +69,7 @@ public class Scherm extends JFrame implements ActionListener {
             this.ds3 = ds3;
             this.PFsense = PFsense;
             this.DBloadBalancer = DBloadBalancer;
+            this.backtrack = backtrack;
             
 		setTitle("Java Applicatie");
 		setSize(900,660);
@@ -205,9 +207,9 @@ public class Scherm extends JFrame implements ActionListener {
         }
         
         if(e.getSource() == Monitoring) {
-            MonitoringDialoog dialoog = new MonitoringDialoog(this);
-            dialoog.setLocationRelativeTo(null);
-            dialoog.setVisible(true);
+            MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
+            monitoringDialoog.setLocationRelativeTo(null);
+            monitoringDialoog.setVisible(true);
         }
         
         if(e.getSource() == webserver) {
@@ -237,202 +239,11 @@ public class Scherm extends JFrame implements ActionListener {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+            ArrayList<Server> oplossing =  backtrack.berekenGoedkoopsteOplossing();
+           for(Server server : oplossing){
+               System.out.println(server.getNaam());
+           }
             
-            
-            //Aanmaken array met alle webservers en databaseservers.
-            ArrayList<Webserver> webservers = new ArrayList<>();
-            webservers.add(ws1);
-            webservers.add(ws2);
-            webservers.add(ws3);
-            ArrayList<DatabaseServer> dbservers = new ArrayList<>();
-            dbservers.add(ds1);
-            dbservers.add(ds2);
-            dbservers.add(ds3);
-            //arraylist voor de goedkoopste oplossing 
-            ArrayList<Server> besteSamenstelling = new ArrayList<>();
-            besteSamenstelling.add(PFsense);
-            besteSamenstelling.add(DBloadBalancer);
-            //ArrayList voor samenstelling in het algoritme
-            ArrayList<Server> huidigeSamenstelling = new ArrayList<>();
-            huidigeSamenstelling.add(PFsense);
-            huidigeSamenstelling.add(DBloadBalancer);
-            
-            /*in deze variabelen komt de laatst verwijderde dbserver of webserver.
-            Hierdoor pakt de foreach niet steeds dezelfde oplossing*/
-            Webserver verwijderdeWeb = new Webserver();
-            DatabaseServer verwijderdeDB = new DatabaseServer();
-            
-            double percentageDoel = 0.9999; //Integer.parseInt(textfield.getText()) <-- moet nog een waarde uit dialog halen. 
-            
-            double totaleBeschikbaarheid = 0;
-            double beschikbaarheidWeb = 0;
-            double beschikbaarheidData = 0;
-            
-            
-            
-            //Deze tellers zijn nodig om de beschikbaarheid van de webservers en databaseservers te kunnen berekenen
-            int tellerWeb = 1;
-            int tellerData = 1;
-            int teller = 1;
-            
-            //Berekenen eerste waarde;
-            while(totaleBeschikbaarheid < percentageDoel){
-                if(beschikbaarheidWeb < beschikbaarheidData){
-                    Webserver besteWebserver = null;
-                    for (Webserver wb : webservers){
-                       double beschikbaarheid = 0;
-                       // De beste webserver wordt gevonden (beste = hoogste beschikbaarheid)
-                       if (wb.getBeschikbaarheid()> beschikbaarheid){
-                           beschikbaarheid = wb.getBeschikbaarheid();
-                           besteWebserver = wb;
-                       }
-                    }
-                    //Om een nullpointerexception te voorkomen een try en catch.
-                    try{
-                        besteSamenstelling.add(besteWebserver);
-                        beschikbaarheidWeb = 1 - Math.pow((1 - besteWebserver.getBeschikbaarheid()), tellerWeb);
-                    } catch (Exception ed){
-                        System.out.println("Geen webserves gevonden");
-                    }
-                    tellerWeb++;
-                } else {
-                    DatabaseServer besteDBserver = null;
-                    for (DatabaseServer dbs : dbservers){
-                       double beschikbaarheid = 0;
-                       // De beste databaseserver wordt gevonden (beste = hoogste beschikbaarheid)
-                       if (dbs.getBeschikbaarheid()> beschikbaarheid){
-                           beschikbaarheid = dbs.getBeschikbaarheid();
-                           besteDBserver = dbs;
-                       }
-                    }
-                    //Om een nullpointerexception te voorkomen een try en catch.
-                    try{
-                        besteSamenstelling.add(besteDBserver);
-                        beschikbaarheidData = 1 - Math.pow((1 - besteDBserver.getBeschikbaarheid()), tellerData);
-                    } catch (Exception ed){
-                        System.out.println("Geen databaseservers gevonden");
-                    }
-                    tellerData++;
-                }
-                totaleBeschikbaarheid = beschikbaarheidWeb * beschikbaarheidData;
-            }
-            totaleBeschikbaarheid = 0;
-            beschikbaarheidWeb = 0;
-            beschikbaarheidData = 0;
-            tellerWeb = 1;
-            tellerData = 1;
-            int aantalVerwijderdeOplossingen = 0;
-            Webserver laatsteWebserver = null;
-            DatabaseServer laatsteDbserver = null;
-            
-            
-            int index = 0;
-            int prijsOplossing = 0;
-            int prijsBesteOplossing = 0;
-            for (Server server : besteSamenstelling){
-                prijsBesteOplossing += server.getPrijs();
-            }
-            
-            // berekenen beste samenstelling
-            while(totaleBeschikbaarheid <= percentageDoel && prijsOplossing < prijsBesteOplossing && teller <25 ){
-                System.out.println("test1");
-                if (beschikbaarheidWeb < beschikbaarheidData){
-                    System.out.println("test3");
-                    for ( int i = index; i < webservers.size() - 1 ; i ++ ){
-                        Webserver ws = webservers.get(index);
-                        if(verwijderdeWeb.equals(ws) == false){
-                            huidigeSamenstelling.add(ws);
-                            System.out.println(ws.getNaam());
-                            prijsOplossing += ws.getPrijs();
-                            System.out.println(prijsOplossing);
-                            if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
-                                System.out.println("test2");
-                                prijsBesteOplossing = prijsOplossing;
-                                besteSamenstelling = huidigeSamenstelling;
-                                huidigeSamenstelling.clear();
-                                huidigeSamenstelling.add(PFsense);
-                                huidigeSamenstelling.add(DBloadBalancer);
-                                teller = 1;
-                                totaleBeschikbaarheid = 0;
-                                beschikbaarheidWeb = 0;
-                                beschikbaarheidData = 0;
-                                prijsOplossing = 0;
-                                for(Server server : huidigeSamenstelling){
-                                    prijsOplossing += server.getPrijs();
-                                }
-                                break;
-                            } else if(prijsOplossing > prijsBesteOplossing){
-                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
-                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
-                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
-                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
-                                if(aantalVerwijderdeOplossingen< webservers.size() -1 ){
-                                    //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
-                                    laatsteDbserver = (DatabaseServer) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
-                                    for (int in = 0 ; in < dbservers.size() - 1 ; in++){
-                                        DatabaseServer db = dbservers.get(in);
-                                        if(db.equals(laatsteDbserver)){
-                                            index = in;
-                                            //ER MOET NOG IETS GEBEUREN MET DE INDEX BIJ DE FOREACH VAN WEB/DBSERVERS!!!
-                                        }
-                                        huidigeSamenstelling.remove(index);
-                                    }
-                                }
-                            } else {
-                                beschikbaarheidWeb = 1 - Math.pow((1 - ws.getBeschikbaarheid()), tellerWeb);
-                                tellerWeb++;
-                                totaleBeschikbaarheid = PFsense.getBeschikbaarheid() * DBloadBalancer.getBeschikbaarheid() * beschikbaarheidWeb * beschikbaarheidData;
-                                break;
-                            }
-                            
-                        }
-                    }
-                } else {
-                    System.out.println("test4");
-                    for (int i = index ; index < dbservers.size() - 1 ; i ++){
-                        DatabaseServer ds = dbservers.get(i);
-                        if(verwijderdeDB.equals(ds) == false){
-                            huidigeSamenstelling.add(ds);
-                            System.out.println(ds.getNaam());
-                            prijsOplossing += ds.getPrijs();
-                            System.out.println(prijsOplossing);
-                            if(totaleBeschikbaarheid >= percentageDoel && prijsOplossing < prijsBesteOplossing){
-                                prijsBesteOplossing = prijsOplossing;
-                                besteSamenstelling = huidigeSamenstelling;
-                                huidigeSamenstelling.clear();
-                                huidigeSamenstelling.add(PFsense);
-                                huidigeSamenstelling.add(DBloadBalancer);
-                                teller = 1;
-                            } else if(prijsOplossing > prijsBesteOplossing){
-                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
-                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
-                                prijsOplossing -= huidigeSamenstelling.get(huidigeSamenstelling.size() - 1).getPrijs();
-                                huidigeSamenstelling.remove(huidigeSamenstelling.size() - 1);
-                                aantalVerwijderdeOplossingen++;
-                                if(aantalVerwijderdeOplossingen< dbservers.size() -1 ){
-                                    //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
-                                    laatsteWebserver = (Webserver) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
-                                    for (int in = 0 ; in < webservers.size() - 1 ; in++){
-                                        Webserver web = webservers.get(i);
-                                        if(web.equals(laatsteWebserver)){
-                                            index = i;
-                                        }
-                                    }
-                                }
-                            } else {
-                                beschikbaarheidData = 1 - Math.pow((1 - ds.getBeschikbaarheid()), tellerData);
-                                tellerData++;
-                                break;
-                            }
-                        } 
-                    }
-                }
-                teller++;
-            }
-            for(Server server : besteSamenstelling){
-                System.out.println(server.getNaam());
-            }
-        }
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {
         Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*0 + "%");
@@ -442,6 +253,7 @@ public class Scherm extends JFrame implements ActionListener {
     repaint();
 
     }
+}
 }
 
 
