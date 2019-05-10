@@ -345,6 +345,7 @@ public class Scherm extends JFrame implements ActionListener {
             Webserver laatsteWebserver = null;
             DatabaseServer laatsteDbserver = null;
             
+            
             int index = 0;
             int prijsOplossing = 0;
             int prijsBesteOplossing = 0;
@@ -357,7 +358,8 @@ public class Scherm extends JFrame implements ActionListener {
                 System.out.println("test1");
                 if (beschikbaarheidWeb < beschikbaarheidData){
                     System.out.println("test3");
-                    for (Webserver ws : webservers){
+                    for ( int i = index; i < webservers.size() - 1 ; i ++ ){
+                        Webserver ws = webservers.get(index);
                         if(verwijderdeWeb.equals(ws) == false){
                             huidigeSamenstelling.add(ws);
                             System.out.println(ws.getNaam());
@@ -387,12 +389,13 @@ public class Scherm extends JFrame implements ActionListener {
                                 if(aantalVerwijderdeOplossingen< webservers.size() -1 ){
                                     //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
                                     laatsteDbserver = (DatabaseServer) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
-                                    for (int i = 0 ; i < dbservers.size() - 1 ; i++){
-                                        DatabaseServer db = dbservers.get(i);
+                                    for (int in = 0 ; in < dbservers.size() - 1 ; in++){
+                                        DatabaseServer db = dbservers.get(in);
                                         if(db.equals(laatsteDbserver)){
-                                            index = i;
+                                            index = in;
                                             //ER MOET NOG IETS GEBEUREN MET DE INDEX BIJ DE FOREACH VAN WEB/DBSERVERS!!!
                                         }
+                                        huidigeSamenstelling.remove(index);
                                     }
                                 }
                             } else {
@@ -406,7 +409,8 @@ public class Scherm extends JFrame implements ActionListener {
                     }
                 } else {
                     System.out.println("test4");
-                    for (DatabaseServer ds : dbservers){
+                    for (int i = index ; index < dbservers.size() - 1 ; i ++){
+                        DatabaseServer ds = dbservers.get(i);
                         if(verwijderdeDB.equals(ds) == false){
                             huidigeSamenstelling.add(ds);
                             System.out.println(ds.getNaam());
@@ -428,7 +432,7 @@ public class Scherm extends JFrame implements ActionListener {
                                 if(aantalVerwijderdeOplossingen< dbservers.size() -1 ){
                                     //er past geen databaseserver meer bij: vorige webserver moet worden verwijdert. 
                                     laatsteWebserver = (Webserver) huidigeSamenstelling.get(huidigeSamenstelling.size() - 1);
-                                    for (int i = 0 ; i < webservers.size() - 1 ; i++){
+                                    for (int in = 0 ; in < webservers.size() - 1 ; in++){
                                         Webserver web = webservers.get(i);
                                         if(web.equals(laatsteWebserver)){
                                             index = i;
