@@ -19,9 +19,26 @@ public class Oplossing {
     private ArrayList<DatabaseServer> dbservers = new ArrayList<>();
     private PFsense PFsense;
     private DBloadBalancer DBloadbalancer;
+    private Webserver a;
+    private Webserver b;
+    private Webserver c;
+    private DatabaseServer d;
+    private DatabaseServer e;
+    private DatabaseServer f;
+    private PFsense g;
+    private DBloadBalancer h;
+    
 
     public Oplossing(Webserver a, Webserver b, Webserver c, DatabaseServer d, DatabaseServer e, DatabaseServer f, PFsense g, DBloadBalancer h) {
         //Databaseservers en webservers worden toegevoegd.
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.e = e;
+        this.f = f;
+        this.g = g;
+        this.h = h;
         webservers.add(a);
         webservers.add(b);
         webservers.add(c);
@@ -54,7 +71,7 @@ public class Oplossing {
         DatabaseServer besteDatabaseServer = null;  //Databaseserver met de hoogste beschikbaarheid
 
         //Er wordt een waarde berekent voor de gestelde beschikbaarheid
-        while (beschikbaarheidOplossing < beschikbaarheidDoel) {
+        while (berekenBeschikbaarheid(besteOplossing) < beschikbaarheidDoel) {
             if (berekenBeschikbaarheidWebservers(besteOplossing) < berekenBeschikbaarheidDbservers(besteOplossing)) {
                 for (Webserver wb : webservers) {
                     double beschikbaarheid = 0; //deze variabele voorkomt nullpointer in de if-loop (rgl 48), deze variabele wordt overgeschreven in de loop
@@ -64,7 +81,7 @@ public class Oplossing {
                     }
                 }
                 besteOplossing.add(besteWebserver);
-                beschikbaarheidOplossing = berekenBeschikbaarheid(besteOplossing);
+               
             } else {
                 for (DatabaseServer ds : dbservers) {
                     double beschikbaarheid = 0;
@@ -74,7 +91,7 @@ public class Oplossing {
                     }
                 }
                 besteOplossing.add(besteDatabaseServer);
-                beschikbaarheidOplossing = berekenBeschikbaarheid(besteOplossing);
+                
             }
         }
        /* prijsBesteOplossing = berekenPrijs(besteOplossing); */
@@ -176,7 +193,7 @@ public class Oplossing {
     }
 
     public double berekenBeschikbaarheidWebservers(ArrayList<Server> servers) {
-        double beschikbaarheidWebservers = 0;
+        double beschikbaarheidWebservers = 1;
         for (Server server : servers) {
             if (server instanceof Webserver) {
                 beschikbaarheidWebservers *= 1 - server.getBeschikbaarheid();
@@ -187,10 +204,12 @@ public class Oplossing {
 
     public double berekenBeschikbaarheidDbservers(ArrayList<Server> servers) {
         double beschikbaarheidDbServers = 1;
-        for (DatabaseServer dbserver : dbservers) {
-            beschikbaarheidDbServers *= (1 - dbserver.getBeschikbaarheid());
+        for (Server server : servers) {
+            if(server instanceof DatabaseServer){
+                beschikbaarheidDbServers *= server.getBeschikbaarheid();
+            }
         }
-        return 1 - beschikbaarheidDbServers;
+        return (1 - beschikbaarheidDbServers);
     }
 
     public double berekenBeschikbaarheid(ArrayList<Server> oplossing) {

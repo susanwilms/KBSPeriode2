@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,16 +22,10 @@ import javax.swing.JPanel;
  *
  * @author mbred
  */
+
 public class MonitoringDialoog extends JDialog implements ActionListener {
-    private JLabel Naam = new JLabel("");
-    private JLabel Resultaat = new JLabel("");
     private JPanel Boven = new JPanel(null);
-    private String opslaannaam;
-    private int opslaanprijs;
-    private double opslaanpercentage;
-    private Database connectie = new Database();
-    private ArrayList<Server> samenstelling;
-    
+    private JLabel Resultaat = new JLabel("");    
     
     public MonitoringDialoog(JFrame frame) {
         super(frame, true);
@@ -43,17 +39,15 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         
         Boven.setBounds(0,0, 1000,28);
         Resultaat.setBounds(210,5,100,20);
-        Naam.setBounds(10, 50, 500, 20);
-
+        
 
         
         Resultaat.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+
 
 
         
         Boven.setBackground(new Color(102,255,255));
-        
         
         
         int i = 1;
@@ -79,14 +73,14 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         Boven.add(Resultaat);
         add(Resultaat);
         add(Boven);
-        add(Naam);
+
         
-        
-    }
+    }   
 
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }
 

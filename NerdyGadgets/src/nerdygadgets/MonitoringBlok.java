@@ -11,10 +11,6 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author susanwilms
- */
 public class MonitoringBlok {
     private JPanel Comp1 = new JPanel();            //blauwe paneel
     private JPanel StatusColor1 = new JPanel();     //Status paneel
@@ -42,6 +38,6 @@ public class MonitoringBlok {
         
         return Blok;
     }
-    
-    
+ 
 }
+
