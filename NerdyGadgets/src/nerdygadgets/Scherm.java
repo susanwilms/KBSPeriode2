@@ -207,9 +207,9 @@ public class Scherm extends JFrame implements ActionListener {
         }
         
         if(e.getSource() == Monitoring) {
-            //MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
-            //monitoringDialoog.setLocationRelativeTo(null);
-            //monitoringDialoog.setVisible(true);
+            MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
+            monitoringDialoog.setLocationRelativeTo(null);
+            monitoringDialoog.setVisible(true);
         }
         
         if(e.getSource() == webserver) {

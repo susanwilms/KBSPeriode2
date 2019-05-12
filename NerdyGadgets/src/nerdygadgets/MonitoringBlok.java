@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*package nerdygadgets;
+package nerdygadgets;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-*/
-/**
- *
- * @author susanwilms
- */
-/*public class MonitoringBlok {
+
+public class MonitoringBlok {
     private JPanel Comp1 = new JPanel();            //blauwe paneel
     private JPanel StatusColor1 = new JPanel();     //Status paneel
     private JLabel beschikbaar = new JLabel("Beschikbaar:");
@@ -28,13 +25,19 @@ import javax.swing.JPanel;
     
 
 
-    public void maakBlok(){
-        JPanel Blok = new JPanel(null);
-        Blok.setSize(200,100);
+    public JPanel maakBlok(){
+        JPanel Blok = new JPanel(new FlowLayout());
+        Blok.setSize(400, 150);
         Blok.setBackground(new Color(204,255,255));
-
-       
+        Blok.add(beschikbaar);
+        Blok.add(tijd);
+        Blok.add(processor);
+        Blok.add(disk);
+        
+            
+        
+        return Blok;
     }
  
-}*/
+}
 
