@@ -69,27 +69,31 @@ public class Oplossing {
 
         Webserver besteWebserver = null; //Webserver met de hoogste beschikbaarheid
         DatabaseServer besteDatabaseServer = null;  //Databaseserver met de hoogste beschikbaarheid
-
-        //Er wordt een waarde berekent voor de gestelde beschikbaarheid
-        while (berekenBeschikbaarheid(besteOplossing) < beschikbaarheidDoel) {
-            if (berekenBeschikbaarheidWebservers(besteOplossing) < berekenBeschikbaarheidDbservers(besteOplossing)) {
-                for (Webserver wb : webservers) {
+for (Webserver wb : webservers) {
+                    
                     double beschikbaarheid = 0; //deze variabele voorkomt nullpointer in de if-loop (rgl 48), deze variabele wordt overgeschreven in de loop
                     if (wb.getBeschikbaarheid() > beschikbaarheid) {
                         besteWebserver = wb;
                         beschikbaarheid = besteWebserver.getBeschikbaarheid();
                     }
                 }
-                besteOplossing.add(besteWebserver);
-               
-            } else {
-                for (DatabaseServer ds : dbservers) {
+for (DatabaseServer ds : dbservers) {
                     double beschikbaarheid = 0;
                     if (ds.getBeschikbaarheid() > beschikbaarheid) {
                         besteDatabaseServer = ds;
                         beschikbaarheid = besteDatabaseServer.getBeschikbaarheid();
                     }
                 }
+                double beschikbaarheid = 0 ;
+        //Er wordt een waarde berekent voor de gestelde beschikbaarheid
+        while (berekenBeschikbaarheid(besteOplossing) < beschikbaarheidDoel) {
+            System.out.println(berekenBeschikbaarheid(besteOplossing));
+            System.out.println("web: " + berekenBeschikbaarheidWebservers(besteOplossing));
+            System.out.println("data: " + berekenBeschikbaarheidWebservers(besteOplossing));
+            if (berekenBeschikbaarheidWebservers(besteOplossing) < berekenBeschikbaarheidDbservers(besteOplossing)) {
+                besteOplossing.add(besteWebserver);
+               beschikbaarheid = berekenBeschikbaarheid(besteOplossing);
+            } else {
                 besteOplossing.add(besteDatabaseServer);
                 
             }
@@ -196,7 +200,7 @@ public class Oplossing {
         double beschikbaarheidWebservers = 1;
         for (Server server : servers) {
             if (server instanceof Webserver) {
-                beschikbaarheidWebservers *= 1 - server.getBeschikbaarheid();
+                beschikbaarheidWebservers *= (1 - server.getBeschikbaarheid());
             }
         }
         return (1 - beschikbaarheidWebservers);
@@ -206,36 +210,18 @@ public class Oplossing {
         double beschikbaarheidDbServers = 1;
         for (Server server : servers) {
             if(server instanceof DatabaseServer){
-                beschikbaarheidDbServers *= server.getBeschikbaarheid();
+                beschikbaarheidDbServers *= (1 - server.getBeschikbaarheid());
             }
         }
         return (1 - beschikbaarheidDbServers);
     }
 
     public double berekenBeschikbaarheid(ArrayList<Server> oplossing) {
-        double beschikbaarheidWeb = 1;
-        double beschikbaarheidData = 1;
-        double beschikbaarheidPFsense = 0;
-        double beschikbaarheidDBloadbalancer = 0;
-        double totaleBeschikbaarheid = 0;
-
-        for (Server server : oplossing) {
-            if (server instanceof Webserver) {
-                beschikbaarheidWeb *= 1 - server.getBeschikbaarheid();
-            }
-            if (server instanceof DatabaseServer) {
-                beschikbaarheidData *= 1 - server.getBeschikbaarheid();
-            }
-            if (server instanceof PFsense) {
-                beschikbaarheidPFsense = server.getBeschikbaarheid();
-            }
-            if (server instanceof DBloadBalancer) {
-                beschikbaarheidDBloadbalancer = server.getBeschikbaarheid();
-            }
-        }
-        beschikbaarheidWeb = 1 - beschikbaarheidWeb;
-        beschikbaarheidData = 1 - beschikbaarheidData;
-        totaleBeschikbaarheid = beschikbaarheidWeb * beschikbaarheidData * beschikbaarheidPFsense * beschikbaarheidDBloadbalancer;
-        return totaleBeschikbaarheid;
+        double beschikbaarheidWeb = berekenBeschikbaarheidWebservers(oplossing);
+        double beschikbaarheidData = berekenBeschikbaarheidDbservers(oplossing);
+        double beschikbaarheidPFsense = PFsense.getBeschikbaarheid();
+        double beschikbaarheidDBloadbalancer = DBloadbalancer.getBeschikbaarheid();
+        
+        return beschikbaarheidWeb * beschikbaarheidData * beschikbaarheidPFsense * beschikbaarheidDBloadbalancer;
     }
 }
