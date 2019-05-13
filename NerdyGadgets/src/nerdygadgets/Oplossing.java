@@ -16,8 +16,8 @@ public class Oplossing {
     private ArrayList<Server> huidigeOplossing;
     private Webserver besteWebserver;
     private DatabaseServer besteDbserver;
-    private ArrayList<Webserver> webserverArray;
-    private ArrayList<DatabaseServer> dbserverArray;
+    private ArrayList<Server> webserverArray;
+    private ArrayList<Server> dbserverArray;
     private PFsense pfsense;
     private DBloadBalancer dbloadbalancer;
     private double beschikbaarheidDoel;
@@ -89,39 +89,39 @@ public class Oplossing {
         return prijs;
     }
     
-    public  void berekenBesteOplossing(ArrayList<Server> oplossing){
-        
+    public  void berekenBesteOplossing(ArrayList<Server> oplossing, ArrayList<Server> servers){
+        ArrayList<Server> huidigeBesteOplossing = new ArrayList<>();
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
            oplossing.add(dbloadbalancer);
-        }
-        if(berekenPrijs(oplossing) > prijsBesteOplossing){
-            return;
-        } else if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel){
-            prijsBesteOplossing = berekenPrijs(oplossing);
-            for(Server server : oplossing){
-                System.out.println(server.getNaam());
-            }
-        } else {
-            if(berekenBeschikbaarheidWebservers(oplossing) > berekenBeschikbaarheidDbservers(oplossing)){
-                for(Webserver webserver : webserverArray){
-                    oplossing.add(webserver);
-                    berekenBesteOplossing(oplossing);
-                    oplossing.remove(oplossing.size() - 1);
-                }
-            } else { 
-                for(DatabaseServer dbserver : dbserverArray){
-                    oplossing.add(dbserver);
-                    berekenBesteOplossing(oplossing);
-                    oplossing.remove(oplossing.size() -1);
-                }
-                
-            }
-        }
+       }
+       
+        for(Server server : servers){
+           oplossing.add(server);
+//voldoet de oplossing
+           if((berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && berekenPrijs(oplossing) < berekenPrijs(huidigeBesteOplossing) )|| berekenPrijs(huidigeBesteOplossing) == 0){
+               System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
+               huidigeBesteOplossing = oplossing;
+           }
+           else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
+               if(berekenBeschikbaarheidWebservers(oplossing) < berekenBeschikbaarheidDbservers(oplossing)){
+                   System.out.println("-----------------------------------------------TOEVOEGEN WEBSERVER!-------------------------------------");
+                   berekenBesteOplossing(oplossing, webserverArray);
+               } else {
+                   berekenBesteOplossing(oplossing, dbserverArray);
+                   System.out.println("-----------------------------------------------TOEVOEGEN DBSERVER!-------------------------------------");
+               }
+           } 
+           else if (berekenPrijs(oplossing) > berekenPrijs(huidigeBesteOplossing) && berekenPrijs(huidigeBesteOplossing) != 0){
+               System.out.println("-----------------------------------------------OPLOSSING TE DUUR!-------------------------------------");
+           }
+           oplossing.remove(oplossing.size()-1);
+       }
+        //return huidigeBesteOplossing;
     }
     
     public ArrayList<Server> getOplossing(){
-        berekenBesteOplossing(besteOplossing);
+        //berekenBesteOplossing(besteOplossing);
         return besteOplossing;
     }
 }
