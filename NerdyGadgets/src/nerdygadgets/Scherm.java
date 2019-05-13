@@ -54,22 +54,21 @@ public class Scherm extends JFrame implements ActionListener {
     private Configuratie ontwerp = new Configuratie();
     private Werkveld werkveld = new Werkveld();
     private Database connectie = new Database();
-    private Oplossing backtrack;
-    
-    
+    private Oplossing oplossing;
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
-                        DBloadBalancer DBloadBalancer, Oplossing backtrack) {
+                        DBloadBalancer DBloadBalancer, Oplossing oplossing) {
             this.ws1 = ws1;
             this.ws2 = ws2;
             this.ws3 = ws3;
-            this.ds1 = ds1;
+            this.ds1 =  ds1;
             this.ds2 = ds2;
             this.ds3 = ds3;
             this.PFsense = PFsense;
             this.DBloadBalancer = DBloadBalancer;
-            this.backtrack = backtrack;
+            
+            this.oplossing = oplossing;
             
 		setTitle("Java Applicatie");
 		setSize(900,660);
@@ -239,13 +238,9 @@ public class Scherm extends JFrame implements ActionListener {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
-            System.out.println("test");
-            ArrayList<Server> oplossing =  backtrack.getOplossing();
-            System.out.println("test1");
-           for(Server server : oplossing){
-               
-               System.out.println(server.getNaam());
-           }
+            ArrayList<Server> besteOplossing = new ArrayList<>();
+            oplossing.berekenBesteOplossing(besteOplossing);
+            
         }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {

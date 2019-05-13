@@ -21,8 +21,8 @@ public class Oplossing {
     private PFsense pfsense;
     private DBloadBalancer dbloadbalancer;
     private double beschikbaarheidDoel;
-    private int prijsBesteOplossing;
-    private int aantalOplossingen = 0;
+    private int prijsBesteOplossing = 1000000;
+    
     
     public Oplossing(   Webserver ws1, Webserver ws2, Webserver ws3,
                         DatabaseServer ds1, DatabaseServer ds2, DatabaseServer ds3,
@@ -56,7 +56,7 @@ public class Oplossing {
     }
     
     public double berekenBeschikbaarheidDbservers(ArrayList<Server> oplossing){
-        double beschikbaarheid = 0;
+        double beschikbaarheid = 1;
         for(Server server : oplossing){
             if(server instanceof DatabaseServer){
                 beschikbaarheid *= (1 - server.getBeschikbaarheid());
@@ -89,17 +89,18 @@ public class Oplossing {
         return prijs;
     }
     
-    public void berekenBesteOplossing(ArrayList<Server> oplossing){
+    public  void berekenBesteOplossing(ArrayList<Server> oplossing){
         
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
            oplossing.add(dbloadbalancer);
         }
-        if(berekenPrijs(oplossing) < prijsBesteOplossing && berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel){
+        if(berekenPrijs(oplossing) > prijsBesteOplossing){
+            return;
+        } else if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel){
             prijsBesteOplossing = berekenPrijs(oplossing);
-            aantalOplossingen++;
-            if(aantalOplossingen >= 10){
-                System.exit(0);
+            for(Server server : oplossing){
+                System.out.println(server.getNaam());
             }
         } else {
             if(berekenBeschikbaarheidWebservers(oplossing) > berekenBeschikbaarheidDbservers(oplossing)){
@@ -114,6 +115,7 @@ public class Oplossing {
                     berekenBesteOplossing(oplossing);
                     oplossing.remove(oplossing.size() -1);
                 }
+                
             }
         }
     }
