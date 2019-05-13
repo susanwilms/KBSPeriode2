@@ -21,7 +21,7 @@ public class Oplossing {
     private PFsense pfsense;
     private DBloadBalancer dbloadbalancer;
     private double beschikbaarheidDoel;
-    private int prijsBesteOplossing = 1000000;
+    private int prijsBesteOplossing = 2000000;
     
     
     public Oplossing(   Webserver ws1, Webserver ws2, Webserver ws3,
