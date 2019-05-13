@@ -240,7 +240,7 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             System.out.println("test");
-            ArrayList<Server> oplossing =  backtrack.berekenGoedkoopsteOplossing();
+            ArrayList<Server> oplossing =  backtrack.getOplossing();
             System.out.println("test1");
            for(Server server : oplossing){
                
