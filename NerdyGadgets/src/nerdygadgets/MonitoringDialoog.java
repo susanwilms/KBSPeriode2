@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -25,7 +26,8 @@ import javax.swing.JPanel;
 
 public class MonitoringDialoog extends JDialog implements ActionListener {
     private JPanel Boven = new JPanel(null);
-    private JLabel Resultaat = new JLabel("");    
+    private JLabel Resultaat = new JLabel(""); 
+    private JPanel totaal = new JPanel(null);
     
     public MonitoringDialoog(JFrame frame) {
         super(frame, true);
@@ -33,9 +35,9 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
-
-        Boven.setBounds(0, 0, 500, 40);
         
+
+        totaal.setBounds(0,0,1000,600);
         
         Boven.setBounds(0,0, 1000,28);
         Resultaat.setBounds(210,5,100,20);
@@ -48,7 +50,7 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
 
         
         Boven.setBackground(new Color(102,255,255));
-        
+        totaal.setBackground(Color.WHITE);
         
         int i = 1;
         int x = 50;
@@ -58,11 +60,11 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
             JPanel jpanel = blok.maakBlok();
             
             if(i%2 == 1) {
+                totaal.add(jpanel);
                 jpanel.setBounds(50,x, 400,150);
-                add(jpanel);
             } else {
+                totaal.add(jpanel);
                 jpanel.setBounds(550, x, 400, 150);
-                add(jpanel);
                 x += 175;
             }
             i++;
@@ -73,6 +75,7 @@ public class MonitoringDialoog extends JDialog implements ActionListener {
         Boven.add(Resultaat);
         add(Resultaat);
         add(Boven);
+        add(totaal);
 
         
     }   
