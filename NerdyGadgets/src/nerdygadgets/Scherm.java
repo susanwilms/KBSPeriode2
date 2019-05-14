@@ -240,17 +240,15 @@ public class Scherm extends JFrame implements ActionListener {
         
         if(e.getSource() == Optimalisatie) {
             ArrayList<Server> test = new ArrayList<>();
-            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
+            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
-            ArrayList<Server> besteOplossing = new ArrayList<>();
+           /* ArrayList<Server> besteOplossing = new ArrayList<>();
             oplossing.berekenBesteOplossing(besteOplossing, webservers);
             test = oplossing.getOplossing();
+            */
+            // De array van de optimale waarde wordt geprint
             
-            System.out.println("VANUIT SCHERM");
-            for(Server server : test){
-                System.out.println(server.getNaam());
-            }
         }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {

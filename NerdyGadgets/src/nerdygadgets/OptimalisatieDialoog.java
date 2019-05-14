@@ -7,12 +7,12 @@ package nerdygadgets;
 
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -37,8 +37,22 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
     private JCheckBox   Webserver                       = new JCheckBox ("Webserver");
     private JTextField  AantalWebservers                = new JTextField(2);
     private JButton     Optimaliseer                    = new JButton   ("Optimaliseer");
+   
+    private ArrayList<Server> webservers                = new ArrayList<>();
+    private ArrayList<Server> dbservers                 = new ArrayList<>();
+    private PFsense pfsense;
+    private DBloadBalancer dbloadbalancer;
+    private Webserver ws1;
+    private Webserver ws2;
+    private Webserver ws3;
+    private DatabaseServer ds1;
+    private DatabaseServer ds2;
+    private DatabaseServer ds3;
+    private ArrayList<Server> besteOplossing            = new ArrayList<>();
     
-    public OptimalisatieDialoog(JFrame frame) {
+    public OptimalisatieDialoog(JFrame frame, Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
+                        DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
+                        DBloadBalancer DBloadBalancer) {
         super(frame, true);
         setSize(550,300);
         setLayout(null);
@@ -112,18 +126,51 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         add(Webserver);
         add(AantalWebservers);
         add(Optimaliseer);
+        
+        //webservers worden toegevoegd aan Array met webservers
+            this.ws1 = ws1;
+            this.ws2 = ws2;
+            this.ws3 = ws3;
+            webservers.add(ws1);
+            webservers.add(ws2);
+            webservers.add(ws3);
+            
+            this.ds1 = ds1;
+            this.ds2 = ds2;
+            this.ds3 = ds3;
+            dbservers.add(ds1);
+            dbservers.add(ds2);
+            dbservers.add(ds3); //????????
+            
+            pfsense = PFsense;
+            dbloadbalancer = DBloadBalancer;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Optimaliseer) {
-            this.setVisible(false);
+            if(getPercentage() != 0 ){
+                this.setVisible(false);
+            Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer, getPercentage());
+            oplossing.berekenBesteOplossing(besteOplossing, webservers);
+            besteOplossing = oplossing.getOplossing();
+            
+            for(Server server : besteOplossing){
+                System.out.println(server.getNaam());
+            }
+            } else {
+               System.out.println("Vul een percentage in!");
+            }
+            
         }
     }
     
     public double getPercentage(){
-        double percentage = Double.parseDouble(PercentageTF.getText());
-        percentage = percentage / 100;
+        double percentage = 0;
+        if (!PercentageTF.getText().equals("")){
+            percentage = Double.parseDouble(PercentageTF.getText());
+            percentage = percentage / 100;
+        }
         return percentage;
     }
 }
