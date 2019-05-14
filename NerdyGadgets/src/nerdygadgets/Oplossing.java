@@ -95,7 +95,7 @@ public class Oplossing {
         return prijs;
     }
     
-    public  void berekenBesteOplossing(ArrayList<Server> oplossing, ArrayList<Server> servers){
+    public  ArrayList<Server> berekenBesteOplossing(ArrayList<Server> oplossing, ArrayList<Server> servers){
         ArrayList<Server> huidigeBesteOplossing = new ArrayList<>();
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
@@ -113,6 +113,7 @@ public class Oplossing {
                    System.out.println("beschikbaarheid webservers " + percentageWebServers);
                    System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
                prijsBesteOplossing = berekenPrijs(oplossing);
+               huidigeBesteOplossing = oplossing;
            }
            else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
                // kiezen of webserver / databaseserver wordt toegevoegd
@@ -138,6 +139,7 @@ public class Oplossing {
            oplossing.remove(oplossing.size()-1);
            System.out.println("------------------------------------BACKTRACK-------------------------------------");
        }
+        return huidigeBesteOplossing;
     }
     
     public ArrayList<Server> getOplossing(){

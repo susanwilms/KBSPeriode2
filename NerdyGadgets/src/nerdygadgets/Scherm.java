@@ -239,12 +239,13 @@ public class Scherm extends JFrame implements ActionListener {
         }         
         
         if(e.getSource() == Optimalisatie) {
+            ArrayList<Server> test = new ArrayList<>();
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             ArrayList<Server> besteOplossing = new ArrayList<>();
-            oplossing.berekenBesteOplossing(besteOplossing, webservers);
-            for(Server server : besteOplossing){
+            test = oplossing.berekenBesteOplossing(besteOplossing, webservers);
+            for(Server server : test){
                 System.out.println(server.getNaam());
             }
             
