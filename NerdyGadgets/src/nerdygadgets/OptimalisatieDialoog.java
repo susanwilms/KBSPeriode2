@@ -120,4 +120,10 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
             this.setVisible(false);
         }
     }
+    
+    public double getPercentage(){
+        double percentage = Double.parseDouble(PercentageTF.getText());
+        percentage = percentage / 100;
+        return percentage;
+    }
 }
