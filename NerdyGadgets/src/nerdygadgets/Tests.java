@@ -30,8 +30,8 @@ public class Tests {
         
 
 
-        PFsense g = new PFsense("PFsense", 2000, 0.9999);
-        DBloadBalancer h = new DBloadBalancer("DB loadbalancer", 2000, 0.9999);
+        PFsense g = new PFsense("PFsense", 2000, 0.99999);
+        DBloadBalancer h = new DBloadBalancer("DB loadbalancer", 2000, 0.99999);
         Oplossing oplossing = new Oplossing(a,b,c,d,e,f,g,h, 0.9999);
         
         Scherm test = new Scherm(a,b,c,d,e,f,g,h, oplossing);
