@@ -105,35 +105,38 @@ public class Oplossing {
         for(Server server : servers){
             
            oplossing.add(server);
-           //System.out.println("-----------------------------------TOEVOEGEN SERVER : "+ server.getNaam() + "----------------------------------");
+           System.out.println("-----------------------------------TOEVOEGEN SERVER : "+ server.getNaam() + "----------------------------------");
 //voldoet de oplossing
-           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < berekenPrijs(huidigeBesteOplossing) || berekenPrijs(huidigeBesteOplossing) == 0)){
-             //  System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
-               huidigeBesteOplossing = oplossing;
+           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing ||prijsBesteOplossing == 0)){
+             System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
+             System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
+                   System.out.println("beschikbaarheid webservers " + percentageWebServers);
+                   System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
+               prijsBesteOplossing = berekenPrijs(oplossing);
            }
            else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
                // kiezen of webserver / databaseserver wordt toegevoegd
                percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
                percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
-               //System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
-                 //  System.out.println("beschikbaarheid webservers " + percentageWebServers);
-                   //System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
+               System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
+                   System.out.println("beschikbaarheid webservers " + percentageWebServers);
+                   System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
                if(percentageWebServers < percentageDatabaseServers){
                    
-                   //System.out.println("-----------------------------------------------TOEVOEGEN WEBSERVER!-------------------------------------"  );
+                   System.out.println("-----------------------------------------------TOEVOEGEN WEBSERVER!-------------------------------------"  );
                    berekenBesteOplossing(oplossing, webserverArray);
                } else {
-                   //System.out.println("-----------------------------------------------TOEVOEGEN DBSERVER!-------------------------------------"); 
+                   System.out.println("-----------------------------------------------TOEVOEGEN DBSERVER!-------------------------------------"); 
                    berekenBesteOplossing(oplossing, dbserverArray);
                    
                }
            } 
            
-           else if (berekenPrijs(oplossing) > berekenPrijs(huidigeBesteOplossing) && berekenPrijs(huidigeBesteOplossing) != 0){
-               //System.out.println("-----------------------------------------------OPLOSSING TE DUUR!-------------------------------------");
+           else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0){
+               System.out.println("-----------------------------------------------OPLOSSING TE DUUR!-------------------------------------");
            }
            oplossing.remove(oplossing.size()-1);
-           //System.out.println("------------------------------------BACKTRACK-------------------------------------");
+           System.out.println("------------------------------------BACKTRACK-------------------------------------");
        }
     }
     
