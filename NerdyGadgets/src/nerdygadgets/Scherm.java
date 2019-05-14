@@ -244,6 +244,9 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setVisible(true);
             ArrayList<Server> besteOplossing = new ArrayList<>();
             oplossing.berekenBesteOplossing(besteOplossing, webservers);
+            for(Server server : besteOplossing){
+                System.out.println(server.getNaam());
+            }
             
         }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");

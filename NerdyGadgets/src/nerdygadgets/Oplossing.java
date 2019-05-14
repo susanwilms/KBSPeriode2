@@ -104,36 +104,37 @@ public class Oplossing {
        
         for(Server server : servers){
             
-           oplossing.add(server); 
-           System.out.println("-----------------------------------TOEVOEGEN SERVER : "+ server.getNaam() + "----------------------------------");
+           oplossing.add(server);
+           //System.out.println("-----------------------------------TOEVOEGEN SERVER : "+ server.getNaam() + "----------------------------------");
 //voldoet de oplossing
-           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && berekenPrijs(oplossing) < berekenPrijs(huidigeBesteOplossing) && berekenPrijs(huidigeBesteOplossing) == 0){
-               System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
+           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < berekenPrijs(huidigeBesteOplossing) || berekenPrijs(huidigeBesteOplossing) == 0)){
+             //  System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
                huidigeBesteOplossing = oplossing;
            }
            else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
                // kiezen of webserver / databaseserver wordt toegevoegd
                percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
                percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
-               System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
-                   System.out.println("beschikbaarheid webservers " + percentageWebServers);
-                   System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
+               //System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
+                 //  System.out.println("beschikbaarheid webservers " + percentageWebServers);
+                   //System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
                if(percentageWebServers < percentageDatabaseServers){
                    
-                   System.out.println("-----------------------------------------------TOEVOEGEN WEBSERVER!-------------------------------------"  );
+                   //System.out.println("-----------------------------------------------TOEVOEGEN WEBSERVER!-------------------------------------"  );
                    berekenBesteOplossing(oplossing, webserverArray);
                } else {
+                   //System.out.println("-----------------------------------------------TOEVOEGEN DBSERVER!-------------------------------------"); 
                    berekenBesteOplossing(oplossing, dbserverArray);
-                   System.out.println("-----------------------------------------------TOEVOEGEN DBSERVER!-------------------------------------"); 
+                   
                }
            } 
+           
            else if (berekenPrijs(oplossing) > berekenPrijs(huidigeBesteOplossing) && berekenPrijs(huidigeBesteOplossing) != 0){
-               System.out.println("-----------------------------------------------OPLOSSING TE DUUR!-------------------------------------");
+               //System.out.println("-----------------------------------------------OPLOSSING TE DUUR!-------------------------------------");
            }
-           //oplossing.remove(oplossing.size()-1);
+           oplossing.remove(oplossing.size()-1);
            //System.out.println("------------------------------------BACKTRACK-------------------------------------");
        }
-        //return huidigeBesteOplossing;
     }
     
     public ArrayList<Server> getOplossing(){
