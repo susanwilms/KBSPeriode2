@@ -24,11 +24,14 @@ public class Oplossing {
     private int                 prijsBesteOplossing;
     private double              percentageWebServers;
     private double              percentageDatabaseServers;
+    //private int                 aantalWebservers;
+    //private int                 aantalDatabaseservers;
     
     
     public Oplossing(   Webserver ws1, Webserver ws2, Webserver ws3,
                         DatabaseServer ds1, DatabaseServer ds2, DatabaseServer ds3,
-                        PFsense pfsense, DBloadBalancer dbloadbalancer, double beschikbaarheidDoel){
+                        PFsense pfsense, DBloadBalancer dbloadbalancer, double beschikbaarheidDoel/*,
+                        int aantalWebservers, int aantalDatabaseservers*/){
         
         // ArrayList met alle webservers maken
         webserverArray          = new ArrayList<>();
@@ -46,6 +49,8 @@ public class Oplossing {
         this.pfsense            = pfsense;
         this.dbloadbalancer     = dbloadbalancer;
         this.beschikbaarheidDoel= beschikbaarheidDoel;
+        //this.aantalWebservers = aantalWebservers;
+        //this.aantalDatabaseservers = aantalDatabaseservers;
         prijsBesteOplossing     = 0;
     }
     
@@ -118,6 +123,7 @@ public class Oplossing {
     
     // Functie om de beste oplossing te berekenen (recursieve backtracking)
     public  void berekenBesteOplossing(ArrayList<Server> oplossing, ArrayList<Server> servers){
+       try {
         // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
@@ -164,6 +170,10 @@ public class Oplossing {
            }
            // de oplossing verwijderen
            oplossing.remove(oplossing.size()-1);
+       }
+       } catch (java.lang.StackOverflowError error) {
+           System.out.println("Geen oplossing gevonden");
+           System.exit(0);
        }
         
     }
