@@ -22,6 +22,8 @@ public class Oplossing {
     private DBloadBalancer dbloadbalancer;
     private double beschikbaarheidDoel;
     private int prijsBesteOplossing = 2000000;
+    private double percentageWebServers;
+    private double percentageDatabaseServers;
     
     
     public Oplossing(   Webserver ws1, Webserver ws2, Webserver ws3,
@@ -52,7 +54,9 @@ public class Oplossing {
                 beschikbaarheid *= (1 - server.getBeschikbaarheid());
             }
         }
-        return (1 - beschikbaarheid);
+        beschikbaarheid = 1 - beschikbaarheid;
+        System.out.println("beschikbaarheid webservers " + beschikbaarheid);
+        return (beschikbaarheid);
     }
     
     public double berekenBeschikbaarheidDbservers(ArrayList<Server> oplossing){
@@ -62,7 +66,9 @@ public class Oplossing {
                 beschikbaarheid *= (1 - server.getBeschikbaarheid());
             }
         }
-        return (1 - beschikbaarheid);
+        beschikbaarheid = 1 - beschikbaarheid;
+        System.out.println("beschikbaarheid databaseservers " + beschikbaarheid);
+        return (beschikbaarheid);
     }
         
     
@@ -97,14 +103,18 @@ public class Oplossing {
        }
        
         for(Server server : servers){
+            
            oplossing.add(server);
 //voldoet de oplossing
-           if((berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && berekenPrijs(oplossing) < berekenPrijs(huidigeBesteOplossing) )|| berekenPrijs(huidigeBesteOplossing) == 0){
+           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && berekenPrijs(oplossing) < berekenPrijs(huidigeBesteOplossing) && berekenPrijs(huidigeBesteOplossing) == 0){
                System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
                huidigeBesteOplossing = oplossing;
            }
            else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
-               if(berekenBeschikbaarheidWebservers(oplossing) < berekenBeschikbaarheidDbservers(oplossing)){
+               // kiezen of webserver / databaseserver wordt toegevoegd
+               percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
+               percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
+               if(percentageWebServers < percentageDatabaseServers){
                    System.out.println("-----------------------------------------------TOEVOEGEN WEBSERVER!-------------------------------------");
                    berekenBesteOplossing(oplossing, webserverArray);
                } else {
