@@ -130,15 +130,10 @@ public class Oplossing {
             // voldoet de oplossing?
             // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing? 
            if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing ||prijsBesteOplossing == 0)){
-             System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
-             System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
              // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan 
              uiteindelijkeOplossing.clear();
-                   System.out.println("beschikbaarheid webservers " + percentageWebServers);
-                   System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
                    // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
                    for(Server server2 : oplossing){
-                      System.out.println(server2.getNaam());
                       uiteindelijkeOplossing.add(server2);
                    }
                // de prijs berekenen 
