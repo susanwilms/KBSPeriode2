@@ -107,13 +107,14 @@ public class Oplossing {
            if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing ||prijsBesteOplossing == 0)){
              System.out.println("-----------------------------------------OPLOSSING VOLDOET------------------------------------");
              System.out.println("totale beschikbaarheid: " + berekenTotaleBeschikbaarheid(oplossing));
+             uiteindelijkeOplossing.clear();
                    System.out.println("beschikbaarheid webservers " + percentageWebServers);
                    System.out.println("beschikbaarheid databaseservers " + percentageDatabaseServers);
                    for(Server server2 : oplossing){
                       System.out.println(server2.getNaam());
+                      uiteindelijkeOplossing.add(server2);
                    }
                prijsBesteOplossing = berekenPrijs(oplossing);
-               uiteindelijkeOplossing = oplossing;
            }
            else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
                // kiezen of webserver / databaseserver wordt toegevoegd
@@ -139,6 +140,7 @@ public class Oplossing {
            oplossing.remove(oplossing.size()-1);
           // System.out.println("------------------------------------BACKTRACK-------------------------------------");
        }
+        
     }
     
     public ArrayList<Server> getOplossing(){
