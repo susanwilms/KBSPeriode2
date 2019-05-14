@@ -244,11 +244,13 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             ArrayList<Server> besteOplossing = new ArrayList<>();
-            test = oplossing.berekenBesteOplossing(besteOplossing, webservers);
+            oplossing.berekenBesteOplossing(besteOplossing, webservers);
+            test = oplossing.getOplossing();
+            
+            System.out.println("VANUIT SCHERM");
             for(Server server : test){
                 System.out.println(server.getNaam());
             }
-            
         }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {
