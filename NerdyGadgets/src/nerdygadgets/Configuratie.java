@@ -50,9 +50,9 @@ public class Configuratie {
         // pseudocode
         return 2;
     }
-    
+   
     public void voegComponentToe(int Component,Werkveld werkveld, Server s1) {
-        // Hier het zelfde concept als de functie hierboven, alleen hier zijn de aantal verschillende componenten van deze soort minder (precies 1)
+    //Kijkt naar het meegegeven component nummer, die gekozen is in het serverkeuze dialoog, daarna voegt hij de bijbehorende server toe. 
         if(Component != 0) {
             if(Component == 1) {
                 this.getSamenstelling().add(s1);
@@ -62,7 +62,7 @@ public class Configuratie {
     }
     
     public void voegComponentToe(int Component,Werkveld werkveld, Server s1, Server s2, Server s3) {
-
+    //Kijkt naar het meegegeven component nummer, die gekozen is in het serverkeuze dialoog, daarna voegt hij de bijbehorende server toe. 
         if(Component != 0) {
             if(Component == 1) {
                 this.getSamenstelling().add(s1);
