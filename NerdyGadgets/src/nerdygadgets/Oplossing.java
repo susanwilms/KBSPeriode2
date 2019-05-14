@@ -133,7 +133,7 @@ public class Oplossing {
              // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan 
              uiteindelijkeOplossing.clear();
                    // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
-                   for(Server server2 : oplossing){
+               for(Server server2 : oplossing){
                       uiteindelijkeOplossing.add(server2);
                    }
                // de prijs berekenen 

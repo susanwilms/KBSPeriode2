@@ -149,16 +149,18 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Optimaliseer) {
+            //Berekenen optimale oplossing.
             if(getPercentage() != 0 ){
+                //Als het percentage niet 0 is wordt de optimale oplossing berekent en kan het scherm verdwijnen. 
                 this.setVisible(false);
             Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer, getPercentage());
             oplossing.berekenBesteOplossing(besteOplossing, webservers);
             besteOplossing = oplossing.getOplossing();
-            
             for(Server server : besteOplossing){
                 System.out.println(server.getNaam());
             }
             } else {
+                // als het percentage wel  is moet er een foutmelding worden weergegegeven
                System.out.println("Vul een percentage in!");
             }
             
@@ -167,6 +169,8 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
     
     public double getPercentage(){
         double percentage = 0;
+        // Als er geen percentage is ingevoerd kan het percentage niet worden opgehaald 
+        // uit de PercentageTF. Dit moet dus worden voorkomen met een if-loop. 
         if (!PercentageTF.getText().equals("")){
             percentage = Double.parseDouble(PercentageTF.getText());
             percentage = percentage / 100;
