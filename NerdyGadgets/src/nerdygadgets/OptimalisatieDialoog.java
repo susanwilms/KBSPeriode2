@@ -28,13 +28,13 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
     private JLabel      GewenstePercentage              = new JLabel    ("Gewenste percentage: ");
     private JTextField  PercentageTF                    = new JTextField(500);
     private JLabel      Componenten                     = new JLabel    ("Voorgedefinieerde componenten: "); 
-    private JCheckBox   DBbalancingServer               = new JCheckBox ("Database balancing server");
+    private JLabel      DBbalancingServer               = new JLabel ("Databaseserver");
     private JTextField  AantalDBbalancingServers        = new JTextField(2);
-    private JCheckBox   DBloadBalancingServer           = new JCheckBox ("Database loadbalancing server");
+    private JLabel      DBloadBalancingServer           = new JLabel ("Databaseloadbalancer");
     private JTextField  AantalDBloadBalancingServers    = new JTextField(2);
-    private JCheckBox   PFsenseRouter                   = new JCheckBox ("PFsense router");
+    private JLabel      PFsenseRouter                   = new JLabel ("PFsense router");
     private JTextField  AantalPFsenseRouters            = new JTextField(2);
-    private JCheckBox   Webserver                       = new JCheckBox ("Webserver");
+    private JLabel      Webserver                       = new JLabel ("Webserver");
     private JTextField  AantalWebservers                = new JTextField(2);
     private JButton     Optimaliseer                    = new JButton   ("Optimaliseer");
    
