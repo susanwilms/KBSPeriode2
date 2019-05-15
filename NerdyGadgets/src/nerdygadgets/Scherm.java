@@ -80,10 +80,7 @@ public class Scherm extends JFrame implements ActionListener {
                 setResizable(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.getContentPane().setBackground(Color.WHITE);
-                
-                
-                
-                
+               
                 //Geef iedere component zijn plek waar hij moet staan
                 Componenten.setBounds(10, 10, 200, 20);
                 webserver.setBounds(10, 50, 200, 75);
@@ -172,6 +169,7 @@ public class Scherm extends JFrame implements ActionListener {
                 add(DBServer);
                 add(DBBalancer);
                 add(Firewall);
+                
                 add(Beschikbaarheid);
                 add(Kosten);
                 add(Openen);
@@ -180,9 +178,12 @@ public class Scherm extends JFrame implements ActionListener {
                 add(Monitoring);
                 add(Naam);
                 add(NaamTF);
+                
                 add(werkveld);
                 //Voeg panel als laatste toe anders zijn de andere componenten niet zichtbaar
                 add(p);
+                
+                
                 
 		// hier komen de controls
 		
