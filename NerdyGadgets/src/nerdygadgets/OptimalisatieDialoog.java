@@ -155,9 +155,6 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
             if(besteOplossing.isEmpty()){
                 System.out.println("Geen oplossing gevonden!");
             }
-            for(Server server : besteOplossing){
-                System.out.println(server.getNaam());
-            }
             } else {
                 // als het percentage wel  is moet er een foutmelding worden weergegegeven
                System.out.println("Vul een percentage in!");
@@ -191,5 +188,9 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
             aantalDatabaseservers = Integer.parseInt(aantalDatabaseserversTextfield.getText());
         }
         return aantalDatabaseservers;
+    }
+    
+    public ArrayList<Server> getOptimalisatie(){
+        return besteOplossing;
     }
 }
