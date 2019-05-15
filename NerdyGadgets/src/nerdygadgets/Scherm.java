@@ -59,7 +59,7 @@ public class Scherm extends JFrame implements ActionListener {
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
-                        DBloadBalancer DBloadBalancer, Oplossing oplossing) {
+                        DBloadBalancer DBloadBalancer) {
             this.ws1 = ws1;
             this.ws2 = ws2;
             this.ws3 = ws3;
@@ -240,17 +240,15 @@ public class Scherm extends JFrame implements ActionListener {
         
         if(e.getSource() == Optimalisatie) {
             ArrayList<Server> test = new ArrayList<>();
-            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this);
+            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
-            ArrayList<Server> besteOplossing = new ArrayList<>();
+           /* ArrayList<Server> besteOplossing = new ArrayList<>();
             oplossing.berekenBesteOplossing(besteOplossing, webservers);
             test = oplossing.getOplossing();
+            */
+            // De array van de optimale waarde wordt geprint
             
-            System.out.println("VANUIT SCHERM");
-            for(Server server : test){
-                System.out.println(server.getNaam());
-            }
         }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {
