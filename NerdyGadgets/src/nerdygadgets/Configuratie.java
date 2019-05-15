@@ -44,6 +44,12 @@ public class Configuratie {
             System.out.println(test.toString());
         }
     }
+    
+    // functie berekening
+    public int Berekening(){
+        // pseudocode
+        return 2;
+    }
    
     public void voegComponentToe(int Component,Werkveld werkveld, Server s1) {
     //Kijkt naar het meegegeven component nummer, die gekozen is in het serverkeuze dialoog, daarna voegt hij de bijbehorende server toe. 
@@ -70,37 +76,7 @@ public class Configuratie {
             }
         } 
     }
-   
-    public void voegComponentToe(ArrayList<Server> servers, Werkveld werkveld, Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1, DatabaseServer ds2, DatabaseServer ds3, PFsense pfsense, DBloadBalancer dbloadbalancer){
-        for(Server server : servers){
-            if(server.equals(ws1)){
-                System.out.println("test");
-                samenstelling.add(ws1);
-                werkveld.lijst.add(ws1);
-            } else if(server.equals(ws2)){
-                this.getSamenstelling().add(ws2);
-                werkveld.lijst.add(ws2);
-            } else if(server.equals(ws3)){
-                this.getSamenstelling().add(ws3);
-                werkveld.lijst.add(ws3);
-            } else if(server.equals(ds1)){
-                this.getSamenstelling().add(ds1);
-                werkveld.lijst.add(ds1);
-            } else if(server.equals(ds2)){
-                this.getSamenstelling().add(ds2);
-                werkveld.lijst.add(ds2);
-            } else if(server.equals(ds3)){
-                this.getSamenstelling().add(ds3);
-                werkveld.lijst.add(ds3);
-            } else if(server.equals(pfsense)){
-                this.getSamenstelling().add(pfsense);
-                werkveld.lijst.add(pfsense);
-            } else if(server.equals(dbloadbalancer)){
-                this.getSamenstelling().add(dbloadbalancer);
-                werkveld.lijst.add(dbloadbalancer);
-            }
-        }
-    }
+    
     public ArrayList<Server> stringToComponent(ArrayList<String> ArrayStrings,Werkveld werkveld, Server ws1, Server ws2, Server ws3, Server ds1, Server ds2, Server ds3, Server firewall, Server dbbalanceloader) {
         ArrayList<Server> ArrayComponenten = new ArrayList<>();
         //Het component wordt opgehaald als string uit de database, deze methode leest de naam van de server en voegt de bijbehorende server toe. Daarna geeft hij een ArrayList met servers terug.
