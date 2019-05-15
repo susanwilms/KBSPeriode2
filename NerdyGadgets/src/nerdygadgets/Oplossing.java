@@ -24,14 +24,15 @@ public class Oplossing {
     private int                 prijsBesteOplossing;
     private double              percentageWebServers;
     private double              percentageDatabaseServers;
-    //private int                 aantalWebservers;
-    //private int                 aantalDatabaseservers;
-    
+    private int                 maximaalAantalWebservers;
+    private int                 maximaalAantalDatabaseservers;
+    private int                 aantalWebserversToegevoegd = 0;
+    private int                 aantalDatabaseserversToegevoegd = 0;
     
     public Oplossing(   Webserver ws1, Webserver ws2, Webserver ws3,
                         DatabaseServer ds1, DatabaseServer ds2, DatabaseServer ds3,
-                        PFsense pfsense, DBloadBalancer dbloadbalancer, double beschikbaarheidDoel/*,
-                        int aantalWebservers, int aantalDatabaseservers*/){
+                        PFsense pfsense, DBloadBalancer dbloadbalancer, double beschikbaarheidDoel,
+                        int aantalWebservers, int aantalDatabaseservers){
         
         // ArrayList met alle webservers maken
         webserverArray          = new ArrayList<>();
@@ -49,8 +50,8 @@ public class Oplossing {
         this.pfsense            = pfsense;
         this.dbloadbalancer     = dbloadbalancer;
         this.beschikbaarheidDoel= beschikbaarheidDoel;
-        //this.aantalWebservers = aantalWebservers;
-        //this.aantalDatabaseservers = aantalDatabaseservers;
+        maximaalAantalWebservers = aantalWebservers;
+        maximaalAantalDatabaseservers = aantalDatabaseservers;
         prijsBesteOplossing     = 0;
     }
     
@@ -123,7 +124,8 @@ public class Oplossing {
     
     // Functie om de beste oplossing te berekenen (recursieve backtracking)
     public  void berekenBesteOplossing(ArrayList<Server> oplossing, ArrayList<Server> servers){
-       try {
+       if(maximaalAantalWebservers == 0 && maximaalAantalDatabaseservers == 0){
+        try {
         // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
@@ -175,7 +177,132 @@ public class Oplossing {
            System.out.println("Geen oplossing gevonden");
            System.exit(0);
        }
-        
+       } else if(maximaalAantalDatabaseservers == 0){
+           try {
+        // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
+        if(oplossing.isEmpty()){
+           oplossing.add(pfsense);
+           oplossing.add(dbloadbalancer);
+        }
+        // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
+        for(Server server : servers){
+           oplossing.add(server);
+           //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
+           if(server instanceof Webserver){
+               aantalWebserversToegevoegd++;
+               System.out.println(aantalWebserversToegevoegd);
+               // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+           } else{
+               aantalDatabaseserversToegevoegd++;
+               System.out.println(aantalDatabaseserversToegevoegd);
+           }
+            // voldoet de oplossing?
+            // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing? 
+           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing ||prijsBesteOplossing == 0)){
+             // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan 
+             uiteindelijkeOplossing.clear();
+                   // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
+               for(Server server2 : oplossing){
+                      uiteindelijkeOplossing.add(server2);
+                   }
+               // de prijs berekenen 
+               prijsBesteOplossing = berekenPrijs(oplossing);
+           }
+           
+           // is de beschikbaarheid van de oplossing kleiner dan het minimale doel dat we willen?
+           else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
+               // kiezen of webserver / databaseserver wordt toegevoegd
+               // percentage van de webservers laten uitrekenen
+               percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
+               // percentage van de databaseservers laten uitrekenen
+               percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
+               // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
+               // en als het aantal toegevoegde webservers lager is dan het maximaal aantal webservers dat is meegegeven in het dialoog
+               if(percentageWebServers < percentageDatabaseServers && aantalWebserversToegevoegd < maximaalAantalWebservers){
+                   // webserver toevoegen aan de webserverarray
+                   berekenBesteOplossing(oplossing, webserverArray);
+               // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
+               } else {
+                   // databaseserver toevoegen aan de dbserverArray
+                   berekenBesteOplossing(oplossing, dbserverArray);                   
+               }
+           } 
+           
+           // is de prijs hogter dan de prijs van de tot nu toe beste oplossing (en niet gelijk aan nul)?
+           else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0){
+           // niets doen omdat de oplossing te duur is, hij gaat dan automatisch opnieuw in de loop. 
+           }
+           // de oplossing verwijderen
+           oplossing.remove(oplossing.size()-1);
+       }
+       } catch (java.lang.StackOverflowError error) {
+           System.out.println("Geen oplossing gevonden");
+           System.exit(0);
+       }
+       } else {
+           try {
+        // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
+        if(oplossing.isEmpty()){
+           oplossing.add(pfsense);
+           oplossing.add(dbloadbalancer);
+        }
+        // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
+        for(Server server : servers){
+           oplossing.add(server);
+           //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
+           if(server instanceof Webserver){
+               aantalWebserversToegevoegd++;
+               System.out.println(aantalWebserversToegevoegd);
+               // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+           } else{
+               aantalDatabaseserversToegevoegd++;
+               System.out.println(aantalDatabaseserversToegevoegd);
+           }
+            // voldoet de oplossing?
+            // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing? 
+           if(berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing ||prijsBesteOplossing == 0)){
+             // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan 
+             uiteindelijkeOplossing.clear();
+                   // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
+               for(Server server2 : oplossing){
+                      uiteindelijkeOplossing.add(server2);
+                   }
+               // de prijs berekenen 
+               prijsBesteOplossing = berekenPrijs(oplossing);
+           }
+           
+           // is de beschikbaarheid van de oplossing kleiner dan het minimale doel dat we willen?
+           else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel){
+               // kiezen of webserver / databaseserver wordt toegevoegd
+               // percentage van de webservers laten uitrekenen
+               percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
+               // percentage van de databaseservers laten uitrekenen
+               percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
+               // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
+               // en als het aantal toegevoegde webservers lager is dan het maximaal aantal webservers dat is meegegeven in het dialoog
+               if(percentageWebServers < percentageDatabaseServers && aantalWebserversToegevoegd < maximaalAantalWebservers){
+                   // webserver toevoegen aan de webserverarray
+                   berekenBesteOplossing(oplossing, webserverArray);
+               // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
+               // en als het maximale aantal databaseservers nog niet is bereikt
+               } else if (aantalDatabaseserversToegevoegd < maximaalAantalDatabaseservers){
+                   // databaseserver toevoegen aan de dbserverArray
+                   berekenBesteOplossing(oplossing, dbserverArray);                   
+               }
+           } 
+           
+           // is de prijs hogter dan de prijs van de tot nu toe beste oplossing (en niet gelijk aan nul)?
+           else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0){
+           // niets doen omdat de oplossing te duur is, hij gaat dan automatisch opnieuw in de loop. 
+           }
+           // de oplossing verwijderen
+           oplossing.remove(oplossing.size()-1);
+       }
+       } catch (java.lang.StackOverflowError error) {
+           System.out.println("Geen oplossing gevonden");
+           System.exit(0);
+       }
+       }
     }
     
     // functie om de oplossing te getten

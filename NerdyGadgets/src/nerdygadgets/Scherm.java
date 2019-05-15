@@ -59,7 +59,7 @@ public class Scherm extends JFrame implements ActionListener {
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
-                        DBloadBalancer DBloadBalancer, Oplossing oplossing) {
+                        DBloadBalancer DBloadBalancer) {
             this.ws1 = ws1;
             this.ws2 = ws2;
             this.ws3 = ws3;

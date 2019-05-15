@@ -29,13 +29,13 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
     private JTextField  PercentageTF                    = new JTextField(500);
     private JLabel      Componenten                     = new JLabel    ("Voorgedefinieerde componenten: "); 
     private JLabel      databaseServer                  = new JLabel ("Databaseserver");
-    private JTextField  AantalDBbalancingServers        = new JTextField(2);
+    private JTextField  aantalDatabaseserversTextfield          = new JTextField(2);
     //private JLabel      DBloadbalancer                   = new JLabel ("Databaseloadbalancer");
     //private JTextField  AantalDBloadBalancingServers    = new JTextField(2);
    // private JLabel      PFsenseRouter                   = new JLabel ("PFsense router");
     //private JTextField  AantalPFsenseRouters            = new JTextField(2);
     private JLabel      Webserver                       = new JLabel ("Webserver");
-    private JTextField  AantalWebservers                = new JTextField(2);
+    private JTextField  aantalWebserversTextfield               = new JTextField(2);
     private JButton     Optimaliseer                    = new JButton   ("Optimaliseer");
    
     private ArrayList<Server> webservers                = new ArrayList<>();
@@ -65,13 +65,13 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         PercentageTF.setBounds                  (275, 80, 265, 20);
         Componenten.setBounds                   (10, 155, 275, 20);
         databaseServer.setBounds             (275, 140, 230, 20);
-        AantalDBbalancingServers.setBounds      (505, 140, 35, 20);
+        aantalDatabaseserversTextfield.setBounds      (505, 140, 35, 20);
         //DBloadBalancingServer.setBounds         (275, 140, 230, 20);
         //AantalDBloadBalancingServers.setBounds  (505, 140, 35, 20);
         //PFsenseRouter.setBounds                 (275, 170, 230, 20);
         //AantalPFsenseRouters.setBounds          (505, 170, 35, 20);
         Webserver.setBounds                     (275, 170, 230, 20);
-        AantalWebservers.setBounds              (505, 170, 35, 20);
+        aantalWebserversTextfield.setBounds              (505, 170, 35, 20);
         Optimaliseer.setBounds                  (420, 230, 120, 40);
         
         
@@ -81,27 +81,27 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         PercentageTF.                   setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Componenten.                    setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         databaseServer.              setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        AantalDBbalancingServers.       setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        aantalDatabaseserversTextfield.       setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //DBloadBalancingServer.          setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //AantalDBloadBalancingServers.   setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //PFsenseRouter.                  setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //AantalPFsenseRouters.           setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Webserver.                      setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        AantalWebservers.               setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        aantalWebserversTextfield.               setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Optimaliseer.                   setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         
         Header.setOpaque(true);
         Header.setBackground(new Color(102,255,255));
         PercentageTF.setOpaque(true);
         PercentageTF.setBackground(new Color(204,255,255));
-        AantalDBbalancingServers.setOpaque(true);
-        AantalDBbalancingServers.setBackground(new Color(204,255,255));
+        aantalDatabaseserversTextfield.setOpaque(true);
+        aantalDatabaseserversTextfield.setBackground(new Color(204,255,255));
         //AantalDBloadBalancingServers.setOpaque(true);
         //AantalDBloadBalancingServers.setBackground(new Color(204,255,255));
         //AantalPFsenseRouters.setOpaque(true);
         //AantalPFsenseRouters.setBackground(new Color(204,255,255));
-        AantalWebservers.setOpaque(true);
-        AantalWebservers.setBackground(new Color(204,255,255));
+        aantalWebserversTextfield.setOpaque(true);
+        aantalWebserversTextfield.setBackground(new Color(204,255,255));
         Optimaliseer.setOpaque(true);
         Optimaliseer.setBackground(new Color(204,255,255));
 
@@ -117,13 +117,13 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
         add(PercentageTF);
         add(Componenten);
         add(databaseServer);
-        add(AantalDBbalancingServers);
+        add(aantalDatabaseserversTextfield);
         //add(DBloadBalancingServer);
         //add(AantalDBloadBalancingServers);
         //add(PFsenseRouter);
         //add(AantalPFsenseRouters);
         add(Webserver);
-        add(AantalWebservers);
+        add(aantalWebserversTextfield);
         add(Optimaliseer);
         
         //webservers worden toegevoegd aan Array met webservers
@@ -149,7 +149,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
             if(getPercentage() != 0 ){
                 //Als het percentage niet 0 is wordt de optimale oplossing berekent en kan het scherm verdwijnen. 
                 this.setVisible(false);
-            Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer, getPercentage());
+            Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer, getPercentage(), getAantalWebservers(), getAantalDatabaseservers());
             oplossing.berekenBesteOplossing(besteOplossing, webservers);
             besteOplossing = oplossing.getOplossing();
             for(Server server : besteOplossing){
@@ -172,5 +172,21 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
             percentage = percentage / 100;
         }
         return percentage;
+    }
+    
+    public int getAantalWebservers(){
+        int aantalWebservers = 0;
+        if(!aantalWebserversTextfield.getText().equals("")){
+            aantalWebservers = Integer.parseInt(aantalWebserversTextfield.getText());
+        }
+        return aantalWebservers;
+    }
+    
+    public int getAantalDatabaseservers(){
+        int aantalDatabaseservers = 0;
+        if(!aantalDatabaseserversTextfield.getText().equals("")){
+            aantalDatabaseservers = Integer.parseInt(aantalDatabaseserversTextfield.getText());
+        }
+        return aantalDatabaseservers;
     }
 }
