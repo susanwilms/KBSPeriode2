@@ -11,6 +11,7 @@ package nerdygadgets;
  */
 public class DBloadBalancer extends Server{
     
+    // Loadbalancer aangemaakt.
     public DBloadBalancer(String naam, int prijs, double beschikbaarheid){
         super(naam, prijs, beschikbaarheid);
     }
