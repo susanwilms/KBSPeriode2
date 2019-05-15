@@ -152,6 +152,9 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener{
             Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer, getPercentage(), getAantalWebservers(), getAantalDatabaseservers());
             oplossing.berekenBesteOplossing(besteOplossing, webservers);
             besteOplossing = oplossing.getOplossing();
+            if(besteOplossing.isEmpty()){
+                System.out.println("Geen oplossing gevonden!");
+            }
             for(Server server : besteOplossing){
                 System.out.println(server.getNaam());
             }

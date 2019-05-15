@@ -130,6 +130,8 @@ public class Oplossing {
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
            oplossing.add(dbloadbalancer);
+           aantalWebserversToegevoegd = 0;
+           aantalDatabaseserversToegevoegd = 0; 
         }
         // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
         for(Server server : servers){
@@ -183,6 +185,8 @@ public class Oplossing {
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
            oplossing.add(dbloadbalancer);
+           aantalWebserversToegevoegd = 0;
+           aantalDatabaseserversToegevoegd = 0; 
         }
         // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
         for(Server server : servers){
@@ -190,11 +194,9 @@ public class Oplossing {
            //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
            if(server instanceof Webserver){
                aantalWebserversToegevoegd++;
-               System.out.println(aantalWebserversToegevoegd);
                // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
            } else{
                aantalDatabaseserversToegevoegd++;
-               System.out.println(aantalDatabaseserversToegevoegd);
            }
             // voldoet de oplossing?
             // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing? 
@@ -234,6 +236,12 @@ public class Oplossing {
            }
            // de oplossing verwijderen
            oplossing.remove(oplossing.size()-1);
+            if(server instanceof Webserver){
+               aantalWebserversToegevoegd--;
+               // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+           } else{
+               aantalDatabaseserversToegevoegd--;
+           }
        }
        } catch (java.lang.StackOverflowError error) {
            System.out.println("Geen oplossing gevonden");
@@ -245,6 +253,8 @@ public class Oplossing {
         if(oplossing.isEmpty()){
            oplossing.add(pfsense);
            oplossing.add(dbloadbalancer);
+           aantalWebserversToegevoegd = 0;
+           aantalDatabaseserversToegevoegd = 0; 
         }
         // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
         for(Server server : servers){
@@ -252,11 +262,9 @@ public class Oplossing {
            //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
            if(server instanceof Webserver){
                aantalWebserversToegevoegd++;
-               System.out.println(aantalWebserversToegevoegd);
                // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
            } else{
                aantalDatabaseserversToegevoegd++;
-               System.out.println(aantalDatabaseserversToegevoegd);
            }
             // voldoet de oplossing?
             // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing? 
@@ -297,6 +305,12 @@ public class Oplossing {
            }
            // de oplossing verwijderen
            oplossing.remove(oplossing.size()-1);
+            if(server instanceof Webserver){
+               aantalWebserversToegevoegd--;
+               // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+           } else{
+               aantalDatabaseserversToegevoegd--;
+           }
        }
        } catch (java.lang.StackOverflowError error) {
            System.out.println("Geen oplossing gevonden");
