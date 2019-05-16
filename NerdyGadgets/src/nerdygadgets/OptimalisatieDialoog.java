@@ -29,7 +29,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
     private JTextField PercentageTF = new JTextField(500);
     private JLabel Componenten = new JLabel("Voorgedefinieerde componenten: ");
     private JLabel databaseServer = new JLabel("Databaseserver");
-    private JLabel geenOplossingLabel = new JLabel("Geen oplossing gevonden!");
+    private JLabel geenOplossingLabel = new JLabel("");
     private JTextField aantalDatabaseserversTextfield = new JTextField(2);
     //private JLabel      DBloadbalancer                   = new JLabel ("Databaseloadbalancer");
     //private JTextField  AantalDBloadBalancingServers    = new JTextField(2);
@@ -74,7 +74,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
         Webserver.setBounds(275, 170, 230, 20);
         aantalWebserversTextfield.setBounds(505, 170, 35, 20);
         Optimaliseer.setBounds(420, 230, 120, 40);
-        geenOplossingLabel.setBounds(210, 120, 275, 20);
+        geenOplossingLabel.setBounds(200, 110, 275, 20);
 
         Header.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -91,7 +91,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
         aantalWebserversTextfield.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         Optimaliseer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         geenOplossingLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        geenOplossingLabel.setForeground(new Color(102, 255, 255));
+        geenOplossingLabel.setForeground(new Color(0, 128, 255));
 
         Header.setOpaque(true);
         Header.setBackground(new Color(102, 255, 255));
@@ -155,11 +155,11 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
                 try {
                     besteOplossing = oplossing.berekenBesteOplossing(getPercentage(), getAantalWebservers(), getAantalDatabaseservers());
                 } catch (java.lang.StackOverflowError error) {
-                    System.out.println("Geen oplossing gevonden");
+                    geenOplossingLabel.setText("Geen oplossing gevonden!");
                 }
             } else {
                 // als het percentage wel  is moet er een foutmelding worden weergegegeven
-                System.out.println("Vul een percentage in!");
+                geenOplossingLabel.setText("Vul een percentage in!");
             }
 
         }
