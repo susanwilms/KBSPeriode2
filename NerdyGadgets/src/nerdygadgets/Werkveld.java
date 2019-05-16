@@ -7,14 +7,13 @@ package nerdygadgets;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -24,7 +23,6 @@ import javax.swing.JPanel;
 public class Werkveld extends JPanel {
     public ArrayList<Server> lijst = new ArrayList<>();
     private BufferedImage webserver, dbserver, dbbalanceloader, firewall;
-    private JLabel succesmessage = new JLabel("hoidoei");
     
     public Werkveld(){
         this.setPreferredSize(new Dimension(560,607));

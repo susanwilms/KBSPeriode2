@@ -40,6 +40,7 @@ public class Scherm extends JFrame implements ActionListener {
     private JButton Opslaan = new JButton("Opslaan");
     private JButton Optimalisatie = new JButton("Optimalisatie");
     private JButton Monitoring = new JButton("Monitoring");
+    private JButton verwijderOntwerp = new JButton("Verwijder Ontwerp");
     private JLabel Naam = new JLabel("Naam project:");
     private JTextField NaamTF = new JTextField(500);
     private JPanel p = new JPanel(null);
@@ -90,10 +91,11 @@ public class Scherm extends JFrame implements ActionListener {
                 Firewall.setBounds(10, 305, 200, 75);
                 Beschikbaarheid.setBounds(10, 400, 200, 15);
                 Kosten.setBounds(10,420,200,15);
-                Openen.setBounds(10, 455, 200, 30);
-                Opslaan.setBounds(10, 495, 200, 30);
-                Optimalisatie.setBounds(10, 535, 200, 30);
-                Monitoring.setBounds(10, 575, 200, 30);
+                Openen.setBounds(10, 440, 200, 30);
+                Opslaan.setBounds(10, 477, 200, 30);
+                Optimalisatie.setBounds(10, 514, 200, 30);
+                Monitoring.setBounds(10, 551, 200, 30);
+                verwijderOntwerp.setBounds(10, 588, 200, 30);
                 Naam.setBounds(230,10,100,20);
                 NaamTF.setBounds(330,13,545,20);
                 p.setBounds (0,0,220,800);
@@ -112,7 +114,8 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Opslaan.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Optimalisatie.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-                Monitoring.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));       
+                Monitoring.setFont(new Font("Helvetica Neue", Font.PLAIN, 14)); 
+                verwijderOntwerp.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
                 
                 //Zorgt ervoor dat de inhoud van de knoppen links weergeven wordt
@@ -132,6 +135,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setBackground(new Color(204,255,255));
                 Optimalisatie.setBackground(new Color(204,255,255));
                 Monitoring.setBackground(new Color(204,255,255));
+                verwijderOntwerp.setBackground(new Color(204, 255, 255));
                 NaamTF.setBackground(new Color(204,255,255));
 
                 
@@ -144,6 +148,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Openen.setBorder(null);
                 Optimalisatie.setBorder(null);
                 Monitoring.setBorder(null);
+                verwijderOntwerp.setBorder(null);
                 NaamTF.setBorder(null);
                 
                 
@@ -162,6 +167,7 @@ public class Scherm extends JFrame implements ActionListener {
                 Firewall.addActionListener(this);
                 Openen.addActionListener(this);
                 Monitoring.addActionListener(this);
+                verwijderOntwerp.addActionListener(this);
 
                 
                 //Voegt alle componenten toe 
@@ -177,6 +183,7 @@ public class Scherm extends JFrame implements ActionListener {
                 add(Opslaan);
                 add(Optimalisatie);
                 add(Monitoring);
+                add(verwijderOntwerp);
                 add(Naam);
                 add(NaamTF);
                 
@@ -251,7 +258,11 @@ public class Scherm extends JFrame implements ActionListener {
             for(Server server : oplossing){
                 werkveld.lijst.add(server);
             }
-        }   
+        }
+        if(e.getSource() == verwijderOntwerp){
+            werkveld.lijst.clear();
+            ontwerp.clearSamenstelling();
+        }
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {
         Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage()*0 + "%");

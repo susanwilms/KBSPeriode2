@@ -177,4 +177,8 @@ public class Configuratie {
         this.samenstelling = samenstelling;
     }
     
+    public void clearSamenstelling(){
+        samenstelling.clear();
+    }
+    
 }
