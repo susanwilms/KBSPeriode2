@@ -12,6 +12,9 @@ package nerdygadgets;
 public class SSHverbinding {
     // componenten aanmaken
     
+    public SSHverbinding(){
+        
+    }
     // voor alle binnenkomende componenten
     // FysiekComponent component = new FysiekComponent(alle informatie om component aan te maken);
 }

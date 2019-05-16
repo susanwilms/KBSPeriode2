@@ -172,4 +172,9 @@ public class Configuratie {
         //Geef het totaal aantal terug
         return totaal;
     }
+
+    public void setSamenstelling(ArrayList<Server> samenstelling) {
+        this.samenstelling = samenstelling;
+    }
+    
 }

@@ -56,6 +56,7 @@ public class Scherm extends JFrame implements ActionListener {
     private Database connectie = new Database();
     private Oplossing oplossing;
     private ArrayList<Server> webservers = new ArrayList<>();
+    private Configuratie optimaleOplossing;
     
 	public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
                         DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
@@ -244,11 +245,12 @@ public class Scherm extends JFrame implements ActionListener {
             OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
+            werkveld.lijst.clear();
             oplossing = dialoog.getOptimalisatie();
+            ontwerp.setSamenstelling(oplossing);
             for(Server server : oplossing){
                 werkveld.lijst.add(server);
             }
-            
         }   
     Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
     if(ontwerp.BerekenPercentage()*100 == 100) {
