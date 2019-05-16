@@ -17,4 +17,7 @@ public class SSHverbinding {
     }
     // voor alle binnenkomende componenten
     // FysiekComponent component = new FysiekComponent(alle informatie om component aan te maken);
+    
+    //commands:
+    //Diskruimte # top
 }
