@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author mbred
  */
-public class Tests {
+public class Main {
 
     /**
      * @param args the command line arguments
