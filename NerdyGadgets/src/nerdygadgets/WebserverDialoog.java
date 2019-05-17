@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * @author mbred
  */
-public class WebserverGUI extends JDialog implements ActionListener{
+public class WebserverDialoog extends JDialog implements ActionListener{
     private JLabel Selecteren = new JLabel("Selecteren");
     private JPanel Boven = new JPanel(null);
     private JButton Sluiten = new JButton("Bevestig");
@@ -36,7 +36,7 @@ public class WebserverGUI extends JDialog implements ActionListener{
     private String type;
     
     
-    public WebserverGUI(JFrame frame, String type) {
+    public WebserverDialoog(JFrame frame, String type) {
         super(frame, true);
         setSize(250,150);
         setLayout(null);

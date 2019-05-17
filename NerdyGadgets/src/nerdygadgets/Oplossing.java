@@ -16,7 +16,7 @@ public class Oplossing {
     private ArrayList<Server> oplossing = new ArrayList<Server>();
     private ArrayList<Server> uiteindelijkeOplossing = new ArrayList<>();
     private Webserver besteWebserver;
-    private DatabaseServer besteDbserver;
+    private Databaseserver besteDbserver;
     private ArrayList<Server> webserverArray;
     private ArrayList<Server> dbserverArray;
     private PFsense pfsense;
@@ -31,7 +31,7 @@ public class Oplossing {
     private int aantalDatabaseserversToegevoegd = 0;
 
     public Oplossing(Webserver ws1, Webserver ws2, Webserver ws3,
-            DatabaseServer ds1, DatabaseServer ds2, DatabaseServer ds3,
+            Databaseserver ds1, Databaseserver ds2, Databaseserver ds3,
             PFsense pfsense, DBloadBalancer dbloadbalancer) {
 
         // ArrayList met alle webservers maken
@@ -53,7 +53,7 @@ public class Oplossing {
     }
 
     // Functie om de beschikbaarheid van de webservers te berekenen
-    public double berekenBeschikbaarheidWebservers(ArrayList<Server> oplossing) {
+    private double berekenBeschikbaarheidWebservers(ArrayList<Server> oplossing) {
         // variabele beschikbaarheid aanmaken
         double beschikbaarheid = 1.0;
         // for loop iedere server in de oplossing in de formule te verwerken
@@ -70,12 +70,12 @@ public class Oplossing {
     }
 
     // functie om de beschikbaarheid van de databaseservers te berekenen
-    public double berekenBeschikbaarheidDbservers(ArrayList<Server> oplossing) {
+    private double berekenBeschikbaarheidDbservers(ArrayList<Server> oplossing) {
         // variabele beschikbaarheid aanmaken
         double beschikbaarheid = 1;
         // for loop iedere server in de oplossing in de formule te verwerken
         for (Server server : oplossing) {
-            if (server instanceof DatabaseServer) {
+            if (server instanceof Databaseserver) {
                 // gegeven formule uit de reader
                 beschikbaarheid *= (1 - server.getBeschikbaarheid());
             }
@@ -88,7 +88,7 @@ public class Oplossing {
 
     // Functie om de totale beschikbaarheid van de oplossing te berekenen
     // gebruikt de arraylist met daarin de oplossing
-    public double berekenTotaleBeschikbaarheid(ArrayList<Server> oplossing) {
+    private double berekenTotaleBeschikbaarheid(ArrayList<Server> oplossing) {
         // inititialiseren PFsense en DBloadbalancer
         double beschikbaarheidPFsense = 0;
         double beschikbaarheidDbloadbalancer = 0;
@@ -108,7 +108,7 @@ public class Oplossing {
     }
 
     // functie om de prijs te berekenen
-    public int berekenPrijs(ArrayList<Server> oplossing) {
+    private int berekenPrijs(ArrayList<Server> oplossing) {
         // de variabele prijs initialiseren
         int prijs = 0;
         // for loop op de prijzen van alle items in de array oplossing bij elkaar op te tellen
@@ -305,11 +305,5 @@ public class Oplossing {
                 System.exit(0);
             }
         }
-    }
-
-    // functie om de oplossing te getten
-    public ArrayList<Server> getOplossing() {
-        // de uiteindelijke (definitieve) oplossing returnen
-        return uiteindelijkeOplossing;
     }
 }

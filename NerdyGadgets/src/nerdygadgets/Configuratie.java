@@ -15,12 +15,6 @@ public class Configuratie {
 
     // variabelen voor configuratie
     private ArrayList<Server> samenstelling = new ArrayList<Server>();
-    private double percentageDoei;
-
-    // constructor die componenten zelf uitzoekt en optimaliseerd
-    public Configuratie(double percentageDoei) {
-        this.percentageDoei = percentageDoei;
-    }
 
     public Configuratie(ArrayList<Server> samenstelling) {
         this.samenstelling = samenstelling;
@@ -30,25 +24,9 @@ public class Configuratie {
         return samenstelling;
     }
 
-    public double getPercentageDoei() {
-        return percentageDoei;
-    }
-
     // constructor die gebruikt wordt bij het maken van een nieuw ontwerp
     public Configuratie() {
 
-    }
-
-    public void print() {
-        for (Server test : samenstelling) {
-            System.out.println(test.toString());
-        }
-    }
-
-    // functie berekening
-    public int Berekening() {
-        // pseudocode
-        return 2;
     }
 
     public void voegComponentToe(int Component, Werkveld werkveld, Server s1) {
@@ -130,7 +108,7 @@ public class Configuratie {
             if (component instanceof Webserver) {
                 webserverlijst.add(component.getBeschikbaarheid());
 
-            } else if (component instanceof DatabaseServer) {
+            } else if (component instanceof Databaseserver) {
                 databaseserverlijst.add(component.getBeschikbaarheid());
             } else if (component instanceof PFsense) {
                 firewall = component.getBeschikbaarheid();

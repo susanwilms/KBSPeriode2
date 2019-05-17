@@ -45,13 +45,13 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
     private Webserver ws1;
     private Webserver ws2;
     private Webserver ws3;
-    private DatabaseServer ds1;
-    private DatabaseServer ds2;
-    private DatabaseServer ds3;
+    private Databaseserver ds1;
+    private Databaseserver ds2;
+    private Databaseserver ds3;
     private ArrayList<Server> besteOplossing = new ArrayList<>();
 
-    public OptimalisatieDialoog(JFrame frame, Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
-            DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
+    public OptimalisatieDialoog(JFrame frame, Webserver ws1, Webserver ws2, Webserver ws3, Databaseserver ds1,
+            Databaseserver ds2, Databaseserver ds3, PFsense PFsense,
             DBloadBalancer DBloadBalancer) {
         super(frame, true);
         setSize(550, 300);

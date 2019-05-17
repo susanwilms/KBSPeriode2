@@ -46,9 +46,9 @@ public class Scherm extends JFrame implements ActionListener {
     private Webserver ws1;
     private Webserver ws2;
     private Webserver ws3;
-    private DatabaseServer ds1;
-    private DatabaseServer ds2;
-    private DatabaseServer ds3;
+    private Databaseserver ds1;
+    private Databaseserver ds2;
+    private Databaseserver ds3;
     private PFsense PFsense;
     private DBloadBalancer DBloadBalancer;
     private Configuratie ontwerp = new Configuratie();
@@ -58,8 +58,8 @@ public class Scherm extends JFrame implements ActionListener {
     private ArrayList<Server> webservers = new ArrayList<>();
     private Configuratie optimaleOplossing;
 
-    public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
-            DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
+    public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, Databaseserver ds1,
+            Databaseserver ds2, Databaseserver ds3, PFsense PFsense,
             DBloadBalancer DBloadBalancer) {
         this.ws1 = ws1;
         this.ws2 = ws2;
@@ -215,27 +215,27 @@ public class Scherm extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == webserver) {
-            WebserverGUI webserver = new WebserverGUI(this, "Webserver");
+            WebserverDialoog webserver = new WebserverDialoog(this, "Webserver");
             webserver.setLocation(900, 450);
             webserver.setVisible(true);
             ontwerp.voegComponentToe(webserver.WelkeWebserver, werkveld, ws1, ws2, ws3);
         }
 
         if (e.getSource() == DBServer) {
-            WebserverGUI DBserver = new WebserverGUI(this, "DBserver");
+            WebserverDialoog DBserver = new WebserverDialoog(this, "DBserver");
             DBserver.setLocation(900, 450);
             DBserver.setVisible(true);
             ontwerp.voegComponentToe(DBserver.WelkeDBserver, werkveld, ds1, ds2, ds3);
         }
         if (e.getSource() == DBBalancer) {
-            WebserverGUI DBloadbalancer = new WebserverGUI(this, "DBloadbalancer");
+            WebserverDialoog DBloadbalancer = new WebserverDialoog(this, "DBloadbalancer");
             DBloadbalancer.setLocation(900, 450);
             DBloadbalancer.setVisible(true);
             ontwerp.voegComponentToe(DBloadbalancer.WelkeDBloadbalancer, werkveld, DBloadBalancer);
         }
 
         if (e.getSource() == Firewall) {
-            WebserverGUI Firewall = new WebserverGUI(this, "Firewall");
+            WebserverDialoog Firewall = new WebserverDialoog(this, "Firewall");
             Firewall.setLocation(900, 450);
             Firewall.setVisible(true);
             ontwerp.voegComponentToe(Firewall.WelkeFirewall, werkveld, PFsense);

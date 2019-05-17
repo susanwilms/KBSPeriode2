@@ -59,7 +59,7 @@ public class Werkveld extends JPanel {
                 xwebserver += 100;
                 g.drawString(component.getNaam(), xstringweb, 90);
                 xstringweb += 100;
-            } else if (component instanceof DatabaseServer) {
+            } else if (component instanceof Databaseserver) {
                 g.drawImage(dbserver, xdbserver, 120, this);
                 xdbserver += 100;
                 g.drawString(component.getNaam(), xstringdb, 190);

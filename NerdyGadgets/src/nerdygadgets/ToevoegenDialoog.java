@@ -20,14 +20,14 @@ import javax.swing.JPanel;
  *
  * @author mbred
  */
-public class ToevoegenGUI extends JDialog implements ActionListener {
+public class ToevoegenDialoog extends JDialog implements ActionListener {
     private JLabel Selecteren = new JLabel("Selecteren");
     private JPanel Boven = new JPanel(null);
     private JButton Sluiten = new JButton("Bevestig");
     private JComboBox Selectie;
     
     
-    public ToevoegenGUI(JFrame frame, String type) {
+    public ToevoegenDialoog(JFrame frame, String type) {
         super(frame, true);
         setSize(500,300);
         setLayout(null);
