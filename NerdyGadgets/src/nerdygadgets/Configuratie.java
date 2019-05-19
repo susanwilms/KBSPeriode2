@@ -35,7 +35,8 @@ public class Configuratie {
         }
     }
 
-   
+
+ 
 
     public void voegComponentToe(int Component, Werkveld werkveld, Server s1) {
         //Kijkt naar het meegegeven component nummer, die gekozen is in het serverkeuze dialoog, daarna voegt hij de bijbehorende server toe.
@@ -57,13 +58,11 @@ public class Configuratie {
                 this.getSamenstelling().add(s2);
             } else if(Component == 3) {
                 this.getSamenstelling().add(s3);
-            }
-            
-         
+            }                     
         werkveld.lijst = this.getSamenstelling();
+        }
+    }
 
-    }
-    }
 
     public ArrayList<Server> stringToComponent(ArrayList<String> ArrayStrings, Werkveld werkveld, Server ws1, Server ws2, Server ws3, Server ds1, Server ds2, Server ds3, Server firewall, Server dbbalanceloader) {
         ArrayList<Server> ArrayComponenten = new ArrayList<>();
