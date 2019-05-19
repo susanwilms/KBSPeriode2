@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -20,12 +21,13 @@ import javax.swing.JPanel;
  * @author mbred
  */
 public class Werkveld extends JPanel {
+
     public ArrayList<Server> lijst = new ArrayList<>();
     private BufferedImage webserver, dbserver, dbbalanceloader, firewall;
-    
-    public Werkveld(){
-        this.setPreferredSize(new Dimension(560,607));
-        try{
+
+    public Werkveld() {
+        this.setPreferredSize(new Dimension(560, 607));
+        try {
             webserver = ImageIO.read(new File("src/nerdygadgets/Webserver.png"));
             dbserver = ImageIO.read(new File("src/nerdygadgets/Databaseserver.png"));
             dbbalanceloader = ImageIO.read(new File("src/nerdygadgets/Databasebalancing.png"));
@@ -34,15 +36,14 @@ public class Werkveld extends JPanel {
             System.out.println("Plaatje niet gevonden.");
         }
     }
-    
-    public void paintComponent(Graphics g) {
-	// teken de achtergrond
-	super.paintComponent(g);
 
-	// maak de achtergrond de goede kleur
-	setBackground(new Color(204,255,255));
-	
-        
+    public void paintComponent(Graphics g) {
+        // teken de achtergrond
+        super.paintComponent(g);
+
+        // maak de achtergrond de goede kleur
+        setBackground(new Color(204, 255, 255));
+
         int xwebserver = 20;
         int xdbserver = 20;
         int xdbloadbalancer = 20;
@@ -51,31 +52,38 @@ public class Werkveld extends JPanel {
         int xstringdb = 22;
         int xstringdbload = 5;
         int xstringfirewall = 25;
-        
-        for(Server component: lijst) {
-            if(component instanceof Webserver){
+
+        for (Server component : lijst) {
+            if (component instanceof Webserver) {
                 g.drawImage(webserver, xwebserver, 20, this);
-                xwebserver += 100;         
+                xwebserver += 100;
                 g.drawString(component.getNaam(), xstringweb, 90);
                 xstringweb += 100;
-            } else if(component instanceof DatabaseServer) {
+            } else if (component instanceof Databaseserver) {
                 g.drawImage(dbserver, xdbserver, 120, this);
                 xdbserver += 100;
-                g.drawString(component.getNaam(), xstringdb,190);
+                g.drawString(component.getNaam(), xstringdb, 190);
                 xstringdb += 100;
-            } else if(component instanceof DBloadBalancer) {
+            } else if (component instanceof DBloadBalancer) {
                 g.drawImage(dbbalanceloader, xdbloadbalancer, 220, this);
                 xdbloadbalancer += 100;
-                g.drawString(component.getNaam(), xstringdbload,290);
+                g.drawString(component.getNaam(), xstringdbload, 290);
                 xstringdbload += 100;
-            } else if(component instanceof PFsense) {
+            } else if (component instanceof PFsense) {
                 g.drawImage(firewall, xpfsense, 320, this);
                 xpfsense += 100;
-                g.drawString(component.getNaam(), xstringfirewall,390);
+                g.drawString(component.getNaam(), xstringfirewall, 390);
                 xstringfirewall += 100;
             }
-           
 
+        }
     }
-}   
+
+    public void addToLijst(Server server) {
+        lijst.add(server);
+    }
+
+    public void clearLijst() {
+        lijst.clear();
+    }
 }

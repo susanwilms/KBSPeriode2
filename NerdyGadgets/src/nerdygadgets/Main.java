@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author mbred
  */
-public class Tests {
+public class Main {
 
     /**
      * @param args the command line arguments
@@ -20,9 +20,9 @@ public class Tests {
         Webserver a = new Webserver("HAL9001W", 2200, 0.8);
         Webserver b = new Webserver("HAL9002W", 3200, 0.9);
         Webserver c = new Webserver("HAL9003W", 5100, 0.95);
-        DatabaseServer d = new DatabaseServer("HAL9001DB", 5100, 0.90);
-        DatabaseServer e = new DatabaseServer("HAL9002DB", 7700, 0.95);
-        DatabaseServer f = new DatabaseServer("HAL9003DB", 12200, 0.98);
+        Databaseserver d = new Databaseserver("HAL9001DB", 5100, 0.90);
+        Databaseserver e = new Databaseserver("HAL9002DB", 7700, 0.95);
+        Databaseserver f = new Databaseserver("HAL9003DB", 12200, 0.98);
         
 
 
@@ -31,7 +31,7 @@ public class Tests {
         
         Scherm test = new Scherm(a,b,c,d,e,f,g,h);
         ArrayList<Webserver> webservers = new ArrayList<>();
-        ArrayList<DatabaseServer> dbServers = new ArrayList<>();
+        ArrayList<Databaseserver> dbServers = new ArrayList<>();
         
         webservers.add(a);
         webservers.add(b);
