@@ -200,10 +200,12 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             if (dialoog.isBevestigd) {
+                NaamTF.setText(connectie.getOntwerpNaam(dialoog.OpenenID));
                 ArrayList<Server> Opslagcomponenten = ontwerp.stringToComponent(connectie.getComponenten(dialoog.OpenenID), werkveld, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
                 for (Server server : Opslagcomponenten) {
                     ontwerp.addToSamenstelling(server);
                     werkveld.addToLijst(server);
+                    dialoog.setVisible(false);
                 }
             }
         }
@@ -212,6 +214,7 @@ public class Scherm extends JFrame implements ActionListener {
             MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
             monitoringDialoog.setLocationRelativeTo(null);
             monitoringDialoog.setVisible(true);
+            ontwerp.print();
         }
 
         if (e.getSource() == webserver) {
@@ -256,7 +259,10 @@ public class Scherm extends JFrame implements ActionListener {
         if (e.getSource() == verwijderOntwerp) {
             werkveld.clearLijst();
             ontwerp.clearSamenstelling();
+            NaamTF.setText("");
         }
+        
+        
         Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
         if (ontwerp.BerekenPercentage() * 100 == 100) {
             Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage() * 0 + "%");
@@ -266,4 +272,5 @@ public class Scherm extends JFrame implements ActionListener {
         repaint();
 
     }
+    
 }

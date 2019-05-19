@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -90,9 +91,14 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Bevestig) {            
-            String opslagdatum = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-            connectie.insertinto(opslaanpercentage, opslaanprijs, opslaannaam, samenstelling);
+        if(e.getSource() == Bevestig) {
+            if(!connectie.checkNaam(opslaannaam)) {
+                String opslagdatum = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+                connectie.insertinto(opslaanpercentage, opslaanprijs, opslaannaam, samenstelling);
+            } else {
+                JOptionPane.showMessageDialog(this, "Niet opgeslagen. (Naam van ontwerp bestaat al)");
+            }
+            setVisible(false);
         
     }
 }

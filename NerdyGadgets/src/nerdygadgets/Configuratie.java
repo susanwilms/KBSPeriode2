@@ -80,9 +80,9 @@ public class Configuratie {
                 ArrayComponenten.add(ds2);
             } else if (ComponentenString.contains("HAL9003DB")) {
                 ArrayComponenten.add(ds3);
-            } else if (ComponentenString.contains("DBloadbalancer")) {
+            } else if (ComponentenString.contains("DB loadbalancer")) {
                 ArrayComponenten.add(dbbalanceloader);
-            } else if (ComponentenString.contains("Pfsense")) {
+            } else if (ComponentenString.contains("PFsense")) {
                 ArrayComponenten.add(firewall);
             }
 
