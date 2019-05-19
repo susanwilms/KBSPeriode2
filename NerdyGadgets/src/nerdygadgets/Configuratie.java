@@ -43,7 +43,6 @@ public class Configuratie {
         if (Component != 0) {
             if (Component == 1) {
                 this.getSamenstelling().add(s1);
-                werkveld.addToLijst(s1);
             }
         }
         werkveld.lijst = this.getSamenstelling();
