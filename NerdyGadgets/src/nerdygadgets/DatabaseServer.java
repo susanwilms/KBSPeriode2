@@ -9,12 +9,12 @@ package nerdygadgets;
  *
  * @author susanwilms
  */
-public class Databaseserver extends Server{
-    public Databaseserver(){
+public class DatabaseServer extends Server{
+    public DatabaseServer(){
         
     }
     
-    public Databaseserver(String naam, int prijs, double beschikbaarheid){
+    public DatabaseServer(String naam, int prijs, double beschikbaarheid){
         super(naam, prijs, beschikbaarheid);
     }
 }

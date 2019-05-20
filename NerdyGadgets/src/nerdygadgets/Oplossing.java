@@ -16,7 +16,7 @@ public class Oplossing {
     private ArrayList<Server> oplossing = new ArrayList<Server>();
     private ArrayList<Server> uiteindelijkeOplossing = new ArrayList<>();
     private Webserver besteWebserver;
-    private Databaseserver besteDbserver;
+    private DatabaseServer besteDbserver;
     private ArrayList<Server> webserverArray;
     private ArrayList<Server> dbserverArray;
     private PFsense pfsense;
@@ -31,7 +31,7 @@ public class Oplossing {
     private int aantalDatabaseserversToegevoegd = 0;
 
     public Oplossing(Webserver ws1, Webserver ws2, Webserver ws3,
-            Databaseserver ds1, Databaseserver ds2, Databaseserver ds3,
+            DatabaseServer ds1, DatabaseServer ds2, DatabaseServer ds3,
             PFsense pfsense, DBloadBalancer dbloadbalancer) {
 
         // ArrayList met alle webservers maken
@@ -75,7 +75,7 @@ public class Oplossing {
         double beschikbaarheid = 1;
         // for loop iedere server in de oplossing in de formule te verwerken
         for (Server server : oplossing) {
-            if (server instanceof Databaseserver) {
+            if (server instanceof DatabaseServer) {
                 // gegeven formule uit de reader
                 beschikbaarheid *= (1 - server.getBeschikbaarheid());
             }
@@ -190,7 +190,7 @@ public class Oplossing {
                     //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
                     if (server instanceof Webserver) {
                         aantalWebserversToegevoegd++;
-                        // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
                     } else {
                         aantalDatabaseserversToegevoegd++;
                     }
@@ -230,7 +230,7 @@ public class Oplossing {
                     oplossing.remove(oplossing.size() - 1);
                     if (server instanceof Webserver) {
                         aantalWebserversToegevoegd--;
-                        // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
                     } else {
                         aantalDatabaseserversToegevoegd--;
                     }
@@ -254,7 +254,7 @@ public class Oplossing {
                     //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
                     if (server instanceof Webserver) {
                         aantalWebserversToegevoegd++;
-                        // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
                     } else {
                         aantalDatabaseserversToegevoegd++;
                     }
@@ -295,7 +295,7 @@ public class Oplossing {
                     oplossing.remove(oplossing.size() - 1);
                     if (server instanceof Webserver) {
                         aantalWebserversToegevoegd--;
-                        // als server geen Webserver is dan is server een Databaseserver: de teller van databaseserver moet worden verhoogd.
+                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
                     } else {
                         aantalDatabaseserversToegevoegd--;
                     }

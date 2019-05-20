@@ -8,9 +8,10 @@ package nerdygadgets;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -45,13 +46,14 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
     private Webserver ws1;
     private Webserver ws2;
     private Webserver ws3;
-    private Databaseserver ds1;
-    private Databaseserver ds2;
-    private Databaseserver ds3;
+    private DatabaseServer ds1;
+    private DatabaseServer ds2;
+    private DatabaseServer ds3;
     private ArrayList<Server> besteOplossing = new ArrayList<>();
+    private double percentage;
 
-    public OptimalisatieDialoog(JFrame frame, Webserver ws1, Webserver ws2, Webserver ws3, Databaseserver ds1,
-            Databaseserver ds2, Databaseserver ds3, PFsense PFsense,
+    public OptimalisatieDialoog(JFrame frame, Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
+            DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
             DBloadBalancer DBloadBalancer) {
         super(frame, true);
         setSize(550, 300);
@@ -148,32 +150,45 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == Optimaliseer) {
             //Berekenen optimale oplossing.
-            if (getPercentage() != 0) {
-                //Als het percentage niet 0 is wordt de optimale oplossing berekent en kan het scherm verdwijnen.
-                this.setVisible(false);
-                Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer);
-                try {
-                    besteOplossing = oplossing.berekenBesteOplossing(getPercentage(), getAantalWebservers(), getAantalDatabaseservers());
-                } catch (java.lang.StackOverflowError error) {
-                    geenOplossingLabel.setText("Geen oplossing gevonden!");
+            percentage = getPercentage();
+            if (percentage > 0) {
+                if (percentage == 0.99998) {
+                    System.out.println(percentage);
+                    geenOplossingLabel.setText("Geen oplossing gevonden");
+                } else {
+                    System.out.println(getPercentage());
+                    //Als het percentage niet 0 is wordt de optimale oplossing berekent en kan het scherm verdwijnen.
+                    Oplossing oplossing = new Oplossing(ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer);
+                    try {
+                        besteOplossing = oplossing.berekenBesteOplossing(percentage, getAantalWebservers(), getAantalDatabaseservers());
+                        this.setVisible(false);
+                    } catch (java.lang.StackOverflowError error) {
+                        geenOplossingLabel.setText("Geen oplossing gevonden!");
+                    }
                 }
-            } else {
+            } else if (getPercentage() == 0) {
                 // als het percentage wel  is moet er een foutmelding worden weergegegeven
                 geenOplossingLabel.setText("Vul een percentage in!");
+            } else {
+                geenOplossingLabel.setText("Vul een positief getal in!");
             }
 
         }
     }
 
     public double getPercentage() {
-        double percentage = 0;
+        double percentage1 = 0.0;
         // Als er geen percentage is ingevoerd kan het percentage niet worden opgehaald
         // uit de PercentageTF. Dit moet dus worden voorkomen met een if-loop.
         if (!PercentageTF.getText().equals("")) {
-            percentage = Double.parseDouble(PercentageTF.getText());
-            percentage = percentage / 100;
+            try {
+                percentage1 = Double.parseDouble(PercentageTF.getText());
+            } catch (java.lang.NumberFormatException error) {
+
+            }
+            percentage1 = percentage1 / 100.0;
         }
-        return percentage;
+        return percentage1;
     }
 
     public int getAantalWebservers() {

@@ -84,7 +84,7 @@ public class Configuratie {
     }
 
     // fucntie voor berekenen voor totaalprijs
-    public int BerekenTotaalPrijs() {
+    public int berekenTotaalPrijs() {
         int prijs = 0;
         for (Server component : samenstelling) {
             prijs += component.getPrijs();
@@ -93,7 +93,7 @@ public class Configuratie {
     }
 
     //Functie voor het berekenen van percentage
-    public double BerekenPercentage() {
+    public double berekenPercentage() {
         ArrayList<Double> percentage = new ArrayList<>();
         ArrayList<Double> webserverlijst = new ArrayList<>();
         ArrayList<Double> databaseserverlijst = new ArrayList<>();
@@ -108,7 +108,7 @@ public class Configuratie {
             if (component instanceof Webserver) {
                 webserverlijst.add(component.getBeschikbaarheid());
 
-            } else if (component instanceof Databaseserver) {
+            } else if (component instanceof DatabaseServer) {
                 databaseserverlijst.add(component.getBeschikbaarheid());
             } else if (component instanceof PFsense) {
                 firewall = component.getBeschikbaarheid();

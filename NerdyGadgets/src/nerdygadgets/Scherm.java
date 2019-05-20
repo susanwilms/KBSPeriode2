@@ -46,9 +46,9 @@ public class Scherm extends JFrame implements ActionListener {
     private Webserver ws1;
     private Webserver ws2;
     private Webserver ws3;
-    private Databaseserver ds1;
-    private Databaseserver ds2;
-    private Databaseserver ds3;
+    private DatabaseServer ds1;
+    private DatabaseServer ds2;
+    private DatabaseServer ds3;
     private PFsense PFsense;
     private DBloadBalancer DBloadBalancer;
     private Configuratie ontwerp = new Configuratie();
@@ -58,8 +58,8 @@ public class Scherm extends JFrame implements ActionListener {
     private ArrayList<Server> webservers = new ArrayList<>();
     private Configuratie optimaleOplossing;
 
-    public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, Databaseserver ds1,
-            Databaseserver ds2, Databaseserver ds3, PFsense PFsense,
+    public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
+            DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
             DBloadBalancer DBloadBalancer) {
         this.ws1 = ws1;
         this.ws2 = ws2;
@@ -191,7 +191,7 @@ public class Scherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == Opslaan) {
-            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.BerekenTotaalPrijs(), (ontwerp.BerekenPercentage() * 100), NaamTF.getText(), ontwerp.getSamenstelling());
+            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.berekenTotaalPrijs(), (ontwerp.berekenPercentage() * 100), NaamTF.getText(), ontwerp.getSamenstelling());
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
         }
@@ -257,11 +257,11 @@ public class Scherm extends JFrame implements ActionListener {
             werkveld.clearLijst();
             ontwerp.clearSamenstelling();
         }
-        Kosten.setText("Kosten: " + ontwerp.BerekenTotaalPrijs() + " euro");
-        if (ontwerp.BerekenPercentage() * 100 == 100) {
-            Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage() * 0 + "%");
+        Kosten.setText("Kosten: " + ontwerp.berekenTotaalPrijs() + " euro");
+        if (ontwerp.berekenPercentage() * 100 == 100) {
+            Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 0 + "%");
         } else {
-            Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.BerekenPercentage() * 100 + "%");
+            Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 100 + "%");
         }
         repaint();
 
