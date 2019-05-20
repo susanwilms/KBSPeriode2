@@ -23,17 +23,17 @@ import javax.swing.JPanel;
 public class Werkveld extends JPanel {
 
     public ArrayList<Server> lijst = new ArrayList<>();
-    private BufferedImage webserver, dbserver, dbbalanceloader, firewall;
+    private BufferedImage webserver, dbserver, dbloadbalancer, pfsense;
 
     public Werkveld() {
         this.setPreferredSize(new Dimension(560, 607));
         try {
             webserver = ImageIO.read(new File("src/nerdygadgets/Webserver.png"));
             dbserver = ImageIO.read(new File("src/nerdygadgets/Databaseserver.png"));
-            dbbalanceloader = ImageIO.read(new File("src/nerdygadgets/Databasebalancing.png"));
-            firewall = ImageIO.read(new File("src/nerdygadgets/Firewall.png"));
+            dbloadbalancer = ImageIO.read(new File("src/nerdygadgets/Databasebalancing.png"));
+            pfsense = ImageIO.read(new File("src/nerdygadgets/Firewall.png"));
         } catch (IOException ex) {
-            System.out.println("Plaatje niet gevonden.");
+            System.out.println("Geen afbeelding gevonden");
         }
     }
 
@@ -65,12 +65,12 @@ public class Werkveld extends JPanel {
                 g.drawString(component.getNaam(), xstringdb, 190);
                 xstringdb += 100;
             } else if (component instanceof DBloadBalancer) {
-                g.drawImage(dbbalanceloader, xdbloadbalancer, 220, this);
+                g.drawImage(dbloadbalancer, xdbloadbalancer, 220, this);
                 xdbloadbalancer += 100;
                 g.drawString(component.getNaam(), xstringdbload, 290);
                 xstringdbload += 100;
             } else if (component instanceof PFsense) {
-                g.drawImage(firewall, xpfsense, 320, this);
+                g.drawImage(pfsense, xpfsense, 320, this);
                 xpfsense += 100;
                 g.drawString(component.getNaam(), xstringfirewall, 390);
                 xstringfirewall += 100;

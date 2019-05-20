@@ -24,23 +24,23 @@ import javax.swing.JLabel;
  */
 public class OptimalisatieDialoog extends JDialog implements ActionListener {
 
-    private JLabel Header = new JLabel("Optimalisatie");
-    private JLabel Naam = new JLabel();
-    private JLabel GewenstePercentage = new JLabel("Gewenste percentage: ");
-    private JTextField PercentageTF = new JTextField(500);
-    private JLabel Componenten = new JLabel("Voorgedefinieerde componenten: ");
-    private JLabel databaseServer = new JLabel("Databaseserver");
-    private JLabel geenOplossingLabel = new JLabel("");
-    private JTextField aantalDatabaseserversTextfield = new JTextField(2);
+    private JLabel headerLabel = new JLabel("Optimalisatie");
+    private JLabel naamLabel = new JLabel();
+    private JLabel percentageLabel = new JLabel("Gewenste percentage: ");
+    private JTextField percentageTextField = new JTextField(500);
+    private JLabel componentenLabel = new JLabel("Voorgedefinieerde componenten: ");
+    private JLabel databaseserverLabel = new JLabel("Databaseserver");
+    private JLabel foutmeldingLabel = new JLabel("");
+    private JTextField aantalDbserversTextField = new JTextField(2);
     //private JLabel      DBloadbalancer                   = new JLabel ("Databaseloadbalancer");
     //private JTextField  AantalDBloadBalancingServers    = new JTextField(2);
     // private JLabel      PFsenseRouter                   = new JLabel ("PFsense router");
     //private JTextField  AantalPFsenseRouters            = new JTextField(2);
-    private JLabel Webserver = new JLabel("Webserver");
+    private JLabel webserverLabel = new JLabel("Webserver");
     private JTextField aantalWebserversTextfield = new JTextField(2);
-    private JButton Optimaliseer = new JButton("Optimaliseer");
+    private JButton optimaliseerKnop = new JButton("Optimaliseer");
 
-    private ArrayList<Server> webservers = new ArrayList<>();
+    private ArrayList<Server> webserverArray = new ArrayList<>();
     private PFsense pfsense;
     private DBloadBalancer dbloadbalancer;
     private Webserver ws1;
@@ -61,82 +61,82 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
         setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
 
-        Header.setBounds(0, 0, 550, 40);
-        Header.setHorizontalAlignment(JLabel.CENTER);
-        Naam.setBounds(10, 50, 275, 20);
-        GewenstePercentage.setBounds(10, 80, 275, 20);
-        PercentageTF.setBounds(275, 80, 265, 20);
-        Componenten.setBounds(10, 155, 275, 20);
-        databaseServer.setBounds(275, 140, 230, 20);
-        aantalDatabaseserversTextfield.setBounds(505, 140, 35, 20);
+        headerLabel.setBounds(0, 0, 550, 40);
+        headerLabel.setHorizontalAlignment(JLabel.CENTER);
+        naamLabel.setBounds(10, 50, 275, 20);
+        percentageLabel.setBounds(10, 80, 275, 20);
+        percentageTextField.setBounds(275, 80, 265, 20);
+        componentenLabel.setBounds(10, 155, 275, 20);
+        databaseserverLabel.setBounds(275, 140, 230, 20);
+        aantalDbserversTextField.setBounds(505, 140, 35, 20);
         //DBloadBalancingServer.setBounds         (275, 140, 230, 20);
         //AantalDBloadBalancingServers.setBounds  (505, 140, 35, 20);
         //PFsenseRouter.setBounds                 (275, 170, 230, 20);
         //AantalPFsenseRouters.setBounds          (505, 170, 35, 20);
-        Webserver.setBounds(275, 170, 230, 20);
+        webserverLabel.setBounds(275, 170, 230, 20);
         aantalWebserversTextfield.setBounds(505, 170, 35, 20);
-        Optimaliseer.setBounds(420, 230, 120, 40);
-        geenOplossingLabel.setBounds(200, 110, 275, 20);
+        optimaliseerKnop.setBounds(420, 230, 120, 40);
+        foutmeldingLabel.setBounds(200, 110, 275, 20);
 
-        Header.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        GewenstePercentage.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        PercentageTF.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Componenten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        databaseServer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        aantalDatabaseserversTextfield.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        headerLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        naamLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        percentageLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        percentageTextField.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        componentenLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        databaseserverLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        aantalDbserversTextField.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //DBloadBalancingServer.          setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //AantalDBloadBalancingServers.   setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //PFsenseRouter.                  setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         //AantalPFsenseRouters.           setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Webserver.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        webserverLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
         aantalWebserversTextfield.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Optimaliseer.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        geenOplossingLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        geenOplossingLabel.setForeground(new Color(0, 128, 255));
+        optimaliseerKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        foutmeldingLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        foutmeldingLabel.setForeground(new Color(0, 128, 255));
 
-        Header.setOpaque(true);
-        Header.setBackground(new Color(102, 255, 255));
-        PercentageTF.setOpaque(true);
-        PercentageTF.setBackground(new Color(204, 255, 255));
-        aantalDatabaseserversTextfield.setOpaque(true);
-        aantalDatabaseserversTextfield.setBackground(new Color(204, 255, 255));
+        headerLabel.setOpaque(true);
+        headerLabel.setBackground(new Color(102, 255, 255));
+        percentageTextField.setOpaque(true);
+        percentageTextField.setBackground(new Color(204, 255, 255));
+        aantalDbserversTextField.setOpaque(true);
+        aantalDbserversTextField.setBackground(new Color(204, 255, 255));
         //AantalDBloadBalancingServers.setOpaque(true);
         //AantalDBloadBalancingServers.setBackground(new Color(204,255,255));
         //AantalPFsenseRouters.setOpaque(true);
         //AantalPFsenseRouters.setBackground(new Color(204,255,255));
         aantalWebserversTextfield.setOpaque(true);
         aantalWebserversTextfield.setBackground(new Color(204, 255, 255));
-        Optimaliseer.setOpaque(true);
-        Optimaliseer.setBackground(new Color(204, 255, 255));
+        optimaliseerKnop.setOpaque(true);
+        optimaliseerKnop.setBackground(new Color(204, 255, 255));
 
-        Optimaliseer.setBorder(null);
+        optimaliseerKnop.setBorder(null);
 
-        Optimaliseer.addActionListener(this);
+        optimaliseerKnop.addActionListener(this);
 
-        add(Header);
-        add(Naam);
-        add(GewenstePercentage);
-        add(PercentageTF);
-        add(Componenten);
-        add(databaseServer);
-        add(aantalDatabaseserversTextfield);
+        add(headerLabel);
+        add(naamLabel);
+        add(percentageLabel);
+        add(percentageTextField);
+        add(componentenLabel);
+        add(databaseserverLabel);
+        add(aantalDbserversTextField);
         //add(DBloadBalancingServer);
         //add(AantalDBloadBalancingServers);
         //add(PFsenseRouter);
         //add(AantalPFsenseRouters);
-        add(Webserver);
+        add(webserverLabel);
         add(aantalWebserversTextfield);
-        add(Optimaliseer);
-        add(geenOplossingLabel);
+        add(optimaliseerKnop);
+        add(foutmeldingLabel);
 
         //webservers worden toegevoegd aan Array met webservers
         this.ws1 = ws1;
         this.ws2 = ws2;
         this.ws3 = ws3;
-        webservers.add(ws1);
-        webservers.add(ws2);
-        webservers.add(ws3);
+        webserverArray.add(ws1);
+        webserverArray.add(ws2);
+        webserverArray.add(ws3);
 
         this.ds1 = ds1;
         this.ds2 = ds2;
@@ -148,13 +148,13 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == Optimaliseer) {
+        if (e.getSource() == optimaliseerKnop) {
             //Berekenen optimale oplossing.
             percentage = getPercentage();
             if (percentage > 0) {
                 if (percentage == 0.99998) {
                     System.out.println(percentage);
-                    geenOplossingLabel.setText("Geen oplossing gevonden");
+                    foutmeldingLabel.setText("Geen oplossing gevonden");
                 } else {
                     System.out.println(getPercentage());
                     //Als het percentage niet 0 is wordt de optimale oplossing berekent en kan het scherm verdwijnen.
@@ -163,26 +163,26 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
                         besteOplossing = oplossing.berekenBesteOplossing(percentage, getAantalWebservers(), getAantalDatabaseservers());
                         this.setVisible(false);
                     } catch (java.lang.StackOverflowError error) {
-                        geenOplossingLabel.setText("Geen oplossing gevonden!");
+                        foutmeldingLabel.setText("Geen oplossing gevonden!");
                     }
                 }
             } else if (getPercentage() == 0) {
                 // als het percentage wel  is moet er een foutmelding worden weergegegeven
-                geenOplossingLabel.setText("Vul een percentage in!");
+                foutmeldingLabel.setText("Vul een percentage in!");
             } else {
-                geenOplossingLabel.setText("Vul een positief getal in!");
+                foutmeldingLabel.setText("Vul een positief getal in!");
             }
 
         }
     }
 
-    public double getPercentage() {
+    private double getPercentage() {
         double percentage1 = 0.0;
         // Als er geen percentage is ingevoerd kan het percentage niet worden opgehaald
         // uit de PercentageTF. Dit moet dus worden voorkomen met een if-loop.
-        if (!PercentageTF.getText().equals("")) {
+        if (!percentageTextField.getText().equals("")) {
             try {
-                percentage1 = Double.parseDouble(PercentageTF.getText());
+                percentage1 = Double.parseDouble(percentageTextField.getText());
             } catch (java.lang.NumberFormatException error) {
 
             }
@@ -191,7 +191,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
         return percentage1;
     }
 
-    public int getAantalWebservers() {
+    private int getAantalWebservers() {
         int aantalWebservers = 0;
         if (!aantalWebserversTextfield.getText().equals("")) {
             aantalWebservers = Integer.parseInt(aantalWebserversTextfield.getText());
@@ -199,10 +199,10 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
         return aantalWebservers;
     }
 
-    public int getAantalDatabaseservers() {
+    private int getAantalDatabaseservers() {
         int aantalDatabaseservers = 0;
-        if (!aantalDatabaseserversTextfield.getText().equals("")) {
-            aantalDatabaseservers = Integer.parseInt(aantalDatabaseserversTextfield.getText());
+        if (!aantalDbserversTextField.getText().equals("")) {
+            aantalDatabaseservers = Integer.parseInt(aantalDbserversTextField.getText());
         }
         return aantalDatabaseservers;
     }

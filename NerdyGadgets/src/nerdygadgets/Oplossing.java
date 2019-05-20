@@ -13,10 +13,8 @@ import java.util.ArrayList;
  */
 public class Oplossing {
 
-    private ArrayList<Server> oplossing = new ArrayList<Server>();
+    private ArrayList<Server> oplossing = new ArrayList<>();
     private ArrayList<Server> uiteindelijkeOplossing = new ArrayList<>();
-    private Webserver besteWebserver;
-    private DatabaseServer besteDbserver;
     private ArrayList<Server> webserverArray;
     private ArrayList<Server> dbserverArray;
     private PFsense pfsense;

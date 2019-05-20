@@ -10,37 +10,39 @@ package nerdygadgets;
  * @author susanwilms
  */
 public class Server {
-    // Variabelen declareren 
-    private String  naam;
-    private int     prijs;
-    private double  beschikbaarheid;
-    private int     beschikbare_tijd;
-    private int     processorbelasting;
-    private int     diskruimte;
-    
-    // constructor om een server mee aan te maken wanneer alleen de naam, prijs en beschikbaarheid beschikbaar is. 
-    public Server (String naam, int prijs, double beschikbaarheid){
-        this.naam               = naam;
-        this.prijs              = prijs;
-        this.beschikbaarheid    = beschikbaarheid;
-        this.beschikbare_tijd   = 0;
+
+    // Variabelen declareren
+    private String naam;
+    private int prijs;
+    private double beschikbaarheid;
+    private int beschikbareTijd;
+    private int processorbelasting;
+    private int diskruimte;
+
+    // constructor om een server mee aan te maken wanneer alleen de naam, prijs en beschikbaarheid beschikbaar is.
+    public Server(String naam, int prijs, double beschikbaarheid) {
+        this.naam = naam;
+        this.prijs = prijs;
+        this.beschikbaarheid = beschikbaarheid;
+        this.beschikbareTijd = 0;
         this.processorbelasting = 0;
-        this.diskruimte         = 0;        
+        this.diskruimte = 0;
     }
-    
-    // constructor(overloading) om een server mee aan te maken wanneer alleen de naam, prijs, beschikbaarheid, processorbelasting en diskruimte beschikbaar zijn. 
-    public Server (String naam, int prijs, double beschikbaarheid, int processorbelasting, int diskruimte){
-        this.naam               = naam;
-        this.prijs              = prijs;
-        this.beschikbaarheid    = beschikbaarheid;
-        this.beschikbare_tijd   = 0;
+
+    // constructor(overloading) om een server mee aan te maken wanneer alleen de naam, prijs, beschikbaarheid, processorbelasting en diskruimte beschikbaar zijn.
+    public Server(String naam, int prijs, double beschikbaarheid, int processorbelasting, int diskruimte) {
+        this.naam = naam;
+        this.prijs = prijs;
+        this.beschikbaarheid = beschikbaarheid;
+        this.beschikbareTijd = 0;
         this.processorbelasting = processorbelasting;
-        this.diskruimte         = diskruimte; 
+        this.diskruimte = diskruimte;
     }
-    
-    public Server(){
-        
+
+    public Server() {
+
     }
+
     // getters
     public String getNaam() {
         return naam;
@@ -49,14 +51,8 @@ public class Server {
     public int getPrijs() {
         return prijs;
     }
-    
-    public double getBeschikbaarheid(){
+
+    public double getBeschikbaarheid() {
         return beschikbaarheid;
     }
-    
-    public String toString(){
-        return naam + " ";
-    }
-    
-    
 }
