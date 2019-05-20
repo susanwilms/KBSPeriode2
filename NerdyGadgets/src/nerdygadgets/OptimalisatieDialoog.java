@@ -25,7 +25,7 @@ import javax.swing.JLabel;
 public class OptimalisatieDialoog extends JDialog implements ActionListener {
 
     private JLabel Header = new JLabel("Optimalisatie");
-    private JLabel Naam = new JLabel("Naam Project: " + "Projectnaam");
+    private JLabel Naam = new JLabel();
     private JLabel GewenstePercentage = new JLabel("Gewenste percentage: ");
     private JTextField PercentageTF = new JTextField(500);
     private JLabel Componenten = new JLabel("Voorgedefinieerde componenten: ");

@@ -19,10 +19,52 @@ import java.util.Calendar;
  */
 public class Database {
     
+    public boolean checkNaam(String naam) {
+        boolean bestaatAl = false;
+        try{ 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/KBS?serverTimezone=UTC","root", "");
+        Statement myStmt = conn.createStatement();
+        
+        ResultSet myRs = myStmt.executeQuery("Select naam from ontwerp");
+        
+        while (myRs.next()) {
+            if(myRs.getString("naam").equals(naam)) {
+                bestaatAl = true;                                
+            }
+        }     
+
+      
+        
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        return bestaatAl;
+    }
+    
+    public String getOntwerpNaam(int OntwerpID) {
+        String naam = "";
+        try{ 
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/KBS?serverTimezone=UTC","root", "");
+        Statement myStmt = conn.createStatement();
+        
+        ResultSet myRs = myStmt.executeQuery("Select * from ontwerp WHERE Ontwerpid = " + OntwerpID);
+        
+        while (myRs.next()) {
+           naam = (myRs.getString("naam"));
+
+        }     
+
+      
+        
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        return naam;
+    }
+    
     public ArrayList<String> getComponenten(int OntwerpID) {
         ArrayList<String> Samenstelling = new ArrayList<>();
         try{ 
-        System.out.println(OntwerpID);
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/KBS?serverTimezone=UTC","root", "");
         Statement myStmt = conn.createStatement();
         

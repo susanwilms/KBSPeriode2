@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  */
 public class Werkveld extends JPanel {
 
-    private ArrayList<Server> lijst = new ArrayList<>();
+    public ArrayList<Server> lijst = new ArrayList<>();
     private BufferedImage webserver, dbserver, dbbalanceloader, firewall;
 
     public Werkveld() {

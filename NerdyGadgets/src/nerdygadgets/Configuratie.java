@@ -26,17 +26,26 @@ public class Configuratie {
 
     // constructor die gebruikt wordt bij het maken van een nieuw ontwerp
     public Configuratie() {
-
+        
     }
+    
+    public void print() {
+        for(Server test: samenstelling) {
+            System.out.println(test.toString());
+        }
+    }
+
+
+ 
 
     public void voegComponentToe(int Component, Werkveld werkveld, Server s1) {
         //Kijkt naar het meegegeven component nummer, die gekozen is in het serverkeuze dialoog, daarna voegt hij de bijbehorende server toe.
         if (Component != 0) {
             if (Component == 1) {
                 this.getSamenstelling().add(s1);
-                werkveld.addToLijst(s1);
             }
         }
+        werkveld.lijst = this.getSamenstelling();
     }
 
     public void voegComponentToe(int Component, Werkveld werkveld, Server s1, Server s2, Server s3) {
@@ -44,16 +53,15 @@ public class Configuratie {
         if (Component != 0) {
             if (Component == 1) {
                 this.getSamenstelling().add(s1);
-                werkveld.addToLijst(s1);
-            } else if (Component == 2) {
+            } else if(Component == 2) {
                 this.getSamenstelling().add(s2);
-                werkveld.addToLijst(s2);
-            } else if (Component == 3) {
+            } else if(Component == 3) {
                 this.getSamenstelling().add(s3);
-                werkveld.addToLijst(s3);
-            }
+            }                     
+        werkveld.lijst = this.getSamenstelling();
         }
     }
+
 
     public ArrayList<Server> stringToComponent(ArrayList<String> ArrayStrings, Werkveld werkveld, Server ws1, Server ws2, Server ws3, Server ds1, Server ds2, Server ds3, Server firewall, Server dbbalanceloader) {
         ArrayList<Server> ArrayComponenten = new ArrayList<>();
@@ -72,9 +80,9 @@ public class Configuratie {
                 ArrayComponenten.add(ds2);
             } else if (ComponentenString.contains("HAL9003DB")) {
                 ArrayComponenten.add(ds3);
-            } else if (ComponentenString.contains("DBloadbalancer")) {
+            } else if (ComponentenString.contains("DB loadbalancer")) {
                 ArrayComponenten.add(dbbalanceloader);
-            } else if (ComponentenString.contains("Pfsense")) {
+            } else if (ComponentenString.contains("PFsense")) {
                 ArrayComponenten.add(firewall);
             }
 
