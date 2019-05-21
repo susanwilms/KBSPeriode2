@@ -238,7 +238,7 @@ public class Scherm extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == pfsenseKnop) {
-            ToevoegenDialoog pfsenseKnop = new ToevoegenDialoog(this, "pfsenseKnop");
+            ToevoegenDialoog pfsenseKnop = new ToevoegenDialoog(this, "pfsense");
             pfsenseKnop.setLocation(900, 450);
             pfsenseKnop.setVisible(true);
             ontwerp.voegComponentToe(pfsenseKnop.welkePfsense, werkveld, pfsense);

@@ -65,6 +65,8 @@ public class MonitoringDialoog extends JDialog {
         add(resultaat);
         add(boven);
         add(totaal);
+        
+        
 
     }
 }

@@ -50,7 +50,7 @@ public class ToevoegenDialoog extends JDialog implements ActionListener {
             Combobox = new JComboBox(dbserverArray);
         } else if (type == "DBloadbalancer") {
             Combobox = new JComboBox(dbloadbalancerArray);
-        } else if (type == "pfsenseArray") {
+        } else if (type == "pfsense") {
             Combobox = new JComboBox(pfsenseArray);
         }
 
@@ -104,7 +104,7 @@ public class ToevoegenDialoog extends JDialog implements ActionListener {
                 if (Combobox.getSelectedItem() == "Loadbalancer - 99.999%") {
                     welkeDbloadbalancer = 1;
                 }
-            } else if (type == "pfsenseArray") {
+            } else if (type == "pfsense") {
                 if (Combobox.getSelectedItem() == "PFsense - 99.999%") {
                     welkePfsense = 1;
                 }
