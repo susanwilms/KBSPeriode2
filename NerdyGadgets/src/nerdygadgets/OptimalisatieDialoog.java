@@ -188,13 +188,19 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
             }
             percentage1 = percentage1 / 100.0;
         }
+        //De onderstaande code zorgt er voor dat het opgehaald getal niet wordt afgerond
+        // voorbeeld zonder onderstaande code: percentage1 = 0.999980...01
         DecimalFormat formaat = new DecimalFormat("0.00000");
         String percentageString = formaat.format(percentage1);
+        // DecimalFormat returned een waarde met een komma om het decimale af te scheiden.
+        // Hiermee kan niet worden gerekend en moet dus worden vervangen door een punt.
         String juistPercentageString = percentageString.substring(0, 1) + "." + percentageString.substring(2);
         percentage1 = Double.parseDouble(juistPercentageString);
         return percentage1;
     }
 
+    //onderstaande code kan worden gebruikt om een maximaal aantal servers aan te geven,
+    //dit is in deze versie echter niet van toepassing
     private int getAantalWebservers() {
         int aantalWebservers = 0;
         if (!aantalWebserversTextfield.getText().equals("")) {
