@@ -27,79 +27,76 @@ import javax.swing.SwingUtilities;
  * @author mbred
  */
 public class OpslaanDialoog extends JDialog implements ActionListener {
-    private JLabel Naam = new JLabel("Naam project: " + "Projectnaam");
-    private JLabel Beschikbaarheid = new JLabel("Beschikbaarheidspercentage: ");
-    private JLabel Kosten = new JLabel("Kosten: " );
-    private JLabel Resultaat = new JLabel("Opslaan");
-    private JPanel Boven = new JPanel(null);
-    private JButton Bevestig = new JButton("Bevestig");
-    private String opslaannaam;
-    private int opslaanprijs;
-    private double opslaanpercentage;
+
+    private JLabel naamLabel = new JLabel("Naam project: " + "Projectnaam");
+    private JLabel beschikbaarheidLabel = new JLabel("Beschikbaarheidspercentage: ");
+    private JLabel kostenLabel = new JLabel("Kosten: ");
+    private JLabel opslaanLabel = new JLabel("Opslaan");
+    private JPanel bovenPanel = new JPanel(null);
+    private JButton bevestigKnop = new JButton("Bevestig");
+    private String naamOntwerp;
+    private int prijsOntwerp;
+    private double beschikbaarheidOntwerp;
     private Database connectie = new Database();
     private ArrayList<Server> samenstelling;
-    
-    
+
     public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam, ArrayList<Server> samenstelling) {
         super(frame, true);
-        setSize(500,300);
+        setSize(500, 300);
         setLayout(null);
         setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
 
-        Boven.setBounds(0, 0, 500, 40);
-        
+        bovenPanel.setBounds(0, 0, 500, 40);
+
         this.samenstelling = samenstelling;
-        this.opslaannaam = naam;
-        this.opslaanprijs = prijs;
-        this.opslaanpercentage = percentage / 100;
-        Naam.setText("Naam project: " + naam);
-        Kosten.setText("Kosten: " + prijs + " euro");
-        Beschikbaarheid.setText("Beschikbaarheidspercentage: " + percentage + "%");
-        
-        Boven.setBounds(0,0, 500,28);
-        Resultaat.setBounds(210,5,100,20);
-        Naam.setBounds(10, 50, 500, 20);
-        Beschikbaarheid.setBounds(10,85,500,20);
-        Kosten.setBounds(10, 120, 500, 20);
-        Bevestig.setBounds(410, 230,80,30);
+        this.naamOntwerp = naam;
+        this.prijsOntwerp = prijs;
+        this.beschikbaarheidOntwerp = percentage / 100;
+        naamLabel.setText("Naam project: " + naam);
+        kostenLabel.setText("Kosten: " + prijs + " euro");
+        beschikbaarheidLabel.setText("Beschikbaarheidspercentage: " + percentage + "%");
 
-        
-        Resultaat.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Beschikbaarheid.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Kosten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        bovenPanel.setBounds(0, 0, 500, 28);
+        opslaanLabel.setBounds(210, 5, 100, 20);
+        naamLabel.setBounds(10, 50, 500, 20);
+        beschikbaarheidLabel.setBounds(10, 85, 500, 20);
+        kostenLabel.setBounds(10, 120, 500, 20);
+        bevestigKnop.setBounds(410, 230, 80, 30);
 
-        
-        Boven.setBackground(new Color(102,255,255));
-        Bevestig.setBackground(new Color(204,255,255));
-        
-        Bevestig.setBorder(null);
-        
-        Bevestig.addActionListener(this);
-        
-        Boven.add(Resultaat);
-        add(Bevestig);
-        add(Resultaat);
-        add(Boven);
-        add(Naam);
-        add(Kosten);
-        add(Beschikbaarheid);
-        
-        
+        opslaanLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        naamLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        beschikbaarheidLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        kostenLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+
+        bovenPanel.setBackground(new Color(102, 255, 255));
+        bevestigKnop.setBackground(new Color(204, 255, 255));
+
+        bevestigKnop.setBorder(null);
+
+        bevestigKnop.addActionListener(this);
+
+        bovenPanel.add(opslaanLabel);
+        add(bevestigKnop);
+        add(opslaanLabel);
+        add(bovenPanel);
+        add(naamLabel);
+        add(kostenLabel);
+        add(beschikbaarheidLabel);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Bevestig) {
-            if(!connectie.checkNaam(opslaannaam)) {
+        if (e.getSource() == bevestigKnop) {
+            if (!connectie.checkNaam(naamOntwerp)) {
                 String opslagdatum = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-                connectie.insertinto(opslaanpercentage, opslaanprijs, opslaannaam, samenstelling);
+                connectie.insertinto(beschikbaarheidOntwerp, prijsOntwerp, naamOntwerp, samenstelling);
             } else {
                 JOptionPane.showMessageDialog(this, "Niet opgeslagen. (Naam van ontwerp bestaat al)");
             }
             setVisible(false);
-        
+
+        }
     }
-}
 }

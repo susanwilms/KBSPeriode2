@@ -28,34 +28,34 @@ import javax.swing.WindowConstants;
  */
 public class Scherm extends JFrame implements ActionListener {
 
-    private JButton webserver = new JButton("Webservers");
-    private JButton DBServer = new JButton("Databaseserver");
-    private JButton DBBalancer = new JButton("DBBalancer");
-    private JButton Firewall = new JButton("Firewall");
-    private JLabel Componenten = new JLabel("Beschikbare componenten");
-    private JLabel Beschikbaarheid = new JLabel("Beschikbaarheid: ");
-    private JLabel Kosten = new JLabel("Kosten: ");
-    private JButton Openen = new JButton("Openen");
-    private JButton Opslaan = new JButton("Opslaan");
-    private JButton Optimalisatie = new JButton("Optimalisatie");
-    private JButton Monitoring = new JButton("Monitoring");
-    private JButton verwijderOntwerp = new JButton("Verwijder Ontwerp");
-    private JLabel Naam = new JLabel("Naam project:");
-    private JTextField NaamTF = new JTextField(500);
-    private JPanel p = new JPanel(null);
+    private JButton webserverKnop = new JButton("Webservers");
+    private JButton dbserverKnop = new JButton("Databaseserver");
+    private JButton dbloadbalancerKnop = new JButton("Dbloadbalancer");
+    private JButton pfsenseKnop = new JButton("Pfsense");
+    private JLabel componentLabel = new JLabel("Beschikbare componenten");
+    private JLabel beschikbaarheidLabel = new JLabel("Beschikbaarheid: ");
+    private JLabel kostenLabel = new JLabel("Kosten: ");
+    private JButton openenKnop = new JButton("Openen");
+    private JButton opslaanKnop = new JButton("Opslaan");
+    private JButton optimalisatieKnop = new JButton("Optimalisatie");
+    private JButton monitoringKnop = new JButton("Monitoring");
+    private JButton verwijderOntwerpKnop = new JButton("Verwijder Ontwerp");
+    private JLabel naamLabel = new JLabel("Naam project:");
+    private JTextField naamTextField = new JTextField(500);
+    private JPanel panel = new JPanel(null);
     private Webserver ws1;
     private Webserver ws2;
     private Webserver ws3;
     private DatabaseServer ds1;
     private DatabaseServer ds2;
     private DatabaseServer ds3;
-    private PFsense PFsense;
-    private DBloadBalancer DBloadBalancer;
+    private PFsense pfsense;
+    private DBloadBalancer dbloadbalancer;
     private Configuratie ontwerp = new Configuratie();
     private Werkveld werkveld = new Werkveld();
     private Database connectie = new Database();
     private Oplossing oplossing;
-    private ArrayList<Server> webservers = new ArrayList<>();
+    private ArrayList<Server> webserverArray = new ArrayList<>();
     private Configuratie optimaleOplossing;
 
     public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
@@ -64,14 +64,14 @@ public class Scherm extends JFrame implements ActionListener {
         this.ws1 = ws1;
         this.ws2 = ws2;
         this.ws3 = ws3;
-        webservers.add(ws1);
-        webservers.add(ws2);
-        webservers.add(ws3);
+        webserverArray.add(ws1);
+        webserverArray.add(ws2);
+        webserverArray.add(ws3);
         this.ds1 = ds1;
         this.ds2 = ds2;
         this.ds3 = ds3;
-        this.PFsense = PFsense;
-        this.DBloadBalancer = DBloadBalancer;
+        this.pfsense = PFsense;
+        this.dbloadbalancer = DBloadBalancer;
 
         setTitle("Java Applicatie");
         setSize(900, 660);
@@ -81,108 +81,108 @@ public class Scherm extends JFrame implements ActionListener {
         this.getContentPane().setBackground(Color.WHITE);
 
         //Geef iedere component zijn plek waar hij moet staan
-        Componenten.setBounds(10, 10, 200, 20);
-        webserver.setBounds(10, 50, 200, 75);
-        DBServer.setBounds(10, 135, 200, 75);
-        DBBalancer.setBounds(10, 220, 200, 75);
-        Firewall.setBounds(10, 305, 200, 75);
-        Beschikbaarheid.setBounds(10, 400, 200, 15);
-        Kosten.setBounds(10, 420, 200, 15);
-        Openen.setBounds(10, 440, 200, 30);
-        Opslaan.setBounds(10, 477, 200, 30);
-        Optimalisatie.setBounds(10, 514, 200, 30);
-        Monitoring.setBounds(10, 551, 200, 30);
-        verwijderOntwerp.setBounds(10, 588, 200, 30);
-        Naam.setBounds(230, 10, 100, 20);
-        NaamTF.setBounds(330, 13, 545, 20);
-        p.setBounds(0, 0, 220, 800);
+        componentLabel.setBounds(10, 10, 200, 20);
+        webserverKnop.setBounds(10, 50, 200, 75);
+        dbserverKnop.setBounds(10, 135, 200, 75);
+        dbloadbalancerKnop.setBounds(10, 220, 200, 75);
+        pfsenseKnop.setBounds(10, 305, 200, 75);
+        beschikbaarheidLabel.setBounds(10, 400, 200, 15);
+        kostenLabel.setBounds(10, 420, 200, 15);
+        openenKnop.setBounds(10, 440, 200, 30);
+        opslaanKnop.setBounds(10, 477, 200, 30);
+        optimalisatieKnop.setBounds(10, 514, 200, 30);
+        monitoringKnop.setBounds(10, 551, 200, 30);
+        verwijderOntwerpKnop.setBounds(10, 588, 200, 30);
+        naamLabel.setBounds(230, 10, 100, 20);
+        naamTextField.setBounds(330, 13, 545, 20);
+        panel.setBounds(0, 0, 220, 800);
         werkveld.setBounds(230, 43, 643, 560);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
 
         //Zet de font naar onze 'main' font Helvetica Neue + Lettertype
-        Componenten.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-        Beschikbaarheid.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Kosten.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        webserver.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        DBServer.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        DBBalancer.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Firewall.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Openen.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Opslaan.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Optimalisatie.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Monitoring.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        verwijderOntwerp.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
-        Naam.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        componentLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+        beschikbaarheidLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        kostenLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        webserverKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        dbserverKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        dbloadbalancerKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        pfsenseKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        openenKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        opslaanKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        optimalisatieKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        monitoringKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        verwijderOntwerpKnop.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
+        naamLabel.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
 
         //Zorgt ervoor dat de inhoud van de knoppen links weergeven wordt
-        webserver.setHorizontalAlignment(SwingConstants.LEFT);
-        DBServer.setHorizontalAlignment(SwingConstants.LEFT);
-        DBBalancer.setHorizontalAlignment(SwingConstants.LEFT);
-        Firewall.setHorizontalAlignment(SwingConstants.LEFT);
+        webserverKnop.setHorizontalAlignment(SwingConstants.LEFT);
+        dbserverKnop.setHorizontalAlignment(SwingConstants.LEFT);
+        dbloadbalancerKnop.setHorizontalAlignment(SwingConstants.LEFT);
+        pfsenseKnop.setHorizontalAlignment(SwingConstants.LEFT);
 
         //Veranderd de achtergrondkleur van componenten
-        p.setBackground(new Color(102, 255, 255));
-        webserver.setBackground(Color.white);
-        DBServer.setBackground(Color.white);
-        DBBalancer.setBackground(Color.white);
-        Firewall.setBackground(Color.white);
-        Opslaan.setBackground(new Color(204, 255, 255));
-        Openen.setBackground(new Color(204, 255, 255));
-        Optimalisatie.setBackground(new Color(204, 255, 255));
-        Monitoring.setBackground(new Color(204, 255, 255));
-        verwijderOntwerp.setBackground(new Color(204, 255, 255));
-        NaamTF.setBackground(new Color(204, 255, 255));
+        panel.setBackground(new Color(102, 255, 255));
+        webserverKnop.setBackground(Color.white);
+        dbserverKnop.setBackground(Color.white);
+        dbloadbalancerKnop.setBackground(Color.white);
+        pfsenseKnop.setBackground(Color.white);
+        opslaanKnop.setBackground(new Color(204, 255, 255));
+        openenKnop.setBackground(new Color(204, 255, 255));
+        optimalisatieKnop.setBackground(new Color(204, 255, 255));
+        monitoringKnop.setBackground(new Color(204, 255, 255));
+        verwijderOntwerpKnop.setBackground(new Color(204, 255, 255));
+        naamTextField.setBackground(new Color(204, 255, 255));
 
         //Zorgt ervoor dat de buttons geen omringende border hebben (geen zwart lijntje aan de uiteinden)
-        webserver.setBorder(null);
-        DBServer.setBorder(null);
-        DBBalancer.setBorder(null);
-        Firewall.setBorder(null);
-        Opslaan.setBorder(null);
-        Openen.setBorder(null);
-        Optimalisatie.setBorder(null);
-        Monitoring.setBorder(null);
-        verwijderOntwerp.setBorder(null);
-        NaamTF.setBorder(null);
+        webserverKnop.setBorder(null);
+        dbserverKnop.setBorder(null);
+        dbloadbalancerKnop.setBorder(null);
+        pfsenseKnop.setBorder(null);
+        opslaanKnop.setBorder(null);
+        openenKnop.setBorder(null);
+        optimalisatieKnop.setBorder(null);
+        monitoringKnop.setBorder(null);
+        verwijderOntwerpKnop.setBorder(null);
+        naamTextField.setBorder(null);
 
         //Zorgt voor het plaatje bij de buttons
-        webserver.setIcon(new ImageIcon(this.getClass().getResource("Webserver.png")));
-        DBServer.setIcon(new ImageIcon(this.getClass().getResource("Databaseserver.png")));
-        DBBalancer.setIcon(new ImageIcon(this.getClass().getResource("Databasebalancing.png")));
-        Firewall.setIcon(new ImageIcon(this.getClass().getResource("Firewall.png")));
+        webserverKnop.setIcon(new ImageIcon(this.getClass().getResource("Webserver.png")));
+        dbserverKnop.setIcon(new ImageIcon(this.getClass().getResource("Databaseserver.png")));
+        dbloadbalancerKnop.setIcon(new ImageIcon(this.getClass().getResource("Databasebalancing.png")));
+        pfsenseKnop.setIcon(new ImageIcon(this.getClass().getResource("Firewall.png")));
 
         //Actionlisteners
-        Opslaan.addActionListener(this);
-        Optimalisatie.addActionListener(this);
-        webserver.addActionListener(this);
-        DBServer.addActionListener(this);
-        DBBalancer.addActionListener(this);
-        Firewall.addActionListener(this);
-        Openen.addActionListener(this);
-        Monitoring.addActionListener(this);
-        verwijderOntwerp.addActionListener(this);
+        opslaanKnop.addActionListener(this);
+        optimalisatieKnop.addActionListener(this);
+        webserverKnop.addActionListener(this);
+        dbserverKnop.addActionListener(this);
+        dbloadbalancerKnop.addActionListener(this);
+        pfsenseKnop.addActionListener(this);
+        openenKnop.addActionListener(this);
+        monitoringKnop.addActionListener(this);
+        verwijderOntwerpKnop.addActionListener(this);
 
         //Voegt alle componenten toe
-        add(Componenten);
-        add(webserver);
-        add(DBServer);
-        add(DBBalancer);
-        add(Firewall);
+        add(componentLabel);
+        add(webserverKnop);
+        add(dbserverKnop);
+        add(dbloadbalancerKnop);
+        add(pfsenseKnop);
 
-        add(Beschikbaarheid);
-        add(Kosten);
-        add(Openen);
-        add(Opslaan);
-        add(Optimalisatie);
-        add(Monitoring);
-        add(verwijderOntwerp);
-        add(Naam);
-        add(NaamTF);
+        add(beschikbaarheidLabel);
+        add(kostenLabel);
+        add(openenKnop);
+        add(opslaanKnop);
+        add(optimalisatieKnop);
+        add(monitoringKnop);
+        add(verwijderOntwerpKnop);
+        add(naamLabel);
+        add(naamTextField);
 
         add(werkveld);
         //Voeg panel als laatste toe anders zijn de andere componenten niet zichtbaar
-        add(p);
+        add(panel);
 
         // hier komen de controls
         setVisible(true); // toont het venster
@@ -190,18 +190,18 @@ public class Scherm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == Opslaan) {
-            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.berekenTotaalPrijs(), (ontwerp.berekenPercentage() * 100), NaamTF.getText(), ontwerp.getSamenstelling());
+        if (e.getSource() == opslaanKnop) {
+            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.berekenTotaalPrijs(), (ontwerp.berekenPercentage() * 100), naamTextField.getText(), ontwerp.getSamenstelling());
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
         }
-        if (e.getSource() == Openen) {
+        if (e.getSource() == openenKnop) {
             OpenenDialoog dialoog = new OpenenDialoog(this);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             if (dialoog.isBevestigd) {
-                NaamTF.setText(connectie.getOntwerpNaam(dialoog.OpenenID));
-                ArrayList<Server> Opslagcomponenten = ontwerp.stringToComponent(connectie.getComponenten(dialoog.OpenenID), werkveld, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
+                naamTextField.setText(connectie.getOntwerpNaam(dialoog.OpenenID));
+                ArrayList<Server> Opslagcomponenten = ontwerp.stringToComponent(connectie.getComponenten(dialoog.OpenenID), werkveld, ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer);
                 for (Server server : Opslagcomponenten) {
                     ontwerp.addToSamenstelling(server);
                     werkveld.addToLijst(server);
@@ -210,43 +210,43 @@ public class Scherm extends JFrame implements ActionListener {
             }
         }
 
-        if (e.getSource() == Monitoring) {
+        if (e.getSource() == monitoringKnop) {
             MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
             monitoringDialoog.setLocationRelativeTo(null);
             monitoringDialoog.setVisible(true);
             ontwerp.print();
         }
 
-        if (e.getSource() == webserver) {
-            WebserverDialoog webserver = new WebserverDialoog(this, "Webserver");
-            webserver.setLocation(900, 450);
-            webserver.setVisible(true);
-            ontwerp.voegComponentToe(webserver.WelkeWebserver, werkveld, ws1, ws2, ws3);
+        if (e.getSource() == webserverKnop) {
+            ToevoegenDialoog webserverKnop = new ToevoegenDialoog(this, "Webserver");
+            webserverKnop.setLocation(900, 450);
+            webserverKnop.setVisible(true);
+            ontwerp.voegComponentToe(webserverKnop.welkeWebserver, werkveld, ws1, ws2, ws3);
         }
 
-        if (e.getSource() == DBServer) {
-            WebserverDialoog DBserver = new WebserverDialoog(this, "DBserver");
+        if (e.getSource() == dbserverKnop) {
+            ToevoegenDialoog DBserver = new ToevoegenDialoog(this, "DBserver");
             DBserver.setLocation(900, 450);
             DBserver.setVisible(true);
-            ontwerp.voegComponentToe(DBserver.WelkeDBserver, werkveld, ds1, ds2, ds3);
+            ontwerp.voegComponentToe(DBserver.welkeDbserver, werkveld, ds1, ds2, ds3);
         }
-        if (e.getSource() == DBBalancer) {
-            WebserverDialoog DBloadbalancer = new WebserverDialoog(this, "DBloadbalancer");
+        if (e.getSource() == dbloadbalancerKnop) {
+            ToevoegenDialoog DBloadbalancer = new ToevoegenDialoog(this, "DBloadbalancer");
             DBloadbalancer.setLocation(900, 450);
             DBloadbalancer.setVisible(true);
-            ontwerp.voegComponentToe(DBloadbalancer.WelkeDBloadbalancer, werkveld, DBloadBalancer);
+            ontwerp.voegComponentToe(DBloadbalancer.welkeDbloadbalancer, werkveld, dbloadbalancer);
         }
 
-        if (e.getSource() == Firewall) {
-            WebserverDialoog Firewall = new WebserverDialoog(this, "Firewall");
-            Firewall.setLocation(900, 450);
-            Firewall.setVisible(true);
-            ontwerp.voegComponentToe(Firewall.WelkeFirewall, werkveld, PFsense);
+        if (e.getSource() == pfsenseKnop) {
+            ToevoegenDialoog pfsenseKnop = new ToevoegenDialoog(this, "pfsenseKnop");
+            pfsenseKnop.setLocation(900, 450);
+            pfsenseKnop.setVisible(true);
+            ontwerp.voegComponentToe(pfsenseKnop.welkePfsense, werkveld, pfsense);
         }
 
-        if (e.getSource() == Optimalisatie) {
+        if (e.getSource() == optimalisatieKnop) {
             ArrayList<Server> oplossing = new ArrayList<>();
-            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this, ws1, ws2, ws3, ds1, ds2, ds3, PFsense, DBloadBalancer);
+            OptimalisatieDialoog dialoog = new OptimalisatieDialoog(this, ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             werkveld.clearLijst();
@@ -256,17 +256,17 @@ public class Scherm extends JFrame implements ActionListener {
                 werkveld.addToLijst(server);
             }
         }
-        if (e.getSource() == verwijderOntwerp) {
+        if (e.getSource() == verwijderOntwerpKnop) {
             werkveld.clearLijst();
             ontwerp.clearSamenstelling();
-            NaamTF.setText("");
+            naamTextField.setText("");
         }
 
-        Kosten.setText("Kosten: " + ontwerp.berekenTotaalPrijs() + " euro");
+        kostenLabel.setText("Kosten: " + ontwerp.berekenTotaalPrijs() + " euro");
         if (ontwerp.berekenPercentage() * 100 == 100) {
-            Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 0 + "%");
+            beschikbaarheidLabel.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 0 + "%");
         } else {
-            Beschikbaarheid.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 100 + "%");
+            beschikbaarheidLabel.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 100 + "%");
         }
         repaint();
 

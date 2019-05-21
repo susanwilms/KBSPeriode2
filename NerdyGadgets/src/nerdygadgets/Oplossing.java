@@ -21,8 +21,8 @@ public class Oplossing {
     private DBloadBalancer dbloadbalancer;
     private double beschikbaarheidDoel;
     private int prijsBesteOplossing;
-    private double percentageWebServers;
-    private double percentageDatabaseServers;
+    private double percentageWebservers;
+    private double percentageDatabaseservers;
     private int maximaalAantalWebservers;
     private int maximaalAantalDatabaseservers;
     private int aantalWebserversToegevoegd = 0;
@@ -70,16 +70,16 @@ public class Oplossing {
     // functie om de beschikbaarheid van de databaseservers te berekenen
     private double berekenBeschikbaarheidDbservers(ArrayList<Server> oplossing) {
         // variabele beschikbaarheid aanmaken
-        double beschikbaarheid = 1;
+        double beschikbaarheid = 1.0;
         // for loop iedere server in de oplossing in de formule te verwerken
         for (Server server : oplossing) {
             if (server instanceof DatabaseServer) {
                 // gegeven formule uit de reader
-                beschikbaarheid *= (1 - server.getBeschikbaarheid());
+                beschikbaarheid *= (1.0 - server.getBeschikbaarheid());
             }
         }
         // beschikbaarheid min 1 doen omdat dit niet in de for loop gedaan kan worden
-        beschikbaarheid = 1 - beschikbaarheid;
+        beschikbaarheid = 1.0 - beschikbaarheid;
         // het antwoord (beschikbaarheid) returnen
         return (beschikbaarheid);
     }
@@ -154,11 +154,11 @@ public class Oplossing {
                 else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
                     // kiezen of webserver / databaseserver wordt toegevoegd
                     // percentage van de webservers laten uitrekenen
-                    percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
+                    percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
                     // percentage van de databaseservers laten uitrekenen
-                    percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
+                    percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
                     // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
-                    if (percentageWebServers < percentageDatabaseServers) {
+                    if (percentageWebservers < percentageDatabaseservers) {
                         // webserver toevoegen aan de webserverarray
                         berekenBesteOplossing(oplossing, webserverArray);
                         // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
@@ -207,12 +207,12 @@ public class Oplossing {
                     else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
                         // kiezen of webserver / databaseserver wordt toegevoegd
                         // percentage van de webservers laten uitrekenen
-                        percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
+                        percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
                         // percentage van de databaseservers laten uitrekenen
-                        percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
+                        percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
                         // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
                         // en als het aantal toegevoegde webservers lager is dan het maximaal aantal webservers dat is meegegeven in het dialoog
-                        if (percentageWebServers < percentageDatabaseServers && aantalWebserversToegevoegd < maximaalAantalWebservers) {
+                        if (percentageWebservers < percentageDatabaseservers && aantalWebserversToegevoegd < maximaalAantalWebservers) {
                             // webserver toevoegen aan de webserverarray
                             berekenBesteOplossing(oplossing, webserverArray);
                             // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
@@ -271,12 +271,12 @@ public class Oplossing {
                     else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
                         // kiezen of webserver / databaseserver wordt toegevoegd
                         // percentage van de webservers laten uitrekenen
-                        percentageWebServers = berekenBeschikbaarheidWebservers(oplossing);
+                        percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
                         // percentage van de databaseservers laten uitrekenen
-                        percentageDatabaseServers = berekenBeschikbaarheidDbservers(oplossing);
+                        percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
                         // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
                         // en als het aantal toegevoegde webservers lager is dan het maximaal aantal webservers dat is meegegeven in het dialoog
-                        if (percentageWebServers < percentageDatabaseServers && aantalWebserversToegevoegd < maximaalAantalWebservers) {
+                        if (percentageWebservers < percentageDatabaseservers && aantalWebserversToegevoegd < maximaalAantalWebservers) {
                             // webserver toevoegen aan de webserverarray
                             berekenBesteOplossing(oplossing, webserverArray);
                             // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
