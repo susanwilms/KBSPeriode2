@@ -10,8 +10,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -180,6 +179,7 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
         double percentage1 = 0.0;
         // Als er geen percentage is ingevoerd kan het percentage niet worden opgehaald
         // uit de PercentageTF. Dit moet dus worden voorkomen met een if-loop.
+
         if (!percentageTextField.getText().equals("")) {
             try {
                 percentage1 = Double.parseDouble(percentageTextField.getText());
@@ -188,6 +188,10 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
             }
             percentage1 = percentage1 / 100.0;
         }
+        DecimalFormat formaat = new DecimalFormat("0.00000");
+        String percentageString = formaat.format(percentage1);
+        String juistPercentageString = percentageString.substring(0, 1) + "." + percentageString.substring(2);
+        percentage1 = Double.parseDouble(juistPercentageString);
         return percentage1;
     }
 
