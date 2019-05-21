@@ -46,7 +46,6 @@ public class MonitoringDialoog extends JDialog {
         int i = 1;
         int x = 50;
         while (i <= 3) {
-
             MonitoringBlok blok = new MonitoringBlok();
             JPanel jpanel = blok.maakBlok();
 
