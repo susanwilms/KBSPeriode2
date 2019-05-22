@@ -23,8 +23,8 @@ public class Oplossing {
     private int prijsBesteOplossing;
     private double percentageWebservers;
     private double percentageDatabaseservers;
-    private int maximaalAantalWebservers;
-    private int maximaalAantalDatabaseservers;
+    //private int maximaalAantalWebservers;
+    //private int maximaalAantalDatabaseservers;
     private int aantalWebserversToegevoegd = 0;
     private int aantalDatabaseserversToegevoegd = 0;
 
@@ -117,191 +117,61 @@ public class Oplossing {
         return prijs;
     }
 
-    public ArrayList<Server> berekenBesteOplossing(double beschikbaarheid, int aantalWebservers, int aantalDatabaseservers) {
+    public ArrayList<Server> berekenBesteOplossing(double beschikbaarheid) {
         beschikbaarheidDoel = beschikbaarheid;
-        maximaalAantalWebservers = aantalWebservers;
-        maximaalAantalDatabaseservers = aantalDatabaseservers;
+        //maximaalAantalWebservers = aantalWebservers;
+        //maximaalAantalDatabaseservers = aantalDatabaseservers;
         berekenBesteOplossing(oplossing, webserverArray);
         return (uiteindelijkeOplossing);
     }
 
     // Functie om de beste oplossing te berekenen (recursieve backtracking)
     private void berekenBesteOplossing(ArrayList<Server> oplossing, ArrayList<Server> servers) {
-        if (maximaalAantalWebservers == 0 && maximaalAantalDatabaseservers == 0) {
-            // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
-            if (oplossing.isEmpty()) {
-                oplossing.add(pfsense);
-                oplossing.add(dbloadbalancer);
-                aantalWebserversToegevoegd = 0;
-                aantalDatabaseserversToegevoegd = 0;
-            }
-            // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
-            for (Server server : servers) {
-                oplossing.add(server);
-
-                // voldoet de oplossing?
-                // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing?
-                if (berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing || prijsBesteOplossing == 0)) {
-                    // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan
-                    uiteindelijkeOplossing.clear();
-                    // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
-                    for (Server server2 : oplossing) {
-                        uiteindelijkeOplossing.add(server2);
-                    }
-                    // de prijs berekenen
-                    prijsBesteOplossing = berekenPrijs(oplossing);
-                } // is de beschikbaarheid van de oplossing kleiner dan het minimale doel dat we willen?
-                else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
-                    // kiezen of webserver / databaseserver wordt toegevoegd
-                    // percentage van de webservers laten uitrekenen
-                    percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
-                    // percentage van de databaseservers laten uitrekenen
-                    percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
-                    // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
-                    if (percentageWebservers < percentageDatabaseservers) {
-                        // webserver toevoegen aan de webserverarray
-                        berekenBesteOplossing(oplossing, webserverArray);
-                        // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
-                    } else {
-                        // databaseserver toevoegen aan de dbserverArray
-                        berekenBesteOplossing(oplossing, dbserverArray);
-                    }
-                } // is de prijs hogter dan de prijs van de tot nu toe beste oplossing (en niet gelijk aan nul)?
-                else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0) {
-                    // niets doen omdat de oplossing te duur is, hij gaat dan automatisch opnieuw in de loop.
-                }
-                // de oplossing verwijderen
-                oplossing.remove(oplossing.size() - 1);
-            }
-        } else if (maximaalAantalDatabaseservers == 0) {
-            try {
-                // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
-                if (oplossing.isEmpty()) {
-                    oplossing.add(pfsense);
-                    oplossing.add(dbloadbalancer);
-                    aantalWebserversToegevoegd = 0;
-                    aantalDatabaseserversToegevoegd = 0;
-                }
-                // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
-                for (Server server : servers) {
-                    oplossing.add(server);
-                    //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
-                    if (server instanceof Webserver) {
-                        aantalWebserversToegevoegd++;
-                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
-                    } else {
-                        aantalDatabaseserversToegevoegd++;
-                    }
-                    // voldoet de oplossing?
-                    // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing?
-                    if (berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing || prijsBesteOplossing == 0)) {
-                        // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan
-                        uiteindelijkeOplossing.clear();
-                        // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
-                        for (Server server2 : oplossing) {
-                            uiteindelijkeOplossing.add(server2);
-                        }
-                        // de prijs berekenen
-                        prijsBesteOplossing = berekenPrijs(oplossing);
-                    } // is de beschikbaarheid van de oplossing kleiner dan het minimale doel dat we willen?
-                    else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
-                        // kiezen of webserver / databaseserver wordt toegevoegd
-                        // percentage van de webservers laten uitrekenen
-                        percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
-                        // percentage van de databaseservers laten uitrekenen
-                        percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
-                        // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
-                        // en als het aantal toegevoegde webservers lager is dan het maximaal aantal webservers dat is meegegeven in het dialoog
-                        if (percentageWebservers < percentageDatabaseservers && aantalWebserversToegevoegd < maximaalAantalWebservers) {
-                            // webserver toevoegen aan de webserverarray
-                            berekenBesteOplossing(oplossing, webserverArray);
-                            // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
-                        } else {
-                            // databaseserver toevoegen aan de dbserverArray
-                            berekenBesteOplossing(oplossing, dbserverArray);
-                        }
-                    } // is de prijs hogter dan de prijs van de tot nu toe beste oplossing (en niet gelijk aan nul)?
-                    else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0) {
-                        // niets doen omdat de oplossing te duur is, hij gaat dan automatisch opnieuw in de loop.
-                    }
-                    // de oplossing verwijderen
-                    oplossing.remove(oplossing.size() - 1);
-                    if (server instanceof Webserver) {
-                        aantalWebserversToegevoegd--;
-                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
-                    } else {
-                        aantalDatabaseserversToegevoegd--;
-                    }
-                }
-            } catch (java.lang.StackOverflowError error) {
-                System.out.println("Geen oplossing gevonden");
-                System.exit(0);
-            }
-        } else {
-            try {
-                // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
-                if (oplossing.isEmpty()) {
-                    oplossing.add(pfsense);
-                    oplossing.add(dbloadbalancer);
-                    aantalWebserversToegevoegd = 0;
-                    aantalDatabaseserversToegevoegd = 0;
-                }
-                // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
-                for (Server server : servers) {
-                    oplossing.add(server);
-                    //Als dit een webserver is moet hiervan de teller worden verhoogd (teller = aantalWebserversToegevoegd).
-                    if (server instanceof Webserver) {
-                        aantalWebserversToegevoegd++;
-                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
-                    } else {
-                        aantalDatabaseserversToegevoegd++;
-                    }
-                    // voldoet de oplossing?
-                    // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing?
-                    if (berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing || prijsBesteOplossing == 0)) {
-                        // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan
-                        uiteindelijkeOplossing.clear();
-                        // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
-                        for (Server server2 : oplossing) {
-                            uiteindelijkeOplossing.add(server2);
-                        }
-                        // de prijs berekenen
-                        prijsBesteOplossing = berekenPrijs(oplossing);
-                    } // is de beschikbaarheid van de oplossing kleiner dan het minimale doel dat we willen?
-                    else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
-                        // kiezen of webserver / databaseserver wordt toegevoegd
-                        // percentage van de webservers laten uitrekenen
-                        percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
-                        // percentage van de databaseservers laten uitrekenen
-                        percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
-                        // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
-                        // en als het aantal toegevoegde webservers lager is dan het maximaal aantal webservers dat is meegegeven in het dialoog
-                        if (percentageWebservers < percentageDatabaseservers && aantalWebserversToegevoegd < maximaalAantalWebservers) {
-                            // webserver toevoegen aan de webserverarray
-                            berekenBesteOplossing(oplossing, webserverArray);
-                            // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
-                            // en als het maximale aantal databaseservers nog niet is bereikt
-                        } else if (aantalDatabaseserversToegevoegd < maximaalAantalDatabaseservers) {
-                            // databaseserver toevoegen aan de dbserverArray
-                            berekenBesteOplossing(oplossing, dbserverArray);
-                        }
-                    } // is de prijs hogter dan de prijs van de tot nu toe beste oplossing (en niet gelijk aan nul)?
-                    else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0) {
-                        // niets doen omdat de oplossing te duur is, hij gaat dan automatisch opnieuw in de loop.
-                    }
-                    // de oplossing verwijderen
-                    oplossing.remove(oplossing.size() - 1);
-                    if (server instanceof Webserver) {
-                        aantalWebserversToegevoegd--;
-                        // als server geen Webserver is dan is server een DatabaseServer: de teller van databaseserver moet worden verhoogd.
-                    } else {
-                        aantalDatabaseserversToegevoegd--;
-                    }
-                }
-            } catch (java.lang.StackOverflowError error) {
-                System.out.println("Geen oplossing gevonden");
-                System.exit(0);
-            }
+        // de PFsense en DBloadbalancer toevoegen als de oplossing helemaal leeg is
+        if (oplossing.isEmpty()) {
+            oplossing.add(pfsense);
+            oplossing.add(dbloadbalancer);
+            aantalWebserversToegevoegd = 0;
+            aantalDatabaseserversToegevoegd = 0;
         }
+        // Hiermee gaat hij elke server in de arraylist na dus elke database of webserver wordt bekeken.
+        for (Server server : servers) {
+            oplossing.add(server);
+
+            // voldoet de oplossing?
+            // is de beschikbaarheid van de oplossing groter dan of gelijk aan het doel EN is de prijs goedkoper dan die van de vorige beste oplossing?
+            if (berekenTotaleBeschikbaarheid(oplossing) >= beschikbaarheidDoel && (berekenPrijs(oplossing) < prijsBesteOplossing || prijsBesteOplossing == 0)) {
+                // De ArrayList met de uiteindelijke oplossing leegmaken omdat hier nog items van de vorige oplossing in staan
+                uiteindelijkeOplossing.clear();
+                // De items van de nieuwe oplossing in de ArrayList uiteindelijkeOplossing zetten
+                for (Server server2 : oplossing) {
+                    uiteindelijkeOplossing.add(server2);
+                }
+                // de prijs berekenen
+                prijsBesteOplossing = berekenPrijs(oplossing);
+            } // is de beschikbaarheid van de oplossing kleiner dan het minimale doel dat we willen?
+            else if (berekenTotaleBeschikbaarheid(oplossing) < beschikbaarheidDoel) {
+                // kiezen of webserver / databaseserver wordt toegevoegd
+                // percentage van de webservers laten uitrekenen
+                percentageWebservers = berekenBeschikbaarheidWebservers(oplossing);
+                // percentage van de databaseservers laten uitrekenen
+                percentageDatabaseservers = berekenBeschikbaarheidDbservers(oplossing);
+                // als het beschikbaarheidspercentage van de databaseservers hoger is dan ie van de webserservers
+                if (percentageWebservers < percentageDatabaseservers) {
+                    // webserver toevoegen aan de webserverarray
+                    berekenBesteOplossing(oplossing, webserverArray);
+                    // als het beschikbaarheidspercentage van de webservers hoger is dan ie van de databaseserservers
+                } else {
+                    // databaseserver toevoegen aan de dbserverArray
+                    berekenBesteOplossing(oplossing, dbserverArray);
+                }
+            } // is de prijs hogter dan de prijs van de tot nu toe beste oplossing (en niet gelijk aan nul)?
+            else if (berekenPrijs(oplossing) > prijsBesteOplossing && prijsBesteOplossing != 0) {
+                // niets doen omdat de oplossing te duur is, hij gaat dan automatisch opnieuw in de loop.
+            }
+            // de oplossing verwijderen
+            oplossing.remove(oplossing.size() - 1);
+        }
+
     }
 }
