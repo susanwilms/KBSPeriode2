@@ -1,5 +1,5 @@
 // Tiemen Nienhuis S1093024 ICTM2N
-package nerdygadgets;
+/*package nerdygadgets;
 
 import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
@@ -20,4 +20,4 @@ public abstract class MyUserInfo
                                               boolean[] echo){
       return null;
     }
-  }
+  } */

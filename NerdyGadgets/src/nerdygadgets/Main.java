@@ -55,13 +55,14 @@ public class Main {
         dbServers.add(e);
         dbServers.add(f);
         
-        Draad Component1 = new Draad("Component1", FysiekeWs1,"200");
+        /*Draad Component1 = new Draad("Component1", FysiekeWs1,"200");
         Draad Component2 = new Draad("Component2", FysiekeWs2,"200");
         Draad Component3 = new Draad("Component3", FysiekeDb1,"200");
         Draad Component4 = new Draad("Component4", FysiekeDb2,"200");
         Draad Component5 = new Draad("Component5", FysiekeDBbalancer,"200");
         
         Component1.start();
+*/
     }
 }  
     

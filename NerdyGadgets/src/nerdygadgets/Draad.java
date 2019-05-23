@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nerdygadgets;
+/*package nerdygadgets;
 
 import com.jcraft.jsch.JSchException;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * @author mbred
  */
- public class Draad extends Thread {
+/* public class Draad extends Thread {
      FysiekComponent server; 
              
   public Draad(String threadName, FysiekComponent server, String ip) { // constructor
@@ -47,4 +47,4 @@ import java.io.IOException;
       }
       
 }
-}
+}*/

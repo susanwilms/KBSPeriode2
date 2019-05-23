@@ -1,5 +1,5 @@
 // Tiemen Nienhuis S1093024 ICTM2N
-package nerdygadgets;
+/*package nerdygadgets;
 
 import com.jcraft.jsch.*;
 import java.awt.*;
@@ -135,4 +135,4 @@ public class Connection extends readChannelOutput {
         System.out.println("Disconnected!");
     }
 
-}
+}*/
