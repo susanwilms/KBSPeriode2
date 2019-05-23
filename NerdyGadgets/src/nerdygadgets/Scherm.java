@@ -5,14 +5,18 @@
  */
 package nerdygadgets;
 
+import com.jcraft.jsch.JSchException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,10 +61,11 @@ public class Scherm extends JFrame implements ActionListener {
     private Oplossing oplossing;
     private ArrayList<Server> webserverArray = new ArrayList<>();
     private Configuratie optimaleOplossing;
+    private ArrayList<FysiekComponent> FysiekeComponenten;
 
     public Scherm(Webserver ws1, Webserver ws2, Webserver ws3, DatabaseServer ds1,
             DatabaseServer ds2, DatabaseServer ds3, PFsense PFsense,
-            DBloadBalancer DBloadBalancer) {
+            DBloadBalancer DBloadBalancer, ArrayList<FysiekComponent> FysiekeComponenten) {
         this.ws1 = ws1;
         this.ws2 = ws2;
         this.ws3 = ws3;
@@ -72,6 +77,7 @@ public class Scherm extends JFrame implements ActionListener {
         this.ds3 = ds3;
         this.pfsense = PFsense;
         this.dbloadbalancer = DBloadBalancer;
+        this.FysiekeComponenten = FysiekeComponenten;
 
         setTitle("Java Applicatie");
         setSize(900, 660);
@@ -211,9 +217,17 @@ public class Scherm extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == monitoringKnop) {
-            MonitoringDialoog monitoringDialoog = new MonitoringDialoog(this);
-            monitoringDialoog.setLocationRelativeTo(null);
+            MonitoringDialoog monitoringDialoog;
+            try {
+                monitoringDialoog = new MonitoringDialoog(this,FysiekeComponenten);
+                            monitoringDialoog.setLocationRelativeTo(null);
             monitoringDialoog.setVisible(true);
+            } catch (JSchException ex) {
+                Logger.getLogger(Scherm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Scherm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             ontwerp.print();
         }
 

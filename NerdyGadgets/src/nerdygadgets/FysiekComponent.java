@@ -11,59 +11,49 @@ package nerdygadgets;
  */
 public class FysiekComponent {
 
-    private String naam;
-    private int prijs;
     private double beschikbaarheid;
-    private int beschikbareTijd;
-    private int processorbelasting;
-    private int diskruimte;
+    private String beschikbareTijd;
+    private String processorbelasting;
+    private String diskruimte;
 
     // constructor om een server mee aan te maken wanneer alleen de naam, prijs en beschikbaarheid beschikbaar is.
-    public FysiekComponent(String naam, int prijs, double beschikbaarheid) {
-        this.naam = naam;
-        this.prijs = prijs;
-        this.beschikbaarheid = beschikbaarheid;
-        this.beschikbareTijd = 0;
-        this.processorbelasting = 0;
-        this.diskruimte = 0;
-    }
 
-    // constructor(overloading) om een server mee aan te maken wanneer alleen de naam, prijs, beschikbaarheid, processorbelasting en diskruimte beschikbaar zijn.
-    public FysiekComponent(String naam, int prijs, double beschikbaarheid, int processorbelasting, int diskruimte) {
-        this.naam = naam;
-        this.prijs = prijs;
-        this.beschikbaarheid = beschikbaarheid;
-        this.beschikbareTijd = 0;
-        this.processorbelasting = processorbelasting;
-        this.diskruimte = diskruimte;
-    }
 
     public FysiekComponent() {
 
     }
 
-    public void setNaam(String naam) {
-        this.naam = naam;
-    }
-
-    public void setPrijs(int prijs) {
-        this.prijs = prijs;
-    }
 
     public void setBeschikbaarheid(double beschikbaarheid) {
         this.beschikbaarheid = beschikbaarheid;
     }
 
-    public void setBeschikbareTijd(int beschikbareTijd) {
+    public void setBeschikbareTijd(String beschikbareTijd) {
         this.beschikbareTijd = beschikbareTijd;
     }
 
-    public void setProcessorbelasting(int processorbelasting) {
+    public void setProcessorbelasting(String processorbelasting) {
         this.processorbelasting = processorbelasting;
     }
 
-    public void setDiskruimte(int diskruimte) {
+    public void setDiskruimte(String diskruimte) {
         this.diskruimte = diskruimte;
+    }
+
+    public double getBeschikbaarheid() {
+        return beschikbaarheid;
+    }
+
+    public String getBeschikbareTijd() {
+        return beschikbareTijd;
+    }
+
+    public String getProcessorbelasting() {
+        return processorbelasting;
+    }
+
+    public String getDiskruimte() {
+        return diskruimte;
     }
 
 }

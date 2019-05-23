@@ -13,18 +13,23 @@ import javax.swing.JPanel;
 
 public class MonitoringBlok {
     private JPanel kleurPanel;
-    
-
+    private JLabel Type = new JLabel("Type: ");
+    private JLabel tijd = new JLabel("Uptime: 5 days, 20 hours");
+    private JLabel disk = new JLabel("Diskruimte:");
+    private JLabel labelCpuPercentage = new JLabel("Cpu");
+    private JLabel labelMemoryPercentage = new JLabel("Disk");
+    private JLabel processor = new JLabel("Processorbelasting:");
 
     public JPanel maakBlok(){
-            JLabel Type = new JLabel("Type: ");
-            JLabel tijd = new JLabel("Uptime: 5 days, 20 hours");
-            JLabel processor = new JLabel("Processorbelasting:");
-            JLabel disk = new JLabel("Diskruimte:");
-            JLabel labelCpuPercentage = new JLabel("Cpu");
-            JLabel labelMemoryPercentage = new JLabel("Disk");
+//            JLabel Type = new JLabel("Type: ");
+//            JLabel tijd = new JLabel("Uptime: 5 days, 20 hours");
+//            JLabel processor = new JLabel("Processorbelasting:");
+//            JLabel disk = new JLabel("Diskruimte:");
+//            JLabel labelCpuPercentage = new JLabel("Cpu");
+//            JLabel labelMemoryPercentage = new JLabel("Disk");
         
         
+            
         Type.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
         tijd.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
         processor.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
@@ -55,6 +60,24 @@ public class MonitoringBlok {
         
         return Blok;
     }
+
+    public JLabel getType() {
+        return Type;
+    }
+
+    public JLabel getTijd() {
+        return tijd;
+    }
+
+    public JLabel getDisk() {
+        return disk;
+    }
+
+    public JLabel getProcessor() {
+        return processor;
+    }
+    
+    
  
 }
 
