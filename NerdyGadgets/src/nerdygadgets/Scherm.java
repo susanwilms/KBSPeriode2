@@ -5,18 +5,15 @@
  */
 package nerdygadgets;
 
-import com.jcraft.jsch.JSchException;
+//import com.jcraft.jsch.JSchException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -217,19 +214,19 @@ public class Scherm extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == monitoringKnop) {
-            MonitoringDialoog monitoringDialoog;
-            try {
+//            MonitoringDialoog monitoringDialoog;
+            /*try {
                 monitoringDialoog = new MonitoringDialoog(this,FysiekeComponenten);
                             monitoringDialoog.setLocationRelativeTo(null);
             monitoringDialoog.setVisible(true);
-            } catch (JSchException ex) {
+//            } catch (JSchException ex) {
                 Logger.getLogger(Scherm.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(Scherm.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            ontwerp.print();
-        }
+            ontwerp.print();*/
+        } 
 
         if (e.getSource() == webserverKnop) {
             ToevoegenDialoog webserverKnop = new ToevoegenDialoog(this, "Webserver");
@@ -275,12 +272,13 @@ public class Scherm extends JFrame implements ActionListener {
             ontwerp.clearSamenstelling();
             naamTextField.setText("");
         }
-
+        DecimalFormat formaat = new DecimalFormat("0.00000");
+        
         kostenLabel.setText("Kosten: " + ontwerp.berekenTotaalPrijs() + " euro");
         if (ontwerp.berekenPercentage() * 100 == 100) {
-            beschikbaarheidLabel.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 0 + "%");
+            beschikbaarheidLabel.setText("Beschikbaarheid: " + formaat.format(ontwerp.berekenPercentage() * 0) + "%");
         } else {
-            beschikbaarheidLabel.setText("Beschikbaarheid: " + ontwerp.berekenPercentage() * 100 + "%");
+            beschikbaarheidLabel.setText("Beschikbaarheid: " + formaat.format(ontwerp.berekenPercentage() * 100) + "%");
         }
         repaint();
 

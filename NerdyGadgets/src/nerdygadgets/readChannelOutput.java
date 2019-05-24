@@ -1,5 +1,5 @@
 // Tiemen Nienhuis S1093024 ICTM2N
-package nerdygadgets;
+/*package nerdygadgets;
 
 import com.jcraft.jsch.Channel;
 import java.io.InputStream;
@@ -38,4 +38,4 @@ public class readChannelOutput {
         System.out.println("Error while reading channel output: "+ e);
         }
     }
-}
+} */

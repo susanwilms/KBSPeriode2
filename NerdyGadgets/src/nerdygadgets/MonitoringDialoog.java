@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nerdygadgets;
+/*package nerdygadgets;
 
 import com.jcraft.jsch.JSchException;
 import java.awt.Color;
@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
  *
  * @author mbred
  */
+/*
 public class MonitoringDialoog extends JDialog{
 
     private JPanel boven = new JPanel(null);
@@ -76,4 +77,4 @@ public class MonitoringDialoog extends JDialog{
         
 
     }
-}
+} */

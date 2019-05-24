@@ -5,7 +5,7 @@
  */
 
 
-package nerdygadgets;
+/*package nerdygadgets;
 
 import com.jcraft.jsch.JSchException;
 import java.io.IOException;
@@ -34,4 +34,4 @@ public Draad2(String threadName, FysiekComponent server, MonitoringBlok blok) {
 }
 }
 
-
+*/
