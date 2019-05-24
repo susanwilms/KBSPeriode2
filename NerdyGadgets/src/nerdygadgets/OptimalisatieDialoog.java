@@ -139,12 +139,16 @@ public class OptimalisatieDialoog extends JDialog implements ActionListener {
 
     private double getPercentage() {
         double percentage1 = 0.0;
+        String percentageStringv2 = percentageTextField.getText();
         // Als er geen percentage is ingevoerd kan het percentage niet worden opgehaald
         // uit de PercentageTF. Dit moet dus worden voorkomen met een if-loop.
 
         if (!percentageTextField.getText().equals("")) {
+            if (percentageStringv2.indexOf(",") > 0) {
+                percentageStringv2 = percentageStringv2.replace(",", ".");
+            }
             try {
-                percentage1 = Double.parseDouble(percentageTextField.getText());
+                percentage1 = Double.parseDouble(percentageStringv2);
             } catch (java.lang.NumberFormatException error) {
 
             }
