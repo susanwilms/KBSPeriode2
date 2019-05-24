@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,8 +40,9 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
     private double beschikbaarheidOntwerp;
     private Database connectie = new Database();
     private ArrayList<Server> samenstelling;
+    private Configuratie ontwerp;
 
-    public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam, ArrayList<Server> samenstelling) {
+    public OpslaanDialoog(JFrame frame, int prijs, double percentage, String naam, ArrayList<Server> samenstelling, Configuratie ontwerp) {
         super(frame, true);
         setSize(500, 300);
         setLayout(null);
@@ -49,13 +51,22 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
 
         bovenPanel.setBounds(0, 0, 500, 40);
 
+        this.ontwerp = ontwerp;
         this.samenstelling = samenstelling;
         this.naamOntwerp = naam;
         this.prijsOntwerp = prijs;
-        this.beschikbaarheidOntwerp = percentage / 100;
+        this.beschikbaarheidOntwerp = (percentage / 100);
         naamLabel.setText("Naam project: " + naam);
         kostenLabel.setText("Kosten: " + prijs + " euro");
-        beschikbaarheidLabel.setText("Beschikbaarheidspercentage: " + percentage + "%");
+        
+        if(percentage == 100.00) {
+            percentage = 0.00;
+        }
+        
+        DecimalFormat formaat = new DecimalFormat("0.00000");
+        
+        beschikbaarheidLabel.setText("Beschikbaarheidspercentage: " + formaat.format(percentage) + "%");
+        
 
         bovenPanel.setBounds(0, 0, 500, 28);
         opslaanLabel.setBounds(210, 5, 100, 20);
@@ -89,11 +100,13 @@ public class OpslaanDialoog extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == bevestigKnop) {
-            if (!connectie.checkNaam(naamOntwerp)) {
-                String opslagdatum = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-                connectie.insertinto(beschikbaarheidOntwerp, prijsOntwerp, naamOntwerp, samenstelling);
+            if ((connectie.checkNaam(naamOntwerp)) || (naamOntwerp == "") || (naamOntwerp.contains(" "))) {
+                JOptionPane.showMessageDialog(this, "Niet opgeslagen, er is een fout met de naam van het project.");
+            } else if(!ontwerp.checkComponenten(ontwerp)) {
+                JOptionPane.showMessageDialog(this, "Er zijn te weinig verplichte componenten aanwezig");
             } else {
-                JOptionPane.showMessageDialog(this, "Niet opgeslagen. (Naam van ontwerp bestaat al)");
+                connectie.insertinto(beschikbaarheidOntwerp, prijsOntwerp, naamOntwerp, samenstelling); 
+                System.out.println("test");
             }
             setVisible(false);
 

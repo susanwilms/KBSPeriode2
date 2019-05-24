@@ -194,7 +194,7 @@ public class Scherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == opslaanKnop) {
-            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.berekenTotaalPrijs(), (ontwerp.berekenPercentage() * 100), naamTextField.getText(), ontwerp.getSamenstelling());
+            OpslaanDialoog dialoog = new OpslaanDialoog(this, ontwerp.berekenTotaalPrijs(), (ontwerp.berekenPercentage() * 100), naamTextField.getText(), ontwerp.getSamenstelling(), ontwerp);
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
         }
@@ -203,6 +203,8 @@ public class Scherm extends JFrame implements ActionListener {
             dialoog.setLocationRelativeTo(null);
             dialoog.setVisible(true);
             if (dialoog.isBevestigd) {
+                ontwerp.clearSamenstelling();
+                werkveld.clearLijst();
                 naamTextField.setText(connectie.getOntwerpNaam(dialoog.OpenenID));
                 ArrayList<Server> Opslagcomponenten = ontwerp.stringToComponent(connectie.getComponenten(dialoog.OpenenID), werkveld, ws1, ws2, ws3, ds1, ds2, ds3, pfsense, dbloadbalancer);
                 for (Server server : Opslagcomponenten) {

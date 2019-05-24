@@ -90,6 +90,29 @@ public class Configuratie {
 
         return ArrayComponenten;
     }
+    
+    public boolean checkComponenten(Configuratie Ontwerp) {
+        int aantalDB = 0;
+        int aantalWS = 0;
+        int aantalPFsense = 0;
+        int aantalDBloader = 0;
+        boolean voldoet = false;
+        for(Server server: Ontwerp.getSamenstelling()) {
+            if(server instanceof Webserver) {
+                aantalWS += 1;
+            } else if (server instanceof DatabaseServer) {
+                aantalDB += 1;
+            } else if (server instanceof PFsense) {
+                aantalPFsense += 1;
+            } else {
+                aantalDBloader += 1;
+            }
+    }
+        if(aantalWS >= 1 && aantalDB >= 1 && aantalPFsense >= 1 && aantalDBloader >= 1) {
+            voldoet = true;
+        }
+        return voldoet;
+    }
 
     // fucntie voor berekenen voor totaalprijs
     public int berekenTotaalPrijs() {

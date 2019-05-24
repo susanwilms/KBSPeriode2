@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  */
 public class ToevoegenDialoog extends JDialog implements ActionListener {
 
-    private JLabel selecteerLabel = new JLabel("selecteerLabel");
+    private JLabel selecteerLabel = new JLabel("Selecteren");
     private JPanel bovenPanel = new JPanel(null);
     private JButton sluitKnop = new JButton("Bevestig");
     private String[] webserverArray = {"HAL9001W - 80%", "HAL9002W - 90%", "HAL9003W - 95%"};
