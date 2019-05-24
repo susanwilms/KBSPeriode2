@@ -26,3 +26,4 @@ hs_err_pid*
 /NerdyGadgets/build/
 /NerdyGadgets/dist/
 NerdyGadgets/src/nerdygadgets/MonitoringBlok.java
+/testscripts/nbproject/private/
