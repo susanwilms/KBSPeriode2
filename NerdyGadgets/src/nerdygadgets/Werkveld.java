@@ -72,10 +72,11 @@ public class Werkveld extends JPanel {
                 } else {
                     // g.drawRect(WIDTH, WIDTH, WIDH, HEIGHT)
 
-                    g.setColor(new Color(102, 255, 255));
+                    // g.setColor(new Color(102, 255, 255));
+                    g.setColor(Color.WHITE);
                     g.fillRect(xwebserver, 20, 90, 60);
                     g.setColor(Color.BLACK);
-                    g.drawRect(xwebserver, 20, 90, 60);
+                    // g.drawRect(xwebserver, 20, 90, 60);
                     if (component.getNaam().equals("HAL9001W")) {
                         aantalHAL9001W++;
                     } else if (component.getNaam().equals("HAL9002W")) {
@@ -96,10 +97,11 @@ public class Werkveld extends JPanel {
                     xstringdb += 75;
                     tellerDatabase++;
                 } else {
-                    g.setColor(new Color(102, 255, 255));
+                    //g.setColor(new Color(102, 255, 255));
+                    g.setColor(Color.WHITE);
                     g.fillRect(xdbserver, 120, 90, 60);
                     g.setColor(Color.BLACK);
-                    g.drawRect(xdbserver, 120, 90, 60);
+                    // g.drawRect(xdbserver, 120, 90, 60);
                     if (component.getNaam().equals("HAL9001DB")) {
                         aantalHAL9001DB++;
                     } else if (component.getNaam().equals("HAL9002DB")) {

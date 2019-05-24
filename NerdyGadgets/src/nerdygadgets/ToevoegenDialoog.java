@@ -22,6 +22,7 @@ import javax.swing.JPanel;
  */
 public class ToevoegenDialoog extends JDialog implements ActionListener {
 
+
     private JLabel selecteerLabel = new JLabel("Selecteren");
     private JPanel bovenPanel = new JPanel(null);
     private JButton sluitKnop = new JButton("Bevestig");
@@ -84,7 +85,7 @@ public class ToevoegenDialoog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sluitKnop) {
 
-            if (type == "Webserver") {
+            if (type.equals("Webserver")) {
                 if (Combobox.getSelectedItem().toString().contains("HAL9001W")) {
                     welkeWebserver = 1;
                 } else if (Combobox.getSelectedItem().toString().contains("HAL9002W")) {
@@ -100,11 +101,11 @@ public class ToevoegenDialoog extends JDialog implements ActionListener {
                 } else if (Combobox.getSelectedItem() == "HAL9003DB - 98%") {
                     welkeDbserver = 3;
                 }
-            } else if (type == "DBloadbalancer") {
+            } else if (type.equals("DBloadbalancer")) {
                 if (Combobox.getSelectedItem() == "Loadbalancer - 99.999%") {
                     welkeDbloadbalancer = 1;
                 }
-            } else if (type == "pfsense") {
+            } else if (type.equals("pfsense")) {
                 if (Combobox.getSelectedItem() == "PFsense - 99.999%") {
                     welkePfsense = 1;
                 }
